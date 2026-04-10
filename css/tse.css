@@ -1,0 +1,51 @@
+/* ═══════════════════════════════════════════════════
+   THE SPEAKING EDGE — Shared Stylesheet
+   speakingedgeglobal.com  |  v1.0  |  April 2026
+   ═══════════════════════════════════════════════════ */
+
+:root {
+  --vermillion:      #C8392B;
+  --vermillion-dark: #a02a20;
+  --midnight:        #2C3E50;
+  --midnight-light:  #3d5570;
+  --cream:           #FAF6F0;
+  --gold:            #E8A020;
+  --steel:           #5D6D7E;
+  --ltsteel:         #ECF0F1;
+  --white:           #ffffff;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Source Sans 3', Arial, sans-serif;
+  background: var(--cream);
+  color: var(--midnight);
+  overflow-x: hidden;
+}
+
+/* ── NAVIGATION ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(44,62,80,0.97);
+  backdrop-filter: blur(8px);
+  border-bottom: 2px solid var(--vermillion);
+  padding: 0 6%;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 64px;
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 10px; text-decoration: none;
+}
+.nav-logo-text {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 700; font-size: 1.15rem; color: var(--white);
+  letter-spacing: 0.01em; line-height: 1.1;
+}
+.nav-logo-text span { color: var(--vermillion); }
+.nav-links {
+  display: flex; gap: 2rem; list-style: none; align-items: center;
+}
+.nav-links a {
+"css/tse.css" 259L, 8939B
