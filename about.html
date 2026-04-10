@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="About Karsten Huttenhain — founder of The Speaking Edge. Nearly two decades of professional acting experience applied to speaking confidence coaching in Edinburgh.">
+<title>About — The Speaking Edge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<link rel="stylesheet" href="css/tse.css">
+<style>
+/* ── ABOUT-SPECIFIC ── */
+.about-main {
+  padding: 80px 6% 100px;
+  background: var(--midnight);
+  display: grid; grid-template-columns: 1fr 1.3fr; gap: 7rem;
+  align-items: start;
+}
+.founder-frame {
+  background: var(--midnight-light); padding: 0;
+  position: relative; max-width: 420px; overflow: hidden;
+}
+.founder-frame::after {
+  content: '';
+  position: absolute; top: 16px; right: -16px;
+  width: 100%; height: 100%;
+  border: 2px solid var(--vermillion);
+  pointer-events: none; z-index: 0;
+}
+.founder-photo {
+  width: 100%; display: block;
+  object-fit: cover; object-position: center top;
+}
+.founder-caption {
+  padding: 1.6rem 2rem;
+}
+.founder-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.65rem; font-weight: 700; color: var(--white); margin-bottom: 0.4rem;
+}
+.founder-title {
+  font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; display: block;
+}
+.founder-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.founder-tag {
+  background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.65);
+  padding: 4px 12px; font-size: 0.73rem; font-weight: 600;
+  letter-spacing: 0.05em; text-transform: uppercase;
+}
+.about-body h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 700;
+  color: var(--white); line-height: 1.2; margin-bottom: 1.6rem;
+}
+.about-body p {
+  font-size: 1rem; line-height: 1.8; color: rgba(255,255,255,0.65);
+  margin-bottom: 1.3rem;
+}
+.about-body p strong { color: rgba(255,255,255,0.9); font-weight: 600; }
+
+/* Brand principles */
+.brand-principles {
+  padding: 100px 6%; background: var(--cream);
+}
+.brand-principles-inner { max-width: 1100px; margin: 0 auto; }
+.brand-principles h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 700;
+  color: var(--midnight); line-height: 1.15; margin-bottom: 1.6rem;
+}
+.principles-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 3rem;
+}
+.principle-card {
+  background: var(--white); padding: 2rem 1.8rem;
+  border-top: 4px solid var(--gold);
+}
+.principle-word {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.3rem; font-weight: 700; color: var(--midnight);
+  margin-bottom: 0.8rem;
+}
+.principle-card p { font-size: 0.88rem; line-height: 1.7; color: var(--steel); }
+
+/* Credentials */
+.credentials {
+  padding: 80px 6% 100px; background: var(--midnight);
+}
+.credentials-inner {
+  max-width: 900px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;
+}
+.cred-group h4 {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 1.4rem;
+}
+.cred-list { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; }
+.cred-list li {
+  font-size: 0.92rem; line-height: 1.6; color: rgba(255,255,255,0.65);
+  padding-left: 1.4rem; position: relative;
+}
+.cred-list li::before {
+  content: '—'; position: absolute; left: 0; color: var(--vermillion); font-weight: 700;
+}
+
+@media (max-width: 1024px) {
+  .about-main { grid-template-columns: 1fr; gap: 4rem; }
+  .principles-grid { grid-template-columns: 1fr 1fr; }
+  .credentials-inner { grid-template-columns: 1fr; gap: 2rem; }
+}
+@media (max-width: 768px) {
+  .about-main, .brand-principles, .credentials { padding-left: 5%; padding-right: 5%; }
+  .principles-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div id="tse-nav"></div>
+
+<!-- PAGE HEADER -->
+<header class="page-header">
+  <div class="page-header-eyebrow">The Speaking Edge</div>
+  <h1>About <em>Karsten</em></h1>
+  <p>Nearly two decades on stage — in theatre, theatre-in-education, film and TV — now brought directly to bear on one of the most universal challenges in professional life.</p>
+</header>
+
+<!-- ABOUT MAIN -->
+<section class="about-main">
+  <div>
+    <div class="founder-frame reveal">
+      <img src="images/karsten-headshot.jpg" alt="Karsten Huttenhain — founder of The Speaking Edge" class="founder-photo">
+      <div class="founder-caption">
+        <div class="founder-name">Karsten Huttenhain</div>
+        <span class="founder-title">Founder &amp; Speaking Confidence Coach</span>
+        <div class="founder-tags">
+          <span class="founder-tag">Theatre</span>
+          <span class="founder-tag">Film &amp; TV</span>
+          <span class="founder-tag">TIE</span>
+          <span class="founder-tag">Science Comms</span>
+          <span class="founder-tag">Edinburgh</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="about-body reveal">
+    <div class="section-label gold">Founder &amp; speaking confidence coach</div>
+    <div class="gold-divider"></div>
+    <h2>The actor who became a coach — and why that matters</h2>
+    <p>Karsten Huttenhain is an Edinburgh-based speaking confidence coach with nearly two decades of professional acting experience across theatre, theatre-in-education, film, TV commercials and corporate productions.</p>
+    <p>His methodology is not borrowed from another coaching tradition. It comes directly from the rehearsal room, the stage and the screen — from the discipline of <strong>using the body, breath and voice as precision instruments</strong>, and from learning to be present, authentic and compelling under pressure.</p>
+    <p>He has worked as a science communicator with Edinburgh Science and Generation Science, delivering STEM workshops in schools across Scotland — giving him unusual depth in making complex ideas land clearly for any audience, in any room.</p>
+    <p>The Speaking Edge was founded on a simple conviction: that the fear of speaking is almost entirely curable, and that the most effective tools for curing it come not from business coaching, but from the performing arts.</p>
+    <p><em>"Transform your relationship with speaking."</em> That is the mission. Not to make you someone you are not. To give the person you already are a voice powerful enough to be heard.</p>
+    <a href="contact.html" class="btn-primary" style="margin-top:1rem;">Work with Karsten</a>
+  </div>
+</section>
+
+<!-- IN ACTION -->
+<section style="background:var(--midnight);padding:0 6% 80px;">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div style="position:relative;">
+      <img src="images/karsten-sligo-auditorium.jpg"
+           alt="Karsten Huttenhain on stage at the AbbVie Auditorium, Sligo — holding a full room"
+           style="width:100%;display:block;object-fit:cover;max-height:520px;object-position:center 30%;">
+      <div style="position:absolute;bottom:0;left:0;right:0;padding:1.6rem 2rem;
+                  background:linear-gradient(transparent,rgba(44,62,80,0.92));">
+        <p style="font-family:'Playfair Display',Georgia,serif;font-style:italic;
+                  font-size:1rem;color:rgba(255,255,255,0.8);margin:0;">
+          Holding a room — AbbVie Auditorium, Sligo
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BRAND PRINCIPLES -->
+<section class="brand-principles">
+  <div class="brand-principles-inner">
+    <div class="section-label">How we show up</div>
+    <div class="gold-divider"></div>
+    <h2>The Speaking Edge — in a room and on a page</h2>
+    <div class="principles-grid">
+      <div class="principle-card reveal">
+        <div class="principle-word">Authoritative</div>
+        <p>We know our craft inside out. We speak with conviction and we back it up with two decades of professional practice.</p>
+      </div>
+      <div class="principle-card reveal">
+        <div class="principle-word">Warm</div>
+        <p>We genuinely care about the people we work with. Technical rigour without warmth is just instruction. We work differently.</p>
+      </div>
+      <div class="principle-card reveal">
+        <div class="principle-word">Energetic</div>
+        <p>We bring aliveness into every session. Speaking is a physical, embodied act — and our coaching reflects that.</p>
+      </div>
+      <div class="principle-card reveal">
+        <div class="principle-word">Grounded</div>
+        <p>We are rooted in technique, not trends. The PERFORM framework is built on what actually works — in performance and in life.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CREDENTIALS -->
+<section class="credentials">
+  <div class="credentials-inner">
+    <div class="cred-group reveal">
+      <h4>Professional background</h4>
+      <ul class="cred-list">
+        <li>Nearly two decades of professional acting — theatre, TIE, film, TV and corporate productions</li>
+        <li>Science communicator — Edinburgh Science &amp; Generation Science</li>
+        <li>STEM workshop delivery in schools across Scotland</li>
+        <li>Corporate communication and presentation coaching</li>
+        <li>Founder, The Speaking Edge (speakingedgeglobal.com)</li>
+      </ul>
+    </div>
+    <div class="cred-group reveal">
+      <h4>The Speaking Edge delivers</h4>
+      <ul class="cred-list">
+        <li>The 8-week PERFORM Framework — online, group or 1:1</li>
+        <li>Interview preparation — 1:1, panel and group formats</li>
+        <li>Leadership communication programmes</li>
+        <li>Corporate workshops for teams and cohorts</li>
+        <li>Career progression and public speaking coaching</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>Let's have a conversation</h2>
+  <p>A free 20-minute discovery call to find out if The Speaking Edge is right for you.</p>
+  <a href="contact.html" class="btn-cta-white">Book a discovery call</a>
+  <p class="cta-sub">Edinburgh &amp; online. Worldwide delivery.</p>
+</section>
+
+<div id="tse-footer"></div>
+<script src="js/components.js"></script>
+<script src="js/tse.js"></script>
+</body>
+</html>
