@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="The PERFORM Framework — an 8-week speaking confidence programme grounded in professional acting technique. The Speaking Edge, Edinburgh.">
+<meta name="description" content="The Speaking Confidence Programme — six transformative modules addressing every barrier to confident professional speaking. The Speaking Edge, Edinburgh.">
 <title>The Programme — The Speaking Edge</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,68 +11,202 @@
 <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
 <link rel="stylesheet" href="css/tse.css">
 <style>
-/* ── PROGRAMME-SPECIFIC ── */
-.perform-full {
-  padding: 80px 6%; background: var(--midnight);
-}
-.module-list { max-width: 900px; margin: 0 auto; }
-.module-item {
-  display: grid; grid-template-columns: 80px 1fr; gap: 2.5rem;
-  padding: 3rem 0; border-bottom: 1px solid rgba(255,255,255,0.08);
-}
-.module-item:last-child { border-bottom: none; }
-.module-letter-wrap { text-align: center; padding-top: 0.4rem; }
-.module-letter {
+/* ── MODULE STRIP ── */
+.modules-section { background: var(--midnight); padding: 80px 0 100px; }
+.modules-header { text-align: center; max-width: 620px; margin: 0 auto 5rem; padding: 0 6%; }
+.modules-header h2 {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: 4.5rem; font-weight: 900; line-height: 1;
-  color: var(--vermillion); display: block;
+  font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 700;
+  color: var(--white); line-height: 1.15; margin-bottom: 1rem;
 }
-.module-item:nth-child(2) .module-letter,
-.module-item:nth-child(6) .module-letter { color: var(--gold); }
-.module-week {
-  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em;
-  text-transform: uppercase; color: rgba(255,255,255,0.3);
-  margin-top: 0.4rem; display: block;
+.modules-header p { font-size: 1rem; line-height: 1.7; color: rgba(255,255,255,0.6); }
+
+.module-strip { display: flex; width: 100%; min-height: 520px; }
+.module-panel {
+  flex: 1; position: relative; overflow: hidden;
+  cursor: pointer;
+  transition: flex 0.55s cubic-bezier(0.4,0,0.2,1);
+  border-right: 1px solid rgba(255,255,255,0.06);
 }
-.module-content h3 {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 1.6rem; font-weight: 700; color: var(--white);
-  margin-bottom: 0.3rem;
+.module-panel:last-child { border-right: none; }
+.module-panel.active { flex: 3.5; }
+.module-panel[data-mod="1"] { --mc: #C8392B; }
+.module-panel[data-mod="2"] { --mc: #E8A020; }
+.module-panel[data-mod="3"] { --mc: #4A7A8A; }
+.module-panel[data-mod="4"] { --mc: #C8392B; }
+.module-panel[data-mod="5"] { --mc: #E8A020; }
+.module-panel[data-mod="6"] { --mc: #FAF6F0; }
+
+.panel-accent {
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--mc); transform: scaleX(0); transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
 }
-.module-tag {
-  display: inline-block; font-size: 0.65rem; font-weight: 700;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--gold); background: rgba(232,160,32,0.12);
-  padding: 3px 10px; margin-bottom: 1rem;
-}
-.module-content p {
-  font-size: 0.96rem; line-height: 1.75; color: rgba(255,255,255,0.62);
-  margin-bottom: 1rem;
-}
-.module-outcomes {
-  list-style: none; display: flex; flex-direction: column; gap: 0.5rem;
-  margin-top: 1.2rem;
-}
-.module-outcomes li {
-  font-size: 0.85rem; color: rgba(255,255,255,0.75);
-  padding-left: 1.4rem; position: relative; font-weight: 600;
-}
-.module-outcomes li::before {
-  content: '—'; position: absolute; left: 0; color: var(--vermillion);
+.module-panel.active .panel-accent,
+.module-panel:hover .panel-accent { transform: scaleX(1); }
+
+.panel-inner {
+  position: relative; z-index: 2; height: 100%;
+  display: flex; flex-direction: column; padding: 2.4rem 2rem;
 }
 
-/* ACT method */
-.act-section {
-  padding: 100px 6%; background: var(--cream);
+/* Collapsed */
+.panel-collapsed {
+  display: flex; flex-direction: column; align-items: flex-start;
+  gap: 1.2rem; opacity: 1; transition: opacity 0.2s;
 }
+.module-panel.active .panel-collapsed { opacity: 0; pointer-events: none; }
+.panel-num {
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: rgba(255,255,255,0.3);
+}
+.panel-letters { display: flex; flex-direction: column; gap: 2px; }
+.panel-letters span {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.5rem; font-weight: 900; color: var(--mc);
+  line-height: 1; letter-spacing: -0.02em; transition: transform 0.2s;
+}
+.module-panel:hover .panel-letters span { transform: translateX(3px); }
+
+/* Expanded */
+.panel-expanded {
+  position: absolute; inset: 0; padding: 2.4rem 2.2rem;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s 0.15s;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.module-panel.active .panel-expanded { opacity: 1; pointer-events: all; }
+.exp-num {
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--mc); margin-bottom: 0.8rem;
+}
+.exp-acronym {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.8rem, 2.5vw, 2.6rem); font-weight: 900;
+  color: var(--white); line-height: 1; margin-bottom: 0.3rem; letter-spacing: -0.02em;
+}
+.exp-tm { font-size: 0.52rem; vertical-align: super; color: var(--mc); font-weight: 700; }
+.exp-theme {
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 1.4rem;
+}
+.exp-quote {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-style: italic; font-size: 1rem;
+  color: rgba(255,255,255,0.8); margin-bottom: 1.2rem; line-height: 1.45;
+}
+.exp-desc {
+  font-size: 0.87rem; line-height: 1.75;
+  color: rgba(255,255,255,0.55); margin-bottom: 1.4rem;
+}
+.exp-tag {
+  display: inline-block; background: rgba(255,255,255,0.05);
+  color: var(--mc); font-size: 0.66rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 5px 13px; border: 1px solid var(--mc); opacity: 0.8;
+}
+.exp-focus {
+  font-size: 0.73rem; color: rgba(255,255,255,0.28);
+  font-style: italic; line-height: 1.6;
+  border-top: 1px solid rgba(255,255,255,0.07); padding-top: 1.2rem; margin-top: auto;
+}
+
+/* Hint dots */
+.module-hint {
+  text-align: center; margin-top: 2rem; padding: 0 6%;
+  font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(255,255,255,0.2);
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+.hint-dots { display: flex; gap: 6px; }
+.hint-dots span {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: rgba(255,255,255,0.12); transition: background 0.3s;
+}
+.hint-dots span.on { background: var(--vermillion); }
+
+/* ── BARRIERS ── */
+.barriers-section { padding: 100px 6%; background: var(--cream); }
+.barriers-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center;
+}
+.barriers-text h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 700;
+  color: var(--midnight); line-height: 1.15; margin-bottom: 1.4rem;
+}
+.barriers-text p { font-size: 1rem; line-height: 1.8; color: var(--steel); margin-bottom: 1.2rem; }
+.barrier-list { display: flex; flex-direction: column; gap: 1px; }
+.barrier {
+  display: flex; gap: 1.4rem; align-items: flex-start;
+  padding: 1.4rem 1.8rem; background: var(--white);
+  border-left: 3px solid transparent; transition: all 0.2s;
+}
+.barrier:hover { border-left-color: var(--vermillion); }
+.b-num {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.6rem; font-weight: 900;
+  color: rgba(200,57,43,0.12); line-height: 1; flex-shrink: 0;
+  width: 28px; transition: color 0.2s;
+}
+.barrier:hover .b-num { color: var(--vermillion); }
+.b-text h4 {
+  font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--midnight); margin-bottom: 0.3rem;
+}
+.b-text p { font-size: 0.84rem; line-height: 1.6; color: var(--steel); margin: 0; }
+
+/* ── DELIVERY ── */
+.delivery-section { padding: 100px 6%; background: var(--midnight); }
+.delivery-header { text-align: center; max-width: 560px; margin: 0 auto 4rem; }
+.delivery-header h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2rem, 3.5vw, 2.6rem); font-weight: 700;
+  color: var(--white); line-height: 1.15; margin-bottom: 1rem;
+}
+.delivery-header p { font-size: 1rem; line-height: 1.7; color: rgba(255,255,255,0.6); }
+.dcards {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 2px; max-width: 1100px; margin: 0 auto;
+}
+.dcard {
+  background: rgba(255,255,255,0.04); padding: 2.8rem 2.2rem;
+  position: relative; transition: background 0.2s;
+}
+.dcard:hover { background: rgba(255,255,255,0.07); }
+.dcard::before {
+  content:''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+}
+.dcard.d1::before { background: var(--steel); }
+.dcard.d2::before { background: var(--vermillion); }
+.dcard.d3::before { background: var(--gold); }
+.dcard h3 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.4rem; font-weight: 700; color: var(--white); margin-bottom: 0.4rem;
+}
+.dcard-for {
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--steel); margin-bottom: 1.2rem; display: block;
+}
+.dcard p { font-size: 0.9rem; line-height: 1.7; color: rgba(255,255,255,0.5); margin-bottom: 1.2rem; }
+.dcard ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+.dcard ul li {
+  font-size: 0.84rem; color: rgba(255,255,255,0.7); font-weight: 600;
+  padding-left: 1.4rem; position: relative;
+}
+.dcard ul li::before { content:'—'; position: absolute; left: 0; color: var(--gold); }
+
+/* ── ACT METHOD ── */
+.act-section { padding: 100px 6%; background: var(--cream); }
 .act-inner {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 5rem;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 6rem;
   align-items: center; max-width: 1100px; margin: 0 auto;
 }
 .act-text h2 {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 700;
-  line-height: 1.15; margin-bottom: 1.4rem; color: var(--midnight);
+  font-size: clamp(2rem, 3.5vw, 2.6rem); font-weight: 700;
+  color: var(--midnight); line-height: 1.15; margin-bottom: 1.4rem;
 }
 .act-text p { font-size: 1rem; line-height: 1.75; color: var(--steel); margin-bottom: 1.2rem; }
 .act-pillars { display: flex; flex-direction: column; gap: 1px; }
@@ -82,66 +216,32 @@
   border-left: 3px solid transparent; transition: all 0.2s;
 }
 .act-pillar:hover { border-left-color: var(--gold); }
-.act-letter {
+.act-l {
   font-family: 'Playfair Display', Georgia, serif;
   font-size: 2.4rem; font-weight: 900; color: var(--gold);
   line-height: 1; flex-shrink: 0; width: 32px;
 }
-.act-content h4 {
+.act-c h4 {
   font-size: 0.82rem; font-weight: 700; letter-spacing: 0.1em;
   text-transform: uppercase; color: var(--midnight); margin-bottom: 0.4rem;
 }
-.act-content p { font-size: 0.9rem; line-height: 1.6; color: var(--steel); margin: 0; }
+.act-c p { font-size: 0.9rem; line-height: 1.6; color: var(--steel); margin: 0; }
 
-/* Delivery detail */
-.delivery-detail {
-  padding: 100px 6%; background: var(--ltsteel);
-}
-.delivery-detail-header { text-align: center; max-width: 580px; margin: 0 auto 4rem; }
-.delivery-detail-header h2 {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: clamp(2rem, 3.5vw, 2.6rem); font-weight: 700;
-  line-height: 1.15; margin-bottom: 1rem; color: var(--midnight);
-}
-.delivery-detail-header p { font-size: 1rem; line-height: 1.7; color: var(--steel); }
-.delivery-detail-cards {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; max-width: 1100px; margin: 0 auto;
-}
-.ddc {
-  background: var(--white); padding: 2.8rem 2.2rem;
-  position: relative;
-}
-.ddc::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
-}
-.ddc.online::before { background: var(--steel); }
-.ddc.workshop::before { background: var(--vermillion); }
-.ddc.coaching::before { background: var(--gold); }
-.ddc h3 {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 1.4rem; font-weight: 700; color: var(--midnight); margin-bottom: 0.4rem;
-}
-.ddc-ideal {
-  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--steel); margin-bottom: 1rem; display: block;
-}
-.ddc p { font-size: 0.9rem; line-height: 1.7; color: var(--steel); margin-bottom: 1.2rem; }
-.ddc ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
-.ddc ul li {
-  font-size: 0.84rem; color: var(--midnight); font-weight: 600;
-  padding-left: 1.4rem; position: relative;
-}
-.ddc ul li::before { content: '—'; position: absolute; left: 0; color: var(--gold); }
-
+/* ── RESPONSIVE ── */
 @media (max-width: 1024px) {
+  .module-strip { flex-direction: column; min-height: auto; }
+  .module-panel { flex: none !important; min-height: 72px; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .module-panel.active { min-height: 360px; }
+  .panel-collapsed { flex-direction: row; align-items: center; gap: 1rem; }
+  .panel-letters { flex-direction: row; gap: 0; }
+  .panel-letters span { font-size: 1.1rem; }
+  .barriers-inner { grid-template-columns: 1fr; gap: 3rem; }
+  .dcards { grid-template-columns: 1fr 1fr; }
   .act-inner { grid-template-columns: 1fr; gap: 3rem; }
-  .delivery-detail-cards { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 768px) {
-  .module-item { grid-template-columns: 60px 1fr; gap: 1.5rem; }
-  .module-letter { font-size: 3rem; }
-  .delivery-detail-cards { grid-template-columns: 1fr; }
-  .act-section, .delivery-detail { padding-left: 5%; padding-right: 5%; }
+  .dcards { grid-template-columns: 1fr; }
+  .barriers-section, .act-section, .delivery-section { padding-left: 5%; padding-right: 5%; }
 }
 </style>
 </head>
@@ -152,145 +252,257 @@
 <!-- PAGE HEADER -->
 <header class="page-header">
   <div class="page-header-eyebrow">The Speaking Confidence Programme</div>
-  <h1>The PERFORM <em>Framework</em></h1>
-  <p>Eight weeks of structured, performance-based coaching — building from the physical foundations of breath and voice to integrated mastery under live interview pressure.</p>
+  <h1>Six modules. <em>One transformation.</em></h1>
+  <p>Each module addresses a distinct barrier to confident professional speaking — with its own methodology, tools and exercises. Delivered sequentially as a full programme, or as standalone workshops.</p>
 </header>
 
-<!-- MODULES -->
-<section class="perform-full" id="framework">
-  <div class="module-list">
+<!-- MODULE INTERACTIVE STRIP -->
+<section class="modules-section">
+  <div class="modules-header">
+    <div class="section-label gold center">The programme</div>
+    <div class="gold-divider center"></div>
+    <h2>Select a module to explore</h2>
+    <p>Every barrier to confident speaking has a specific solution. Click any module to discover what it addresses — and what changes when you do.</p>
+  </div>
 
-    <div class="module-item reveal">
-      <div class="module-letter-wrap">
-        <span class="module-letter">P</span>
-        <span class="module-week">Week 1</span>
-      </div>
-      <div class="module-content">
-        <h3>Presence</h3>
-        <span class="module-tag">The GEM Method</span>
-        <p>Before you speak a single word, your body communicates. Presence teaches participants to inhabit their space with intention — grounded, expanded and moving with purpose. This is the visible manifestation of everything happening internally.</p>
-        <ul class="module-outcomes">
-          <li>Stand and move with physical authority</li>
-          <li>Use stillness as a tool rather than a symptom of fear</li>
-          <li>Make deliberate, purposeful gestural choices</li>
-          <li>Ground — posture, rooted stance, spine alignment</li>
-          <li>Expand — spatial ownership, eye contact as connection</li>
-          <li>Move — purposeful gesture, deliberate stillness</li>
-        </ul>
+  <div class="module-strip" id="moduleStrip">
+
+    <div class="module-panel active" data-mod="1">
+      <div class="panel-accent"></div>
+      <div class="panel-inner">
+        <div class="panel-collapsed">
+          <span class="panel-num">01</span>
+          <div class="panel-letters"><span>W</span><span>A</span><span>R</span><span>M</span><span>U</span><span>P</span></div>
+        </div>
+        <div class="panel-expanded">
+          <div>
+            <div class="exp-num">Module 01 — Introduction</div>
+            <div class="exp-acronym">W.A.R.M.U.P.<span class="exp-tm">™</span></div>
+            <div class="exp-theme">Comfortable with being uncomfortable</div>
+            <p class="exp-quote">"Before any real work begins, the room has to feel safe enough to take risks."</p>
+            <p class="exp-desc">The foundation of everything. This module creates the psychological conditions that make genuine learning possible — turning a room of nervous professionals into a group ready to do something difficult together.</p>
+            <span class="exp-tag">Psychological safety &amp; play</span>
+          </div>
+          <p class="exp-focus">Addresses: fear of vulnerability and judgement in group learning settings</p>
+        </div>
       </div>
     </div>
 
-    <div class="module-item reveal">
-      <div class="module-letter-wrap">
-        <span class="module-letter">E</span>
-        <span class="module-week">Week 2</span>
-      </div>
-      <div class="module-content">
-        <h3>Expression</h3>
-        <span class="module-tag">Voice as instrument</span>
-        <p>The voice is a physical instrument — shaped by the breath, amplified by resonant spaces, and formed by the articulators. Expression explores how to release, develop and vary the voice for maximum impact and authority.</p>
-        <ul class="module-outcomes">
-          <li>Connect lower breath to vocal output</li>
-          <li>Explore pitch, pace, resonance and projection</li>
-          <li>Understand the mechanics of voice production</li>
-          <li>Learn to look after the voice as a professional instrument</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="module-item reveal">
-      <div class="module-letter-wrap">
-        <span class="module-letter">R</span>
-        <span class="module-week">Week 3</span>
-      </div>
-      <div class="module-content">
-        <h3>Respiration</h3>
-        <span class="module-tag">The physical foundation</span>
-        <p>Without breath there is no voice. More than voice support, controlled diaphragmatic breathing is one of the most powerful tools for managing nerves and releasing physical tension. Fear tightens the stomach, raises the chest and constricts the voice. Relearning natural breath breaks this cycle at source.</p>
-        <ul class="module-outcomes">
-          <li>Understand how diaphragmatic breathing works</li>
-          <li>Reconnect with natural breath through physical exploration</li>
-          <li>Use breath as a daily calming and warm-up practice</li>
-          <li>Bridge breath to voice production</li>
-        </ul>
+    <div class="module-panel" data-mod="2">
+      <div class="panel-accent"></div>
+      <div class="panel-inner">
+        <div class="panel-collapsed">
+          <span class="panel-num">02</span>
+          <div class="panel-letters"><span>S</span><span>C</span><span>R</span><span>I</span><span>B</span><span>E</span></div>
+        </div>
+        <div class="panel-expanded">
+          <div>
+            <div class="exp-num">Module 02 — Story</div>
+            <div class="exp-acronym">S.C.R.I.B.E.<span class="exp-tm">™</span></div>
+            <div class="exp-theme">The art of storytelling</div>
+            <p class="exp-quote">"Facts inform. Stories persuade. The best speakers know the difference."</p>
+            <p class="exp-desc">Most professionals know what they want to say. Fewer know how to make it land. This module teaches the architecture of compelling narrative — from the opening hook to the close that drives action.</p>
+            <span class="exp-tag">Narrative &amp; structure</span>
+          </div>
+          <p class="exp-focus">Addresses: inability to craft and deliver messages that stick</p>
+        </div>
       </div>
     </div>
 
-    <div class="module-item reveal">
-      <div class="module-letter-wrap">
-        <span class="module-letter">F</span>
-        <span class="module-week">Week 4</span>
-      </div>
-      <div class="module-content">
-        <h3>Formal Writing</h3>
-        <span class="module-tag">Confidence on the page</span>
-        <p>Confidence in the room means nothing if your written communication lets you down at the door. True to the TSE methodology, this module treats written communication as a performance skill. A CV is a curated story; a cover letter is a pitch.</p>
-        <ul class="module-outcomes">
-          <li>Write a compelling, targeted CV with clarity and impact</li>
-          <li>Craft a cover letter that tells a story and connects to the role</li>
-          <li>Communicate professionally via email in any workplace scenario</li>
-          <li>Understand tone, register and formality in written business English</li>
-          <li>Write a professional bio or LinkedIn summary</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="module-item reveal">
-      <div class="module-letter-wrap">
-        <span class="module-letter">O</span>
-        <span class="module-week">Week 5</span>
-      </div>
-      <div class="module-content">
-        <h3>Ownership</h3>
-        <span class="module-tag">Mindset &amp; story</span>
-        <p>Ownership is the pivot point of the programme — the shift from technique to truth. You cannot own your story if you cannot own the room; you cannot command silence if you have not found the words worth saying. This expanded module brings together mindset and story as two sides of the same coin.</p>
-        <ul class="module-outcomes">
-          <li>Use pause and silence with intention and confidence</li>
-          <li>Develop pre-performance mental preparation rituals</li>
-          <li>Understand and manage the fight-or-flight response</li>
-          <li>Find the stories that define your professional identity</li>
-          <li>Structure a narrative for maximum engagement and clarity</li>
-          <li>Deliver personal stories with appropriate vulnerability and confidence</li>
-        </ul>
+    <div class="module-panel" data-mod="3">
+      <div class="panel-accent"></div>
+      <div class="panel-inner">
+        <div class="panel-collapsed">
+          <span class="panel-num">03</span>
+          <div class="panel-letters"><span>P</span><span>H</span><span>Y</span><span>S</span><span>C</span><span>L</span></div>
+        </div>
+        <div class="panel-expanded">
+          <div>
+            <div class="exp-num">Module 03 — Body</div>
+            <div class="exp-acronym">P.H.Y.S.C.L.<span class="exp-tm">™</span></div>
+            <div class="exp-theme">Connecting with the body as a communication tool</div>
+            <p class="exp-quote">"Most professionals speak from the neck up. This module brings the whole body into the room."</p>
+            <p class="exp-desc">Before a word is spoken, the body has already communicated. Posture, gesture, stillness, eye contact — each a deliberate instrument of authority. This module teaches professionals to use them intentionally.</p>
+            <span class="exp-tag">Presence &amp; physicality</span>
+          </div>
+          <p class="exp-focus">Addresses: disconnection from the body as a communication instrument</p>
+        </div>
       </div>
     </div>
 
-    <div class="module-item reveal">
-      <div class="module-letter-wrap">
-        <span class="module-letter">R</span>
-        <span class="module-week">Week 6</span>
-      </div>
-      <div class="module-content">
-        <h3>Relationship</h3>
-        <span class="module-tag">Audience connection</span>
-        <p>Speaking is not a performance to an audience — it is a conversation with one. Relationship explores how to read a room, adapt in the moment, and build trust with any group of listeners. Speaker credibility comes from connection, not performance.</p>
-        <ul class="module-outcomes">
-          <li>Develop genuine audience awareness and empathy</li>
-          <li>Adapt tone, pace and content to different contexts</li>
-          <li>Handle questions, challenges and unexpected moments with composure</li>
-          <li>Build speaker credibility through connection</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="module-item reveal">
-      <div class="module-letter-wrap">
-        <span class="module-letter">M</span>
-        <span class="module-week">Weeks 7–8</span>
-      </div>
-      <div class="module-content">
-        <h3>Mastery</h3>
-        <span class="module-tag">Live mock interviews</span>
-        <p>Mastery is not a showcase — it is a test. Participants put every element of the programme under real pressure through a structured series of live mock interviews in progressively challenging formats. Mastery is not perfection; it is the capacity to perform confidently under pressure, recover from mistakes, and continue growing.</p>
-        <ul class="module-outcomes">
-          <li>Week 7 — 1:1 mock interviews: competency-based, behavioural (STAR), values-led</li>
-          <li>Week 8 — Panel &amp; group interview formats; peer feedback</li>
-          <li>Handle unexpected questions with composure and structure</li>
-          <li>Leave with a polished CV, cover letter and personal development plan</li>
-        </ul>
+    <div class="module-panel" data-mod="4">
+      <div class="panel-accent"></div>
+      <div class="panel-inner">
+        <div class="panel-collapsed">
+          <span class="panel-num">04</span>
+          <div class="panel-letters"><span>V</span><span>O</span><span>I</span><span>C</span><span>E</span><span>S</span></div>
+        </div>
+        <div class="panel-expanded">
+          <div>
+            <div class="exp-num">Module 04 — Voice</div>
+            <div class="exp-acronym">V.O.I.C.E.S.<span class="exp-tm">™</span></div>
+            <div class="exp-theme">Developing vocal delivery and control</div>
+            <p class="exp-quote">"The voice is the primary instrument of professional communication. Most people have never been taught to play it."</p>
+            <p class="exp-desc">Pace, pitch, resonance, silence — the elements of a voice that commands attention rather than simply filling space. This module treats the voice as the instrument it is.</p>
+            <span class="exp-tag">Vocal technique &amp; control</span>
+          </div>
+          <p class="exp-focus">Addresses: underdeveloped and uncontrolled vocal delivery</p>
+        </div>
       </div>
     </div>
 
+    <div class="module-panel" data-mod="5">
+      <div class="panel-accent"></div>
+      <div class="panel-inner">
+        <div class="panel-collapsed">
+          <span class="panel-num">05</span>
+          <div class="panel-letters"><span>R</span><span>A</span><span>I</span><span>N</span><span>B</span><span>O</span><span>W</span><span>S</span></div>
+        </div>
+        <div class="panel-expanded">
+          <div>
+            <div class="exp-num">Module 05 — Mind</div>
+            <div class="exp-acronym">R.A.I.N.B.O.W.S.<span class="exp-tm">™</span></div>
+            <div class="exp-theme">Managing fear and building a growth mindset</div>
+            <p class="exp-quote">"Fear of speaking is not a personality trait. It is a physical response — and it can be retrained."</p>
+            <p class="exp-desc">The most common barrier to speaking confidence is psychological. This module addresses the fear response at its source — building the internal conditions for calm, focused performance under pressure.</p>
+            <span class="exp-tag">Mindset &amp; fear management</span>
+          </div>
+          <p class="exp-focus">Addresses: unmanaged fear and a fixed mindset around speaking</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="module-panel" data-mod="6">
+      <div class="panel-accent"></div>
+      <div class="panel-inner">
+        <div class="panel-collapsed">
+          <span class="panel-num">06</span>
+          <div class="panel-letters"><span>I</span><span>M</span><span>P</span><span>A</span><span>C</span><span>T</span></div>
+        </div>
+        <div class="panel-expanded">
+          <div>
+            <div class="exp-num">Module 06 — Delivery</div>
+            <div class="exp-acronym">I.M.P.A.C.T. T.H.E.M.<span class="exp-tm">™</span></div>
+            <div class="exp-theme">Delivery mastery — integrating all skills</div>
+            <p class="exp-quote">"Skills developed in isolation collapse under pressure. This is where everything becomes fluent."</p>
+            <p class="exp-desc">The capstone. Voice, story, mind and body — brought together under real performance conditions. Participants deliver, receive structured feedback, and leave with a personal development plan for what comes next.</p>
+            <span class="exp-tag">Integration &amp; performance</span>
+          </div>
+          <p class="exp-focus">Addresses: inability to integrate skills and perform under real conditions</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="module-hint">
+    <span>Explore each module</span>
+    <div class="hint-dots" id="hintDots">
+      <span class="on"></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+  </div>
+</section>
+
+<!-- SIX BARRIERS -->
+<section class="barriers-section">
+  <div class="barriers-inner">
+    <div class="barriers-text reveal">
+      <div class="section-label">Six barriers. Six solutions.</div>
+      <div class="gold-divider"></div>
+      <h2>Every module solves a specific problem</h2>
+      <p>The Speaking Confidence Programme was built by identifying the six most consistent barriers to confident professional speaking — then designing a precise solution for each one.</p>
+      <p>Nothing is generic. Nothing is filler. Each module addresses exactly what it says it does.</p>
+      <a href="contact.html" class="btn-primary" style="margin-top:1.4rem;">Book a discovery call</a>
+    </div>
+    <div class="barrier-list">
+      <div class="barrier reveal">
+        <div class="b-num">01</div>
+        <div class="b-text">
+          <h4>Psychological unsafety</h4>
+          <p>The fear of being judged, exposed or embarrassed — solved before anything else begins.</p>
+        </div>
+      </div>
+      <div class="barrier reveal">
+        <div class="b-num">02</div>
+        <div class="b-text">
+          <h4>Weak storytelling</h4>
+          <p>Messages that don't land, don't persuade and aren't remembered — rebuilt from the ground up.</p>
+        </div>
+      </div>
+      <div class="barrier reveal">
+        <div class="b-num">03</div>
+        <div class="b-text">
+          <h4>Disconnected physicality</h4>
+          <p>A body that undermines what the voice is saying — brought back into alignment.</p>
+        </div>
+      </div>
+      <div class="barrier reveal">
+        <div class="b-num">04</div>
+        <div class="b-text">
+          <h4>Undeveloped voice</h4>
+          <p>A voice that fills space but doesn't command it — trained as the instrument it is.</p>
+        </div>
+      </div>
+      <div class="barrier reveal">
+        <div class="b-num">05</div>
+        <div class="b-text">
+          <h4>Unmanaged fear</h4>
+          <p>Anxiety that produces a diminished version of the speaker — addressed at its physical source.</p>
+        </div>
+      </div>
+      <div class="barrier reveal">
+        <div class="b-num">06</div>
+        <div class="b-text">
+          <h4>Skills that don't transfer</h4>
+          <p>Techniques that work in practice but collapse under pressure — integrated until they're fluent.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DELIVERY -->
+<section class="delivery-section">
+  <div class="delivery-header">
+    <div class="section-label gold center">How we work</div>
+    <div class="gold-divider center"></div>
+    <h2>Three ways to experience the programme</h2>
+    <p>Formats can be combined or offered independently. Each delivers the full methodology — adapted for context and scale.</p>
+  </div>
+  <div class="dcards">
+    <div class="dcard d1 reveal">
+      <h3>Online Course</h3>
+      <span class="dcard-for">Best for — independent learners</span>
+      <p>Self-paced video modules with exercises, a reflective workbook and email support. Work through all six modules on your own schedule, anywhere in the world.</p>
+      <ul>
+        <li>All six modules — full methodology</li>
+        <li>Downloadable exercise workbook</li>
+        <li>Reflection journal prompts</li>
+        <li>Email coaching support throughout</li>
+      </ul>
+    </div>
+    <div class="dcard d2 reveal">
+      <h3>Live Workshops</h3>
+      <span class="dcard-for">Best for — teams &amp; cohorts</span>
+      <p>Group experiential sessions with real-time coaching and peer practice. In-person in Edinburgh and Scotland, or online worldwide.</p>
+      <ul>
+        <li>Cohort of 6–15 participants</li>
+        <li>In-person or online delivery</li>
+        <li>Corporate and institutional clients</li>
+        <li>Tailored to sector and audience</li>
+      </ul>
+    </div>
+    <div class="dcard d3 reveal">
+      <h3>1:1 Coaching</h3>
+      <span class="dcard-for">Best for — individual goals</span>
+      <p>Fully bespoke sessions tailored to your specific goals, context and career stage. The most targeted and intensive format.</p>
+      <ul>
+        <li>Executives and senior leaders</li>
+        <li>High-stakes presentations</li>
+        <li>Interview preparation</li>
+        <li>Career transition and progression</li>
+      </ul>
+    </div>
   </div>
 </section>
 
@@ -298,99 +510,83 @@
 <section class="act-section">
   <div class="act-inner">
     <div class="act-img reveal" style="position:relative;">
-      <img src="images/karsten-speaking.jpg" alt="Karsten Huttenhain coaching — speaking with presence and authority" style="width:100%;display:block;object-fit:cover;object-position:center top;max-height:520px;">
-      <div style="position:absolute;top:-10px;left:-10px;right:10px;bottom:10px;border:2px solid var(--gold);z-index:-1;pointer-events:none;"></div>
+      <img src="images/karsten-speaking.jpg"
+           alt="Karsten Huttenhain — speaking with presence and authority"
+           style="width:100%;display:block;object-fit:cover;object-position:center top;max-height:520px;">
+      <div style="position:absolute;top:-10px;left:-10px;right:10px;bottom:10px;
+                  border:2px solid var(--gold);z-index:-1;pointer-events:none;"></div>
     </div>
     <div class="act-text reveal">
       <div class="section-label">Underpinning methodology</div>
       <div class="gold-divider"></div>
       <h2>The ACT Method</h2>
-      <p>The Speaking Edge is grounded in the ACT Method — three pillars that distinguish this programme from conventional presentation coaching. Where most coaches work on content and delivery, we work on the instrument: the body, the breath, and the self.</p>
-    </div>
-    <div class="act-pillars">
-      <div class="act-pillar reveal">
-        <div class="act-letter">A</div>
-        <div class="act-content">
-          <h4>Acting Technique</h4>
-          <p>Professional performance training applied to everyday speaking — using the body, breath, voice and imagination as tools for confident expression.</p>
+      <p>Every module is built on the same three-pillar methodology — the thing that distinguishes this work from conventional presentation coaching.</p>
+      <p>Where most coaches work on content and slides, we work on the instrument: the body, the breath, and the self.</p>
+      <div class="act-pillars">
+        <div class="act-pillar">
+          <div class="act-l">A</div>
+          <div class="act-c">
+            <h4>Acting Technique</h4>
+            <p>Professional performance training applied to professional speaking — the body, breath and voice as tools for confident expression.</p>
+          </div>
+        </div>
+        <div class="act-pillar">
+          <div class="act-l">C</div>
+          <div class="act-c">
+            <h4>Communication</h4>
+            <p>The craft of clarity — structuring messages for impact, telling stories that connect, choosing words that serve the listener.</p>
+          </div>
+        </div>
+        <div class="act-pillar">
+          <div class="act-l">T</div>
+          <div class="act-c">
+            <h4>Transformation</h4>
+            <p>The lasting shift — from someone who fears speaking to someone who uses it as a professional advantage.</p>
+          </div>
         </div>
       </div>
-      <div class="act-pillar reveal">
-        <div class="act-letter">C</div>
-        <div class="act-content">
-          <h4>Communication</h4>
-          <p>The craft of clarity — structuring messages for impact, telling stories that connect, and choosing words and delivery that serve the listener.</p>
-        </div>
-      </div>
-      <div class="act-pillar reveal">
-        <div class="act-letter">T</div>
-        <div class="act-content">
-          <h4>Transformation</h4>
-          <p>The lasting shift in self-perception — from someone who fears speaking to someone who uses it as a professional advantage.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- DELIVERY DETAIL -->
-<section class="delivery-detail" id="online">
-  <div class="delivery-detail-header">
-    <div class="section-label center">Delivery formats</div>
-    <div class="gold-divider center"></div>
-    <h2>Three ways to experience the programme</h2>
-    <p>Choose the format that fits your goals, schedule and context. Formats can also be combined.</p>
-  </div>
-  <div class="delivery-detail-cards">
-    <div class="ddc online reveal" id="online">
-      <h3>Online Course</h3>
-      <span class="ddc-ideal">Best for — independent learners</span>
-      <p>Self-paced video modules with exercises, a reflective workbook and email support. Work through the full PERFORM framework on your own schedule, anywhere in the world.</p>
-      <ul>
-        <li>Full 8-module video content</li>
-        <li>Downloadable exercise workbook</li>
-        <li>Reflection journal prompts</li>
-        <li>CV &amp; cover letter templates</li>
-        <li>Email coaching support throughout</li>
-      </ul>
-    </div>
-    <div class="ddc workshop reveal" id="workshops">
-      <h3>Live Workshops</h3>
-      <span class="ddc-ideal">Best for — teams &amp; cohorts</span>
-      <p>Group experiential sessions with real-time coaching and peer practice. Available in-person in Edinburgh and Scotland, or online for any location.</p>
-      <ul>
-        <li>Cohort of 6–12 participants</li>
-        <li>In-person or online delivery</li>
-        <li>Corporate and institutional clients</li>
-        <li>Leadership development programmes</li>
-        <li>Tailored to sector and audience</li>
-      </ul>
-    </div>
-    <div class="ddc coaching reveal" id="coaching">
-      <h3>1:1 Coaching</h3>
-      <span class="ddc-ideal">Best for — individual goals</span>
-      <p>Fully bespoke individual sessions tailored to your specific goals, context and career stage. The highest-intensity, most targeted format.</p>
-      <ul>
-        <li>Executives and senior leaders</li>
-        <li>Career changers and returners</li>
-        <li>High-stakes presentations</li>
-        <li>Interview preparation</li>
-        <li>Online or in-person, Edinburgh</li>
-      </ul>
     </div>
   </div>
 </section>
 
 <!-- CTA -->
 <section class="cta-section">
-  <h2>Sounds like what you need?</h2>
-  <p>Book a free discovery call and we'll work out which format is right for you.</p>
+  <h2>Ready to find your speaking edge?</h2>
+  <p>Book a free 20-minute discovery call. We'll talk through which format fits your goals and context.</p>
   <a href="contact.html" class="btn-cta-white">Book a discovery call</a>
-  <p class="cta-sub">Free, 20 minutes, no obligation.</p>
+  <p class="cta-sub">Free. No obligation. No script.</p>
 </section>
 
 <div id="tse-footer"></div>
 <script src="js/components.js"></script>
 <script src="js/tse.js"></script>
+<script>
+var panels = document.querySelectorAll('.module-panel');
+var dots = document.querySelectorAll('#hintDots span');
+var activeIdx = 0;
+var autoCycle;
+
+function activate(idx) {
+  panels.forEach(function(p) { p.classList.remove('active'); });
+  dots.forEach(function(d) { d.classList.remove('on'); });
+  panels[idx].classList.add('active');
+  if (dots[idx]) dots[idx].classList.add('on');
+  activeIdx = idx;
+}
+
+panels.forEach(function(panel, i) {
+  panel.addEventListener('click', function() {
+    clearInterval(autoCycle);
+    activate(i);
+  });
+});
+
+// Gentle auto-cycle on load to hint interactivity
+autoCycle = setInterval(function() {
+  var next = (activeIdx + 1) % panels.length;
+  activate(next);
+  if (next === panels.length - 1) clearInterval(autoCycle);
+}, 2000);
+</script>
 </body>
 </html>
