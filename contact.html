@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Contact The Speaking Edge — book a free discovery call with Karsten Huttenhain. Edinburgh-based speaking confidence coaching, available online worldwide.">
+<title>Contact — The Speaking Edge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<link rel="stylesheet" href="css/tse.css">
+<style>
+/* ── CONTACT-SPECIFIC ── */
+.contact-main {
+  padding: 80px 6% 100px;
+  background: var(--cream);
+  display: grid; grid-template-columns: 1fr 1.2fr; gap: 7rem;
+  align-items: start;
+}
+.contact-info h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 700;
+  color: var(--midnight); line-height: 1.2; margin-bottom: 1.2rem;
+}
+.contact-info > p {
+  font-size: 1rem; line-height: 1.75; color: var(--steel); margin-bottom: 2.5rem;
+}
+.contact-details { display: flex; flex-direction: column; gap: 1.2rem; margin-bottom: 3rem; }
+.contact-detail { display: flex; gap: 1rem; align-items: flex-start; }
+.contact-detail-icon {
+  width: 42px; height: 42px; background: var(--midnight);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.contact-detail-text { display: flex; flex-direction: column; }
+.contact-detail-label {
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--steel); margin-bottom: 2px;
+}
+.contact-detail-value {
+  font-size: 0.95rem; font-weight: 600; color: var(--midnight);
+}
+.contact-detail-value a {
+  color: var(--midnight); text-decoration: none; transition: color 0.2s;
+}
+.contact-detail-value a:hover { color: var(--vermillion); }
+
+/* What to expect */
+.expect-block {
+  background: var(--white); padding: 2rem;
+  border-left: 4px solid var(--gold);
+}
+.expect-block h4 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.1rem; font-weight: 700; color: var(--midnight);
+  margin-bottom: 1rem;
+}
+.expect-block ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+.expect-block ul li {
+  font-size: 0.88rem; color: var(--steel); line-height: 1.5;
+  padding-left: 1.4rem; position: relative;
+}
+.expect-block ul li::before {
+  content: '—'; position: absolute; left: 0; color: var(--gold); font-weight: 700;
+}
+
+/* Form */
+.contact-form-area {}
+.form-intro {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.2rem; font-style: italic; color: var(--midnight);
+  margin-bottom: 2rem; line-height: 1.5;
+}
+.contact-form { display: flex; flex-direction: column; gap: 1.1rem; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-group label {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--steel);
+}
+.form-group input,
+.form-group select,
+.form-group textarea {
+  background: var(--white); border: 1.5px solid var(--ltsteel);
+  padding: 12px 14px; font-size: 0.9rem;
+  font-family: 'Source Sans 3', Arial, sans-serif;
+  color: var(--midnight); outline: none;
+  transition: border-color 0.2s; border-radius: 0;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus { border-color: var(--vermillion); }
+.form-group textarea { resize: vertical; min-height: 130px; }
+.form-note {
+  font-size: 0.78rem; color: var(--steel); line-height: 1.6;
+}
+.form-submit {
+  background: var(--vermillion); color: #fff;
+  border: none; padding: 15px 32px;
+  font-size: 0.9rem; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; cursor: pointer;
+  font-family: 'Source Sans 3', Arial, sans-serif;
+  transition: background 0.2s; width: 100%;
+}
+.form-submit:hover { background: var(--vermillion-dark); }
+.form-submit:disabled { background: var(--midnight); cursor: default; }
+
+/* Success message */
+.form-success {
+  display: none; background: var(--midnight); color: var(--white);
+  padding: 2.5rem; text-align: center;
+}
+.form-success h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem; font-weight: 700; margin-bottom: 0.8rem;
+}
+.form-success p { font-size: 0.95rem; color: rgba(255,255,255,0.7); line-height: 1.7; }
+
+@media (max-width: 1024px) {
+  .contact-main { grid-template-columns: 1fr; gap: 4rem; }
+}
+@media (max-width: 768px) {
+  .contact-main { padding-left: 5%; padding-right: 5%; }
+  .form-row { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div id="tse-nav"></div>
+
+<!-- PAGE HEADER -->
+<header class="page-header">
+  <div class="page-header-eyebrow">The Speaking Edge</div>
+  <h1>Let's have a <em>conversation</em></h1>
+  <p>Whether you're preparing for a career-defining interview, developing leadership communication, or exploring a workshop for your team — get in touch. The first conversation is always free.</p>
+</header>
+
+<!-- CONTACT MAIN -->
+<section class="contact-main">
+
+  <!-- Left: info -->
+  <div class="contact-info reveal">
+    <div class="section-label">How to reach us</div>
+    <div class="gold-divider"></div>
+    <h2>Book a free discovery call</h2>
+    <p>A 20-minute call to understand what you need, talk through the right format, and answer any questions. No obligation. No hard sell. Just a conversation.</p>
+
+    <div class="contact-details">
+      <div class="contact-detail">
+        <div class="contact-detail-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M3 4h14a1 1 0 011 1v10a1 1 0 01-1 1H3a1 1 0 01-1-1V5a1 1 0 011-1z" stroke="#FAF6F0" stroke-width="1.5" fill="none"/>
+            <path d="M2 5l8 7 8-7" stroke="#C8392B" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="contact-detail-text">
+          <span class="contact-detail-label">Email</span>
+          <span class="contact-detail-value"><a href="/cdn-cgi/l/email-protection#51222134303a383f367f343536347f363d3e33303d11363c30383d7f323e3c"><span class="__cf_email__" data-cfemail="7201021713191b1c155c171615175c151e1d10131e32151f131b1e5c111d1f">[email&#160;protected]</span></a></span>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M10 2C7.2 2 5 4.2 5 7c0 4 5 11 5 11s5-7 5-11c0-2.8-2.2-5-5-5z" stroke="#FAF6F0" stroke-width="1.5" fill="none"/>
+            <circle cx="10" cy="7" r="2" stroke="#C8392B" stroke-width="1.4" fill="none"/>
+          </svg>
+        </div>
+        <div class="contact-detail-text">
+          <span class="contact-detail-label">Location</span>
+          <span class="contact-detail-value">Edinburgh, Scotland</span>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <circle cx="10" cy="10" r="8" stroke="#FAF6F0" stroke-width="1.5" fill="none"/>
+            <path d="M10 6v4l3 2" stroke="#C8392B" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="contact-detail-text">
+          <span class="contact-detail-label">Response time</span>
+          <span class="contact-detail-value">Within one working day</span>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <rect x="2" y="3" width="16" height="14" rx="2" stroke="#FAF6F0" stroke-width="1.5" fill="none"/>
+            <path d="M6 3v3M14 3v3M2 9h16" stroke="#C8392B" stroke-width="1.4"/>
+          </svg>
+        </div>
+        <div class="contact-detail-text">
+          <span class="contact-detail-label">Delivery</span>
+          <span class="contact-detail-value">Online worldwide &middot; In-person Edinburgh &amp; Scotland</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="expect-block">
+      <h4>What happens on a discovery call</h4>
+      <ul>
+        <li>We talk about your current speaking challenges</li>
+        <li>We identify which format and pathway is the right fit</li>
+        <li>You ask any questions about the programme</li>
+        <li>If it's a good match, we agree next steps</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Right: form -->
+  <div class="contact-form-area reveal">
+    <p class="form-intro">Tell me a little about what you need and I'll be in touch within one working day.</p>
+    <form class="contact-form" id="contact-form" name="tse-enquiry" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="tse-enquiry">
+      <p style="display:none;"><label>Don't fill this out: <input name="bot-field"></label></p>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="fname">First name</label>
+          <input type="text" id="fname" name="fname" placeholder="Your first name" required>
+        </div>
+        <div class="form-group">
+          <label for="lname">Last name</label>
+          <input type="text" id="lname" name="lname" placeholder="Your last name">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input type="email" id="email" name="email" placeholder="you@company.com" required>
+      </div>
+      <div class="form-group">
+        <label for="org">Organisation (optional)</label>
+        <input type="text" id="org" name="org" placeholder="Company, institution or individual">
+      </div>
+      <div class="form-group">
+        <label for="interest">I'm interested in</label>
+        <select id="interest" name="interest">
+          <option value="">— Select an option —</option>
+          <option>1:1 Coaching (individual)</option>
+          <option>Live Workshop (team / corporate)</option>
+          <option>Online Course</option>
+          <option>Interview Preparation</option>
+          <option>Leadership Communication</option>
+          <option>A discovery call to explore options</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="message">What's the speaking challenge you're trying to solve?</label>
+        <textarea id="message" name="message" placeholder="The more specific you can be, the more useful our first conversation will be…"></textarea>
+      </div>
+      <p class="form-note">Your details are used only to respond to your enquiry. They are never shared with third parties.</p>
+      <button type="submit" class="form-submit">Send enquiry</button>
+    </form>
+    <div class="form-success" id="form-success">
+      <h3>Enquiry received — thank you.</h3>
+      <p>I'll be in touch within one working day. In the meantime, feel free to explore <a href="programme.html" style="color:var(--gold);">the programme</a> in more detail.</p>
+    </div>
+  </div>
+
+</section>
+
+<div id="tse-footer"></div>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/components.js"></script>
+<script src="js/tse.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var form = document.getElementById('contact-form');

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Thank you for getting in touch with The Speaking Edge.">
+<title>Thank you — The Speaking Edge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<link rel="stylesheet" href="css/tse.css">
+<style>
+.thankyou-section {
+  min-height: 80vh;
+  background: var(--midnight);
+  display: flex; align-items: center; justify-content: center;
+  padding: 120px 6% 80px; text-align: center;
+}
+.thankyou-inner { max-width: 580px; }
+.thankyou-icon {
+  width: 64px; height: 64px; margin: 0 auto 2rem;
+  background: var(--vermillion); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+.thankyou-inner h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2rem, 4vw, 3rem); font-weight: 700;
+  color: var(--white); line-height: 1.15; margin-bottom: 1.2rem;
+}
+.thankyou-inner h1 em { font-style: italic; color: var(--vermillion); }
+.thankyou-inner p {
+  font-size: 1.1rem; line-height: 1.75;
+  color: rgba(255,255,255,0.65); margin-bottom: 1rem;
+}
+.thankyou-quote {
+  margin: 2.5rem auto;
+  padding: 1.4rem 2rem;
+  border-left: 3px solid var(--vermillion);
+  text-align: left; max-width: 420px;
+}
+.thankyou-quote p {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-style: italic; font-size: 1.1rem;
+  color: rgba(255,255,255,0.8); line-height: 1.5;
+  margin: 0;
+}
+.thankyou-actions {
+  display: flex; gap: 1rem; justify-content: center;
+  flex-wrap: wrap; margin-top: 2.5rem;
+}
+</style>
+</head>
+<body>
+
+<div id="tse-nav"></div>
+
+<section class="thankyou-section">
+  <div class="thankyou-inner">
+    <div class="thankyou-icon">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <path d="M5 14l7 7 11-11" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <h1>Enquiry <em>received</em></h1>
+    <p>Thank you for getting in touch. I'll be back to you within one working day.</p>
+    <p>In the meantime, take a look at the full programme if you haven't already.</p>
+    <div class="thankyou-quote">
+      <p>Fear is physical — so control the body to reduce the fear.</p>
+    </div>
+    <div class="thankyou-actions">
+      <a href="programme.html" class="btn-primary">Explore the programme</a>
+      <a href="index.html" class="btn-outline">Back to home</a>
+    </div>
+  </div>
+</section>
+
+<div id="tse-footer"></div>
+<script src="js/components.js"></script>
+<script src="js/tse.js"></script>
+</body>
+</html>
