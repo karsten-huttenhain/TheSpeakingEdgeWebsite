@@ -41,16 +41,6 @@ document.addEventListener('DOMContentLoaded', function () {
     reveals.forEach(function (el) { observer.observe(el); });
   }
 
-  /* ── Contact form ── */
-  const form = document.getElementById('contact-form');
-  if (form) {
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      const btn = form.querySelector('.form-submit');
-      btn.textContent = 'Enquiry sent — thank you';
-      btn.style.background = '#2C3E50';
-      btn.disabled = true;
-    });
-  }
+  /* ── Contact form — let Netlify handle submission natively ── */
 
 });
