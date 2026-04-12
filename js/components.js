@@ -56,7 +56,7 @@ const TSE_FOOTER = `
     <div class="footer-col">
       <h5>Programme</h5>
       <ul>
-        <li><a href="programme.html">The PERFORM Framework</a></li>
+        <li><a href="programme.html">The Speaking Confidence Programme</a></li>
         <li><a href="programme.html#online">Online Course</a></li>
         <li><a href="programme.html#workshops">Live Workshops</a></li>
         <li><a href="programme.html#coaching">1:1 Coaching</a></li>
@@ -68,7 +68,7 @@ const TSE_FOOTER = `
         <li><a href="contact.html">Send an enquiry</a></li>
         <li><a href="contact.html">Book a discovery call</a></li>
         <li><a href="about.html">About Karsten</a></li>
-        <li><a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://www.linkedin.com/in/karsten-huttenhain/" target="_blank" rel="noopener">LinkedIn</a></li>
       </ul>
     </div>
   </div>
