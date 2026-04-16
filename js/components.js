@@ -8,7 +8,7 @@ const TSE_LOGO_SVG = `
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 300" width="220" height="44" aria-label="The Speaking Edge">
   <defs>
     <style>
-      .nb { transform-origin: center 150px; animation: npulse 1.4s ease-in-out 2 forwards; }
+      .nb { transform-origin: center 150px; animation: npulse 1.4s ease-in-out 2 both; animation-delay: 3s; }
       .nb0  { animation-delay:3.00s; animation-duration:1.6s; }
       .nb1  { animation-delay:0.08s; animation-duration:1.5s; }
       .nb2  { animation-delay:0.16s; animation-duration:1.7s; }
