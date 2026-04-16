@@ -8,30 +8,30 @@ const TSE_LOGO_SVG = `
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 300" width="220" height="44" aria-label="The Speaking Edge">
   <defs>
     <style>
-      .nb { transform-origin: center 150px; animation: npulse 1.4s ease-in-out 2 both; animation-delay: 3s; }
-      .nb0  { animation-delay:0.00s; animation-duration:1.6s; }
-      .nb1  { animation-delay:0.08s; animation-duration:1.5s; }
-      .nb2  { animation-delay:0.16s; animation-duration:1.7s; }
-      .nb3  { animation-delay:0.24s; animation-duration:1.4s; }
-      .nb4  { animation-delay:0.32s; animation-duration:1.6s; }
-      .nb5  { animation-delay:0.05s; animation-duration:1.3s; }
-      .nb6  { animation-delay:0.40s; animation-duration:1.5s; }
-      .nb7  { animation-delay:0.12s; animation-duration:1.8s; }
-      .nb8  { animation-delay:0.48s; animation-duration:1.4s; }
-      .nb9  { animation-delay:0.20s; animation-duration:1.6s; }
-      .nb10 { animation-delay:0.56s; animation-duration:1.5s; }
-      .nb11 { animation-delay:0.28s; animation-duration:1.3s; }
-      .nb12 { animation-delay:0.64s; animation-duration:1.7s; }
-      .nb13 { animation-delay:0.36s; animation-duration:1.4s; }
-      .nb14 { animation-delay:0.10s; animation-duration:1.5s; }
-      .nb15 { animation-delay:0.44s; animation-duration:1.6s; }
-      .nb16 { animation-delay:0.72s; animation-duration:1.4s; }
-      .nb17 { animation-delay:0.18s; animation-duration:1.7s; }
-      .nb18 { animation-delay:0.52s; animation-duration:1.5s; }
-      .nb19 { animation-delay:0.26s; animation-duration:1.3s; }
-      .nb20 { animation-delay:0.60s; animation-duration:1.6s; }
-      .nb21 { animation-delay:0.34s; animation-duration:1.8s; }
-      .nb22 { animation-delay:0.68s; animation-duration:1.4s; }
+      .nb { transform-origin: center 150px; animation: npulse 1.4s ease-in-out 2 both; }
+      .nb0  { animation-delay:3.00s; animation-duration:1.6s; }
+      .nb1  { animation-delay:3.08s; animation-duration:1.5s; }
+      .nb2  { animation-delay:3.16s; animation-duration:1.7s; }
+      .nb3  { animation-delay:3.24s; animation-duration:1.4s; }
+      .nb4  { animation-delay:3.32s; animation-duration:1.6s; }
+      .nb5  { animation-delay:3.05s; animation-duration:1.3s; }
+      .nb6  { animation-delay:3.40s; animation-duration:1.5s; }
+      .nb7  { animation-delay:3.12s; animation-duration:1.8s; }
+      .nb8  { animation-delay:3.48s; animation-duration:1.4s; }
+      .nb9  { animation-delay:3.20s; animation-duration:1.6s; }
+      .nb10 { animation-delay:3.56s; animation-duration:1.5s; }
+      .nb11 { animation-delay:3.28s; animation-duration:1.3s; }
+      .nb12 { animation-delay:3.64s; animation-duration:1.7s; }
+      .nb13 { animation-delay:3.36s; animation-duration:1.4s; }
+      .nb14 { animation-delay:3.10s; animation-duration:1.5s; }
+      .nb15 { animation-delay:3.44s; animation-duration:1.6s; }
+      .nb16 { animation-delay:3.72s; animation-duration:1.4s; }
+      .nb17 { animation-delay:3.18s; animation-duration:1.7s; }
+      .nb18 { animation-delay:3.52s; animation-duration:1.5s; }
+      .nb19 { animation-delay:3.26s; animation-duration:1.3s; }
+      .nb20 { animation-delay:3.60s; animation-duration:1.6s; }
+      .nb21 { animation-delay:3.34s; animation-duration:1.8s; }
+      .nb22 { animation-delay:3.68s; animation-duration:1.4s; }
       @keyframes npulse {
         0%   { transform:scaleY(1);    opacity:1; }
         30%  { transform:scaleY(1.6);  opacity:0.9; }
