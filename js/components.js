@@ -9,7 +9,7 @@ const TSE_LOGO_SVG = `
   <defs>
     <style>
       .nb { transform-origin: center 150px; animation: npulse 1.4s ease-in-out 2 both; animation-delay: 3s; }
-      .nb0  { animation-delay:3.00s; animation-duration:1.6s; }
+      .nb0  { animation-delay:0.00s; animation-duration:1.6s; }
       .nb1  { animation-delay:0.08s; animation-duration:1.5s; }
       .nb2  { animation-delay:0.16s; animation-duration:1.7s; }
       .nb3  { animation-delay:0.24s; animation-duration:1.4s; }
