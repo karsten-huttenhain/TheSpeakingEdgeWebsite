@@ -52,6 +52,7 @@ nav {
   font-size: 0.85rem; font-weight: 600; letter-spacing: 0.06em;
   text-transform: uppercase; transition: color 0.2s;
 }
+.nav-logo svg { width: 300px; height: 60px; }
 .nav-links a:hover,
 .nav-links a.active { color: var(--gold); }
 .nav-cta {
@@ -243,6 +244,9 @@ footer {
 /* ── RESPONSIVE ── */
 @media (max-width: 1024px) {
   .footer-inner { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 768px) {
+  .nav-logo svg { width: 200px; height: 40px; }
 }
 @media (max-width: 768px) {
   nav { padding: 0 5%; }
