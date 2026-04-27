@@ -261,19 +261,10 @@
   display: grid; grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem; max-width: 1100px; margin: 0 auto 2rem;
 }
-.pricing-grid > .price-card:nth-child(4),
-.pricing-grid > .price-card:nth-child(5) {
-  grid-column: span 1;
-}
-/* Centre the last two cards */
 .pricing-grid {
-  grid-template-columns: repeat(6, 1fr);
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem; max-width: 1100px; margin: 0 auto 2rem;
 }
-.price-card {
-  grid-column: span 2;
-}
-.price-card:nth-child(4) { grid-column: 2 / span 2; }
-.price-card:nth-child(5) { grid-column: 4 / span 2; }
 
 .price-card {
   background: var(--white); padding: 2.4rem 2rem;
@@ -628,31 +619,14 @@
 
   <div class="pricing-grid">
 
-    <!-- Taster Workshop -->
-    <div class="price-card reveal">
-      <div class="price-card-top">
-        <div class="price-label">Taster Workshop</div>
-        <div class="price-format">Live online · Group · 90 minutes</div>
-        <div class="price-amount">£39 <span>per person</span></div>
-        <div class="price-desc">The ideal first step. A live, high-energy introduction to the TSE methodology — practical, embodied, and immediately useful. No experience required.</div>
-      </div>
-      <ul class="price-includes">
-        <li>Live facilitated session</li>
-        <li>Introduction to W.A.R.M.U.P.™ and P.H.Y.S.C.L.™</li>
-        <li>Practical exercises you can use immediately</li>
-        <li>Recorded replay for 7 days</li>
-      </ul>
-      <a href="contact.html" class="btn-price">Book your place</a>
-    </div>
-
     <!-- Full Programme -->
     <div class="price-card featured reveal">
       <div class="price-card-badge">Most popular</div>
       <div class="price-card-top">
-        <div class="price-label">Full Programme</div>
+        <div class="price-label">6 Week Programme</div>
         <div class="price-format">Live online · Group cohort · 6 modules</div>
         <div class="price-amount">£495 <span>per person</span></div>
-        <div class="price-desc">The complete Speaking Confidence Programme — all six modules delivered as a live group experience. The most transformative format.</div>
+        <div class="price-desc">The complete Speaking Confidence Programme — all six modules delivered as a live group experience. The most transformative format. Fixed Dates.</div>
       </div>
       <ul class="price-includes">
         <li>All six modules — W.A.R.M.U.P.™ through I.M.P.A.C.T. T.H.E.M.™</li>
