@@ -116,12 +116,32 @@
 }
 .form-success p { font-size: 0.95rem; color: rgba(255,255,255,0.7); line-height: 1.7; }
 
+.tidycal-section {
+  padding: 80px 6% 100px;
+  background: var(--white);
+}
+.tidycal-inner {
+  display: grid; grid-template-columns: 1fr 1.6fr; gap: 6rem; align-items: start;
+}
+.tidycal-info h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 700;
+  color: var(--midnight); line-height: 1.2; margin-bottom: 1.2rem;
+}
+.tidycal-info > p {
+  font-size: 1rem; line-height: 1.75; color: var(--steel); margin-bottom: 2.5rem;
+}
+@media (max-width: 1024px) {
+  .tidycal-inner { grid-template-columns: 1fr; gap: 3rem; }
+}
+
 @media (max-width: 1024px) {
   .contact-main { grid-template-columns: 1fr; gap: 4rem; }
 }
 @media (max-width: 768px) {
   .contact-main { padding-left: 5%; padding-right: 5%; }
   .form-row { grid-template-columns: 1fr; }
+  .tidycal-section { padding-left: 5%; padding-right: 5%; }
 }
 </style>
 </head>
@@ -136,6 +156,31 @@
   <p>Whether you're preparing for a career-defining interview, developing leadership communication, or exploring a workshop for your team — get in touch. The first conversation is always free.</p>
 </header>
 
+<!-- TIDYCAL BOOKING -->
+<section class="tidycal-section">
+  <div class="tidycal-inner">
+    <div class="tidycal-info reveal">
+      <div class="section-label">Book directly</div>
+      <div class="gold-divider"></div>
+      <h2>Book a free discovery call</h2>
+      <p>A 15-minute call to understand what you need, talk through the right format, and answer any questions. No obligation. No hard sell. Just a conversation.</p>
+      <div class="expect-block">
+        <h4>What happens on a discovery call</h4>
+        <ul>
+          <li>We talk about your current speaking challenges</li>
+          <li>We identify which format and pathway is the right fit</li>
+          <li>You ask any questions about the programme</li>
+          <li>If it's a good match, we agree next steps</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tidycal-embed-area reveal">
+      <div id="tidycal-embed" data-path="speakingedgeglobal/discovery-call"></div>
+      <script src="https://asset-tidycal.b-cdn.net/js/embed.js" async></script>
+    </div>
+  </div>
+</section>
+
 <!-- CONTACT MAIN -->
 <section class="contact-main">
 
@@ -143,8 +188,6 @@
   <div class="contact-info reveal">
     <div class="section-label">How to reach us</div>
     <div class="gold-divider"></div>
-    <h2>Book a free discovery call</h2>
-    <p>A 20-minute call to understand what you need, talk through the right format, and answer any questions. No obligation. No hard sell. Just a conversation.</p>
 
     <div class="contact-details">
       <div class="contact-detail">
@@ -197,15 +240,6 @@
       </div>
     </div>
 
-    <div class="expect-block">
-      <h4>What happens on a discovery call</h4>
-      <ul>
-        <li>We talk about your current speaking challenges</li>
-        <li>We identify which format and pathway is the right fit</li>
-        <li>You ask any questions about the programme</li>
-        <li>If it's a good match, we agree next steps</li>
-      </ul>
-    </div>
   </div>
 
   <!-- Right: form -->
@@ -258,6 +292,8 @@
   </div>
 
 </section>
+
+
 
 <div id="tse-footer"></div>
 <script src="js/components.js"></script>

@@ -52,6 +52,7 @@ nav {
   font-size: 0.85rem; font-weight: 600; letter-spacing: 0.06em;
   text-transform: uppercase; transition: color 0.2s;
 }
+.nav-logo svg { width: 300px; height: 60px; }
 .nav-links a:hover,
 .nav-links a.active { color: var(--gold); }
 .nav-cta {
@@ -195,6 +196,9 @@ footer {
   flex-wrap: wrap; gap: 1rem;
 }
 .footer-bottom p { font-size: 0.78rem; }
+.footer-legal { display: flex; gap: 1.2rem; }
+.footer-legal a { font-size: 0.78rem; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.2s; }
+.footer-legal a:hover { color: var(--gold); }
 .footer-sig { font-size: 0.78rem; color: rgba(255,255,255,0.35); }
 
 /* ── ANIMATIONS ── */
@@ -243,6 +247,9 @@ footer {
 /* ── RESPONSIVE ── */
 @media (max-width: 1024px) {
   .footer-inner { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 768px) {
+  .nav-logo svg { width: 200px; height: 40px; }
 }
 @media (max-width: 768px) {
   nav { padding: 0 5%; }
