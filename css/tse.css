@@ -196,6 +196,9 @@ footer {
   flex-wrap: wrap; gap: 1rem;
 }
 .footer-bottom p { font-size: 0.78rem; }
+.footer-legal { display: flex; gap: 1.2rem; }
+.footer-legal a { font-size: 0.78rem; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.2s; }
+.footer-legal a:hover { color: var(--gold); }
 .footer-sig { font-size: 0.78rem; color: rgba(255,255,255,0.35); }
 
 /* ── ANIMATIONS ── */

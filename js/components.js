@@ -113,6 +113,10 @@ const TSE_FOOTER = `
   </div>
   <div class="footer-bottom">
     <p>&copy; 2026 The Speaking Edge &middot; Karsten Huttenhain &middot; Edinburgh, Scotland</p>
+    <div class="footer-legal">
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="terms-of-service.html">Terms of Service</a>
+    </div>
     <div class="footer-sig">speakingedgeglobal.com</div>
   </div>
 </footer>`;
