@@ -116,12 +116,18 @@
 }
 .form-success p { font-size: 0.95rem; color: rgba(255,255,255,0.7); line-height: 1.7; }
 
+.tidycal-section {
+  padding: 80px 6% 100px;
+  background: var(--white);
+}
+
 @media (max-width: 1024px) {
   .contact-main { grid-template-columns: 1fr; gap: 4rem; }
 }
 @media (max-width: 768px) {
   .contact-main { padding-left: 5%; padding-right: 5%; }
   .form-row { grid-template-columns: 1fr; }
+  .tidycal-section { padding-left: 5%; padding-right: 5%; }
 }
 </style>
 </head>
@@ -257,6 +263,16 @@
     </div>
   </div>
 
+</section>
+
+<!-- TIDYCAL BOOKING -->
+<section class="tidycal-section">
+  <div class="section-label" style="text-align:center;">Book directly</div>
+  <div class="gold-divider" style="margin:0.8rem auto 1.5rem;"></div>
+  <h2 style="font-family:'Playfair Display',Georgia,serif;font-size:clamp(1.6rem,2.5vw,2.2rem);font-weight:700;color:var(--midnight);text-align:center;margin-bottom:0.6rem;">Pick a time that works for you</h2>
+  <p style="text-align:center;color:var(--steel);font-size:0.95rem;margin-bottom:2rem;">Free 20-minute discovery call — live availability below.</p>
+  <div id="tidycal-embed" data-path="speakingedgeglobal/discovery-call"></div>
+  <script src="https://asset-tidycal.b-cdn.net/js/embed.js" async></script>
 </section>
 
 <div id="tse-footer"></div>
