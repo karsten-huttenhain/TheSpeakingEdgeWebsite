@@ -260,10 +260,11 @@ async function initDashboard() {
   ]);
 
   // TEMP DEBUG — remove once working
+  const dbTest = await db.from('profiles').select('*').limit(1);
   document.getElementById('firstName').textContent =
-    'DEBUG uid:' + session.user.id.slice(0,8)
-    + ' profile:' + JSON.stringify(profile)
-    + ' access:' + hasAccess;
+    'uid:' + session.user.id.slice(0,8)
+    + ' | data:' + JSON.stringify(dbTest.data)
+    + ' | err:' + JSON.stringify(dbTest.error);
   const name = tseFirstName(profile?.full_name);
   document.getElementById('navUser').textContent = name;
   document.getElementById('navUser').style.display = 'block';
