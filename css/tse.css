@@ -55,6 +55,11 @@ nav {
 .nav-logo svg { width: 300px; height: 60px; }
 .nav-links a:hover,
 .nav-links a.active { color: var(--gold); }
+.nav-links a.nav-dashboard {
+  color: var(--gold); border: 1px solid rgba(232,160,32,0.4);
+  padding: 6px 14px; border-radius: 3px; transition: border-color 0.2s, background 0.2s;
+}
+.nav-links a.nav-dashboard:hover { border-color: var(--gold); background: rgba(232,160,32,0.08); }
 .nav-cta {
   background: var(--vermillion); color: #fff;
   padding: 9px 22px; border-radius: 4px;
