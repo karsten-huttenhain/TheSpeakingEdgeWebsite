@@ -5,9 +5,9 @@
 
 // ── CONFIG — fill in after creating Supabase project ─────────────────────────
 const TSE_CONFIG = {
-  supabaseUrl:     'https://YOUR_PROJECT_REF.supabase.co',
-  supabaseAnonKey: 'YOUR_SUPABASE_ANON_KEY',
-  courseId:        'YOUR_COURSE_UUID', // UUID from courses table once seeded
+  supabaseUrl:     'https://bkfkupyvwfbposjumcyq.supabase.co',
+  supabaseAnonKey: 'sb_publishable_uBXJ0SDLFnAz7UWh_sQtXA_8e50aZjz',
+  courseId:        '7c4c6ad1-97a5-4bb1-a214-8a43387119bd',
 };
 // ─────────────────────────────────────────────────────────────────────────────
 
