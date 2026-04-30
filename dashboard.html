@@ -43,6 +43,13 @@
   transition: all 0.2s;
 }
 .btn-signout:hover { border-color: rgba(255,255,255,0.6); color: var(--white); }
+.btn-admin {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; text-decoration: none;
+  color: var(--gold); border: 1px solid rgba(232,160,32,0.4);
+  padding: 6px 14px; border-radius: 3px; transition: all 0.2s;
+}
+.btn-admin:hover { border-color: var(--gold); background: rgba(232,160,32,0.08); }
 
 /* ── LOADING SCREEN ── */
 .loading-screen {
@@ -203,6 +210,7 @@
   <a href="index.html" class="dash-nav-logo">The Speaking <span>Edge</span></a>
   <div class="dash-nav-right">
     <span class="dash-nav-label">Course Platform</span>
+    <a href="admin.html" id="adminLink" class="btn-admin" style="display:none;">Admin ↗</a>
     <span class="dash-nav-user" id="navUser"></span>
     <button class="btn-signout" onclick="tseSignOut()">Sign Out</button>
   </div>
@@ -259,15 +267,13 @@ async function initDashboard() {
     tseGetProgress(session.user.id),
   ]);
 
-  // TEMP DEBUG — remove once working
-  const dbTest = await db.from('profiles').select('*').limit(1);
-  document.getElementById('firstName').textContent =
-    'uid:' + session.user.id.slice(0,8)
-    + ' | data:' + JSON.stringify(dbTest.data)
-    + ' | err:' + JSON.stringify(dbTest.error);
   const name = tseFirstName(profile?.full_name);
+  document.getElementById('firstName').textContent = name;
   document.getElementById('navUser').textContent = name;
   document.getElementById('navUser').style.display = 'block';
+  if (profile?.role === 'admin') {
+    document.getElementById('adminLink').style.display = 'inline-block';
+  }
 
   // Progress
   const completed = TSE_MODULES.filter(m => progressMap[m.id]?.status === 'complete').length;
