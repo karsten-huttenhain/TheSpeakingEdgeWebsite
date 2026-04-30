@@ -352,7 +352,8 @@ async function signUp() {
     email,
     password,
     options: {
-      data: { full_name: name }
+      data: { full_name: name },
+      emailRedirectTo: window.location.origin + '/login.html',
     }
   });
 
@@ -377,7 +378,7 @@ async function forgotPassword(e) {
   }
   clearMessages();
   const { error } = await authClient.auth.resetPasswordForEmail(email, {
-    redirectTo: window.location.origin + '/dashboard.html'
+    redirectTo: window.location.origin + '/reset-password.html'
   });
   if (error) {
     showMessage('signin-message', 'error', error.message);
