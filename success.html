@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Welcome to the Programme — The Speaking Edge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/gif" href="images/favicon.gif">
+<link rel="stylesheet" href="css/tse.css">
+<style>
+.success-page {
+  min-height: 100vh;
+  background: var(--midnight);
+  display: flex; align-items: center; justify-content: center;
+  padding: 80px 6%;
+}
+.success-card {
+  max-width: 560px; width: 100%;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-top: 4px solid #27AE60;
+  border-radius: 4px;
+  padding: 3.5rem;
+  text-align: center;
+}
+.success-icon {
+  width: 72px; height: 72px;
+  background: rgba(39,174,96,0.12);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 2rem;
+}
+.success-icon svg { color: #27AE60; }
+.success-eyebrow {
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.16em;
+  text-transform: uppercase; color: #27AE60; margin-bottom: 1rem;
+}
+.success-card h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.8rem, 4vw, 2.4rem); font-weight: 700;
+  color: var(--white); line-height: 1.15; margin-bottom: 1.2rem;
+}
+.success-card h1 em { font-style: italic; color: var(--vermillion); }
+.success-card p {
+  font-size: 1rem; line-height: 1.75;
+  color: rgba(255,255,255,0.6); margin-bottom: 0.8rem;
+}
+.success-divider {
+  width: 40px; height: 2px; background: var(--gold);
+  margin: 2rem auto;
+}
+.success-next-steps {
+  text-align: left; margin-bottom: 2.5rem;
+}
+.success-next-steps h3 {
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: rgba(255,255,255,0.4);
+  margin-bottom: 1.2rem;
+}
+.success-step {
+  display: flex; align-items: flex-start; gap: 1rem;
+  margin-bottom: 1rem;
+}
+.success-step-num {
+  width: 26px; height: 26px; min-width: 26px;
+  background: var(--gold); color: var(--midnight);
+  border-radius: 50%;
+  font-size: 0.72rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  margin-top: 1px;
+}
+.success-step p {
+  font-size: 0.88rem; color: rgba(255,255,255,0.7);
+  margin-bottom: 0; line-height: 1.6;
+}
+.btn-success {
+  display: inline-block; width: 100%;
+  background: var(--vermillion); color: #fff;
+  padding: 16px 32px; border-radius: 4px;
+  font-size: 0.9rem; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; text-decoration: none;
+  transition: background 0.2s; text-align: center;
+}
+.btn-success:hover { background: var(--vermillion-dark); }
+.success-support {
+  margin-top: 1.5rem;
+  font-size: 0.78rem; color: rgba(255,255,255,0.3);
+}
+.success-support a {
+  color: rgba(255,255,255,0.45); text-decoration: none;
+}
+.success-support a:hover { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<div class="success-page">
+  <div class="success-card">
+
+    <div class="success-icon">
+      <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+        <polyline points="22 4 12 14.01 9 11.01"/>
+      </svg>
+    </div>
+
+    <div class="success-eyebrow">Payment confirmed</div>
+    <h1>You're in.<br><em>Let's get to work.</em></h1>
+    <p>Your place on the Speaking Confidence Programme is confirmed. All six modules are now unlocked and waiting for you.</p>
+
+    <div class="success-divider"></div>
+
+    <div class="success-next-steps">
+      <h3>What happens next</h3>
+      <div class="success-step">
+        <div class="success-step-num">1</div>
+        <p>Check your inbox — a receipt and confirmation have been sent to your email address.</p>
+      </div>
+      <div class="success-step">
+        <div class="success-step-num">2</div>
+        <p>Create your account (or sign in) to access your personal dashboard and all course materials.</p>
+      </div>
+      <div class="success-step">
+        <div class="success-step-num">3</div>
+        <p>Start with Module 01 — W.A.R.M.U.P.™ — and work through the programme at your own pace.</p>
+      </div>
+    </div>
+
+    <a href="/login.html" class="btn-success">Go to my dashboard →</a>
+
+    <p class="success-support">Questions? <a href="mailto:speaking.edge.global@gmail.com">Get in touch</a></p>
+  </div>
+</div>
+
+</body>
+</html>

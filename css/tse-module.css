@@ -1,0 +1,294 @@
+/* ═══════════════════════════════════════════════════════════════
+   TSE MODULE PAGES — Shared stylesheet for dashboard/0x-*.html
+   Depends on tse.css for :root variables
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── DASHBOARD NAV ─────────────────────────────────────────────── */
+.dash-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(44,62,80,0.97); backdrop-filter: blur(8px);
+  border-bottom: 2px solid var(--vermillion);
+  height: 64px; padding: 0 6%;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.dash-nav-logo {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 700; font-size: 1.1rem; color: var(--white);
+  text-decoration: none; letter-spacing: 0.01em;
+}
+.dash-nav-logo span { color: var(--vermillion); }
+.dash-nav-right { display: flex; align-items: center; gap: 1.5rem; }
+.dash-nav-back {
+  font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: rgba(255,255,255,0.5);
+  text-decoration: none; transition: color 0.2s;
+}
+.dash-nav-back:hover { color: var(--gold); }
+.dash-nav-user {
+  font-size: 0.85rem; font-weight: 600;
+  color: rgba(255,255,255,0.8); display: none;
+}
+.btn-signout {
+  background: none; border: 1px solid rgba(255,255,255,0.25);
+  color: rgba(255,255,255,0.6); padding: 6px 16px; border-radius: 3px;
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; cursor: pointer; font-family: inherit;
+  transition: all 0.2s;
+}
+.btn-signout:hover { border-color: rgba(255,255,255,0.6); color: var(--white); }
+
+/* ── LOADING SCREEN ────────────────────────────────────────────── */
+.loading-screen {
+  min-height: 100vh; background: var(--midnight);
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 1.2rem;
+}
+.loading-screen p {
+  font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: rgba(255,255,255,0.35);
+}
+.loading-ring {
+  width: 40px; height: 40px; border-radius: 50%;
+  border: 3px solid rgba(255,255,255,0.1);
+  border-top-color: var(--vermillion);
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── MODULE HEADER ─────────────────────────────────────────────── */
+.module-header {
+  background: var(--midnight);
+  padding: 100px 6% 64px;
+  border-bottom: 3px solid var(--mc, var(--vermillion));
+  position: relative;
+}
+.module-header::after {
+  content: '';
+  position: absolute; bottom: -3px; left: 0;
+  width: 80px; height: 3px;
+  background: var(--mc, var(--vermillion));
+  opacity: 0.6;
+}
+.module-eyebrow {
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.18em;
+  text-transform: uppercase; color: rgba(255,255,255,0.4);
+  margin-bottom: 1.2rem;
+}
+.module-acronym {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 900;
+  color: var(--mc, var(--gold));
+  line-height: 1.05; margin-bottom: 0.8rem;
+  letter-spacing: -0.01em;
+}
+.module-acronym .tm {
+  font-size: 0.4em; vertical-align: super;
+  font-weight: 700; opacity: 0.7;
+  font-style: normal;
+}
+.module-tagline {
+  font-size: 1.05rem; font-weight: 300; line-height: 1.5;
+  color: rgba(255,255,255,0.6); margin-bottom: 1.8rem;
+}
+.module-quote {
+  border-left: 3px solid var(--mc, var(--gold));
+  padding-left: 1.4rem;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-style: italic; font-size: 1.05rem; line-height: 1.65;
+  color: rgba(255,255,255,0.55); max-width: 600px;
+  margin: 0;
+}
+
+/* ── VIDEO SECTION ─────────────────────────────────────────────── */
+.module-video {
+  background: #1a2535;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.video-placeholder {
+  max-width: 900px; margin: 0 auto;
+  padding: 0 6%;
+}
+.video-placeholder-content {
+  aspect-ratio: 16 / 9;
+  background: rgba(255,255,255,0.03);
+  border: 1px dashed rgba(255,255,255,0.12);
+  border-radius: 4px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 1rem; padding: 2rem;
+  margin: 2.5rem 0;
+}
+.vp-label {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: rgba(255,255,255,0.3);
+}
+.vp-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1rem; color: rgba(255,255,255,0.45);
+}
+
+/* ── MODULE BODY ───────────────────────────────────────────────── */
+.module-body {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0 6% 6rem;
+}
+
+/* ── SECTIONS ──────────────────────────────────────────────────── */
+.module-section {
+  padding: 2.8rem 0;
+  border-bottom: 1px solid var(--ltsteel);
+}
+.module-section:last-child { border-bottom: none; }
+.module-section h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.5rem; font-weight: 700;
+  color: var(--midnight); margin-bottom: 0.9rem;
+  display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap;
+}
+.module-section p {
+  font-size: 1rem; line-height: 1.75;
+  color: var(--steel); margin-bottom: 1rem;
+}
+.module-section p:last-child { margin-bottom: 0; }
+.section-sub {
+  font-size: 0.85rem; color: rgba(93,109,126,0.75);
+  margin-bottom: 1.4rem !important;
+}
+.module-placeholder-note {
+  font-size: 0.82rem; color: rgba(93,109,126,0.6);
+  font-style: italic;
+  background: #f7f9fc; border: 1px dashed var(--ltsteel);
+  border-radius: 3px; padding: 0.8rem 1rem;
+  margin-top: 1rem;
+}
+.private-badge {
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--steel);
+  background: var(--ltsteel); padding: 3px 8px; border-radius: 2px;
+  vertical-align: middle;
+}
+
+/* ── JOURNAL ───────────────────────────────────────────────────── */
+.journal-area {
+  width: 100%; min-height: 180px; resize: vertical;
+  border: 1.5px solid var(--ltsteel); border-radius: 4px;
+  padding: 1rem 1.1rem;
+  font-family: 'Source Sans 3', Arial, sans-serif;
+  font-size: 0.95rem; line-height: 1.7; color: var(--midnight);
+  background: var(--white);
+  transition: border-color 0.2s;
+}
+.journal-area:focus {
+  outline: none; border-color: var(--mc, var(--gold));
+}
+.journal-area::placeholder { color: rgba(93,109,126,0.45); }
+.journal-footer {
+  margin-top: 0.6rem;
+  text-align: right; height: 1.2em;
+}
+.journal-status {
+  font-size: 0.75rem; font-weight: 600;
+  letter-spacing: 0.04em; transition: color 0.2s;
+}
+
+/* ── FILE UPLOAD ───────────────────────────────────────────────── */
+.upload-area {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; gap: 0.6rem;
+  border: 2px dashed var(--ltsteel); border-radius: 4px;
+  padding: 2.5rem 2rem; cursor: pointer;
+  text-align: center; transition: border-color 0.2s, background 0.2s;
+  color: var(--steel);
+}
+.upload-area:hover {
+  border-color: var(--mc, var(--gold));
+  background: rgba(232,160,32,0.03);
+}
+.upload-area span { font-size: 0.9rem; font-weight: 600; }
+.upload-types {
+  font-size: 0.72rem !important; font-weight: 400 !important;
+  color: rgba(93,109,126,0.55); letter-spacing: 0.04em;
+}
+.upload-file-info {
+  margin-top: 0.8rem;
+  font-size: 0.85rem; color: var(--steel);
+  background: var(--ltsteel); border-radius: 3px;
+  padding: 0.5rem 0.9rem;
+}
+.upload-progress {
+  margin-top: 0.8rem;
+  height: 4px; background: var(--ltsteel); border-radius: 2px; overflow: hidden;
+}
+.upload-progress-fill {
+  height: 100%; background: var(--mc, var(--gold));
+  border-radius: 2px; width: 0%;
+  transition: width 0.3s ease;
+}
+.upload-message {
+  margin-top: 0.8rem;
+  font-size: 0.85rem; padding: 0.6rem 0.9rem; border-radius: 3px;
+}
+.upload-message.success { background: #f0faf4; color: #1e8449; }
+.upload-message.error   { background: #fdf2f2; color: #c0392b; }
+.btn-upload {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  margin-top: 1rem;
+  background: var(--midnight); color: var(--white);
+  padding: 11px 26px; border-radius: 4px; border: none;
+  font-size: 0.85rem; font-weight: 700; letter-spacing: 0.07em;
+  text-transform: uppercase; cursor: pointer; font-family: inherit;
+  transition: background 0.2s;
+}
+.btn-upload:hover:not(:disabled) { background: var(--midnight-light); }
+.btn-upload:disabled { opacity: 0.55; cursor: default; }
+
+/* ── MARK COMPLETE ─────────────────────────────────────────────── */
+.module-complete-section {
+  padding: 2.8rem 0 1.2rem;
+  display: flex; justify-content: center;
+}
+.btn-complete {
+  background: var(--vermillion); color: var(--white);
+  padding: 15px 44px; border-radius: 4px; border: none;
+  font-size: 0.9rem; font-weight: 700; letter-spacing: 0.07em;
+  text-transform: uppercase; cursor: pointer; font-family: inherit;
+  transition: background 0.2s, transform 0.15s;
+}
+.btn-complete:hover:not(:disabled) {
+  background: var(--vermillion-dark); transform: translateY(-1px);
+}
+.btn-complete:disabled { cursor: default; }
+
+/* ── MODULE NAVIGATION ─────────────────────────────────────────── */
+.module-nav {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 2rem 0 0;
+  border-top: 1px solid var(--ltsteel);
+  gap: 1rem; flex-wrap: wrap;
+}
+.module-nav-btn {
+  font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; text-decoration: none;
+  color: var(--steel);
+  padding: 10px 18px; border: 1.5px solid var(--ltsteel);
+  border-radius: 3px; transition: all 0.2s;
+}
+.module-nav-btn:hover {
+  border-color: var(--midnight); color: var(--midnight);
+}
+.module-nav-btn.primary {
+  background: var(--midnight); color: var(--white);
+  border-color: var(--midnight);
+}
+.module-nav-btn.primary:hover { background: var(--midnight-light); border-color: var(--midnight-light); }
+
+/* ── RESPONSIVE ────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .dash-nav { padding: 0 5%; }
+  .module-header { padding: 88px 5% 48px; }
+  .module-body { padding: 0 5% 4rem; }
+  .video-placeholder { padding: 0 5%; }
+  .module-nav { flex-direction: column; align-items: stretch; }
+  .module-nav-btn { text-align: center; }
+}

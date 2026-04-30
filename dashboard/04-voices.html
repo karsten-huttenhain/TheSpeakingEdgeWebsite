@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 04 — V.O.I.C.E.S.™ — The Speaking Edge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/gif" href="../images/favicon.gif">
+<link rel="stylesheet" href="../css/tse.css">
+<link rel="stylesheet" href="../css/tse-module.css">
+</head>
+<body>
+
+<nav class="dash-nav">
+  <a href="../index.html" class="dash-nav-logo">The Speaking <span>Edge</span></a>
+  <div class="dash-nav-right">
+    <a href="../dashboard.html" class="dash-nav-back">← Dashboard</a>
+    <span class="dash-nav-user" id="navUser"></span>
+    <button class="btn-signout" onclick="tseSignOut()">Sign Out</button>
+  </div>
+</nav>
+
+<div class="loading-screen" id="loadingScreen">
+  <div class="loading-ring"></div>
+  <p>Loading module…</p>
+</div>
+
+<div id="moduleContent" style="display:none;">
+
+  <header class="module-header" style="--mc:#C8392B;">
+    <div class="module-eyebrow">Module 04 &nbsp;·&nbsp; Voice</div>
+    <h1 class="module-acronym">V.O.I.C.E.S.<sup class="tm">™</sup></h1>
+    <p class="module-tagline">Developing vocal delivery and control</p>
+    <blockquote class="module-quote">"The voice is the primary instrument of professional communication. Most people have never been taught to play it."</blockquote>
+  </header>
+
+  <section class="module-video">
+    <div class="video-placeholder">
+      <div class="video-placeholder-content">
+        <svg viewBox="0 0 64 64" width="52" height="52" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="32" cy="32" r="30" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+          <polygon points="26,20 48,32 26,44" fill="rgba(255,255,255,0.25)"/>
+        </svg>
+        <div class="vp-label">Video coming soon</div>
+        <div class="vp-title">Module 04 — V.O.I.C.E.S.™</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="module-body">
+
+    <section class="module-section">
+      <h2>About this module</h2>
+      <p>Pace, pitch, resonance, silence — the elements of a voice that commands attention rather than simply filling space. This module treats the voice as the instrument it is.</p>
+      <p class="module-placeholder-note">📝 Full written module content to be added here.</p>
+    </section>
+
+    <section class="module-section">
+      <h2>Reflection journal <span class="private-badge">Private</span></h2>
+      <p class="section-sub">Your journal is private — only you can read it.</p>
+      <textarea id="journalText" class="journal-area" placeholder="Use this space to reflect on what you're learning in this module…"></textarea>
+      <div class="journal-footer">
+        <span id="journalStatus" class="journal-status"></span>
+      </div>
+    </section>
+
+    <section class="module-section">
+      <h2>Submit your practice</h2>
+      <p class="section-sub">Record a vocal exercise or spoken piece and upload for review. Accepted: MP4, MOV, MP3, M4A, WAV · Max 500 MB.</p>
+      <label class="upload-area" for="fileInput">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+        </svg>
+        <span>Choose a file to upload</span>
+        <span class="upload-types">MP4 · MOV · MP3 · M4A · WAV</span>
+        <input type="file" id="fileInput" accept=".mp4,.mov,.mp3,.m4a,.wav" onchange="handleFileSelect(this)" style="display:none;">
+      </label>
+      <div id="uploadFileInfo" class="upload-file-info" style="display:none;"><span id="uploadFilename"></span></div>
+      <div id="uploadProgress" class="upload-progress" style="display:none;"><div id="uploadProgressFill" class="upload-progress-fill"></div></div>
+      <div id="uploadMessage" class="upload-message" style="display:none;"></div>
+      <button id="uploadSubmitBtn" class="btn-upload" onclick="submitUpload()" style="display:none;">Upload submission</button>
+    </section>
+
+    <section class="module-complete-section">
+      <button id="completeBtn" class="btn-complete" onclick="markComplete()">Mark as complete</button>
+    </section>
+
+    <nav class="module-nav">
+      <a href="03-physcl.html" class="module-nav-btn">← Module 03</a>
+      <a href="05-rainbows.html" class="module-nav-btn primary">Module 05 →</a>
+    </nav>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/tse-platform.js"></script>
+<script>window.TSE_MODULE_DATA = { id: '04-voices', free: false };</script>
+<script src="../js/tse-module-page.js"></script>
+</body>
+</html>

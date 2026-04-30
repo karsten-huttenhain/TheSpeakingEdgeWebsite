@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Your Speaking Confidence Programme dashboard — The Speaking Edge.">
+<title>Dashboard — The Speaking Edge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/gif" href="images/favicon.gif">
+<link rel="stylesheet" href="css/tse.css">
+<style>
+
+/* ── DASHBOARD NAV ── */
+.dash-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(44,62,80,0.97); backdrop-filter: blur(8px);
+  border-bottom: 2px solid var(--vermillion);
+  height: 64px; padding: 0 6%;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.dash-nav-logo {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 700; font-size: 1.1rem; color: var(--white);
+  text-decoration: none; letter-spacing: 0.01em;
+}
+.dash-nav-logo span { color: var(--vermillion); }
+.dash-nav-right { display: flex; align-items: center; gap: 1.5rem; }
+.dash-nav-label {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: rgba(255,255,255,0.45);
+}
+.dash-nav-user {
+  font-size: 0.85rem; font-weight: 600;
+  color: rgba(255,255,255,0.8); display: none;
+}
+.btn-signout {
+  background: none; border: 1px solid rgba(255,255,255,0.25);
+  color: rgba(255,255,255,0.6); padding: 6px 16px; border-radius: 3px;
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; cursor: pointer; font-family: inherit;
+  transition: all 0.2s;
+}
+.btn-signout:hover { border-color: rgba(255,255,255,0.6); color: var(--white); }
+
+/* ── LOADING SCREEN ── */
+.loading-screen {
+  min-height: 100vh; background: var(--midnight);
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 1.2rem;
+}
+.loading-screen p {
+  font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: rgba(255,255,255,0.35);
+}
+.loading-ring {
+  width: 40px; height: 40px; border-radius: 50%;
+  border: 3px solid rgba(255,255,255,0.1);
+  border-top-color: var(--vermillion);
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── UPGRADE BANNER ── */
+.upgrade-banner {
+  background: var(--gold); padding: 14px 6%; text-align: center;
+  display: none;
+}
+.upgrade-banner p {
+  font-size: 0.85rem; font-weight: 700; color: var(--midnight);
+  display: flex; align-items: center; justify-content: center;
+  gap: 1rem; flex-wrap: wrap;
+}
+.btn-upgrade {
+  background: var(--midnight); color: var(--white);
+  padding: 6px 18px; border-radius: 3px;
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; text-decoration: none; transition: background 0.2s;
+}
+.btn-upgrade:hover { background: #1a252f; }
+
+/* ── WELCOME HEADER ── */
+.dash-header {
+  background: var(--midnight);
+  padding: 100px 6% 60px;
+  display: none;
+}
+.dash-welcome {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem;
+}
+.dash-header h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 700;
+  color: var(--white); line-height: 1.15; margin-bottom: 2rem;
+}
+.dash-header h1 em { font-style: italic; color: var(--vermillion); }
+
+/* Progress bar */
+.progress-wrap { max-width: 480px; }
+.progress-label {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 0.6rem;
+}
+.progress-label span:first-child {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: rgba(255,255,255,0.5);
+}
+.progress-label span:last-child {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.1rem; font-weight: 700; color: var(--gold);
+}
+.progress-track {
+  height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden;
+}
+.progress-fill {
+  height: 100%; background: var(--gold); border-radius: 3px;
+  transition: width 0.8s ease; width: 0%;
+}
+
+/* ── MODULE GRID ── */
+.dash-grid-section {
+  padding: 60px 6% 100px; background: var(--cream); display: none;
+}
+.dash-grid-section h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.4rem; font-weight: 700; color: var(--midnight);
+  margin-bottom: 2rem;
+}
+.module-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px; max-width: 1100px;
+}
+.module-card {
+  background: var(--white); padding: 2.2rem 2rem;
+  position: relative; overflow: hidden;
+  text-decoration: none; display: block;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border-top: 4px solid var(--ltsteel);
+}
+.module-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(44,62,80,0.1); }
+.module-card.locked { cursor: default; }
+.module-card.locked:hover { transform: none; box-shadow: none; }
+.module-card.complete { border-top-color: #27AE60; }
+
+.module-card-num {
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--steel); margin-bottom: 0.6rem;
+}
+.module-card-acronym {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.3rem; font-weight: 900; line-height: 1;
+  margin-bottom: 0.4rem;
+}
+.module-card-theme {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--steel); margin-bottom: 0.7rem;
+}
+.module-card-title {
+  font-size: 0.88rem; line-height: 1.55; color: var(--steel);
+  margin-bottom: 1.2rem;
+}
+
+/* Status badges */
+.module-status {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; padding: 4px 10px; border-radius: 2px;
+}
+.status-free     { background: #fef9e7; color: #b7950b; }
+.status-locked   { background: var(--ltsteel); color: var(--steel); }
+.status-unlocked { background: #eaf4fb; color: #1a5276; }
+.status-progress { background: #fef9e7; color: #b7950b; }
+.status-complete { background: #f0faf4; color: #1e8449; }
+
+.lock-icon {
+  position: absolute; top: 1.4rem; right: 1.4rem;
+  color: var(--ltsteel);
+}
+.check-icon {
+  position: absolute; top: 1.4rem; right: 1.4rem;
+  color: #27AE60;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  .module-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .dash-nav { padding: 0 5%; }
+  .dash-nav-label { display: none; }
+  .dash-header, .dash-grid-section { padding-left: 5%; padding-right: 5%; }
+  .module-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- Dashboard Nav -->
+<nav class="dash-nav">
+  <a href="index.html" class="dash-nav-logo">The Speaking <span>Edge</span></a>
+  <div class="dash-nav-right">
+    <span class="dash-nav-label">Course Platform</span>
+    <span class="dash-nav-user" id="navUser"></span>
+    <button class="btn-signout" onclick="tseSignOut()">Sign Out</button>
+  </div>
+</nav>
+
+<!-- Loading -->
+<div class="loading-screen" id="loadingScreen">
+  <div class="loading-ring"></div>
+  <p>Loading your dashboard…</p>
+</div>
+
+<!-- Upgrade banner (shown if no course access) -->
+<div class="upgrade-banner" id="upgradeBanner">
+  <p>
+    You haven't unlocked the full course yet.
+    <a href="programme.html#pricing" class="btn-upgrade">Enrol — £197</a>
+  </p>
+</div>
+
+<!-- Welcome header -->
+<header class="dash-header" id="dashHeader">
+  <div class="dash-welcome">Speaking Confidence Programme</div>
+  <h1>Welcome back, <em id="firstName">there</em>.</h1>
+  <div class="progress-wrap">
+    <div class="progress-label">
+      <span>Your progress</span>
+      <span id="progressText">0 of 6 modules complete</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+</header>
+
+<!-- Module grid -->
+<section class="dash-grid-section" id="dashGrid">
+  <h2>Your modules</h2>
+  <div class="module-grid" id="moduleGrid"></div>
+</section>
+
+<!-- Supabase + platform -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/tse-platform.js"></script>
+<script>
+'use strict';
+
+async function initDashboard() {
+  const session = await tseRequireAuth();
+  if (!session) return;
+
+  const [profile, hasAccess, progressMap] = await Promise.all([
+    tseGetProfile(session.user.id),
+    tseHasCourseAccess(session.user.id),
+    tseGetProgress(session.user.id),
+  ]);
+
+  const name = tseFirstName(profile?.full_name);
+  document.getElementById('firstName').textContent = name;
+  document.getElementById('navUser').textContent = name;
+  document.getElementById('navUser').style.display = 'block';
+
+  // Progress
+  const completed = TSE_MODULES.filter(m => progressMap[m.id]?.status === 'complete').length;
+  document.getElementById('progressText').textContent = `${completed} of 6 modules complete`;
+  document.getElementById('progressFill').style.width = `${Math.round((completed / 6) * 100)}%`;
+
+  // Upgrade banner
+  if (!hasAccess) {
+    document.getElementById('upgradeBanner').style.display = 'block';
+  }
+
+  // Build module grid
+  const grid = document.getElementById('moduleGrid');
+  TSE_MODULES.forEach(mod => {
+    const prog    = progressMap[mod.id];
+    const isComplete = prog?.status === 'complete';
+    const canAccess  = mod.free || hasAccess;
+
+    const card = document.createElement('a');
+    card.href  = canAccess ? mod.url : '#';
+    card.className = 'module-card reveal'
+      + (isComplete ? ' complete' : '')
+      + (!canAccess  ? ' locked'   : '');
+
+    // Accent colour on top border
+    if (canAccess && !isComplete) card.style.borderTopColor = mod.color;
+
+    // Status label
+    let statusClass, statusText;
+    if (mod.free)              { statusClass = 'status-free';     statusText = 'Free module'; }
+    else if (!hasAccess)       { statusClass = 'status-locked';   statusText = '🔒 Locked'; }
+    else if (isComplete)       { statusClass = 'status-complete'; statusText = '✓ Complete'; }
+    else if (prog?.status === 'in_progress') { statusClass = 'status-progress'; statusText = 'In progress'; }
+    else                       { statusClass = 'status-unlocked'; statusText = 'Not started'; }
+
+    card.innerHTML = `
+      ${isComplete ? '<svg class="check-icon" viewBox="0 0 20 20" width="20" height="20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/></svg>' : ''}
+      ${!canAccess  ? '<svg class="lock-icon" viewBox="0 0 20 20" width="20" height="20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"/></svg>' : ''}
+      <div class="module-card-num">Module ${mod.num}</div>
+      <div class="module-card-acronym" style="color:${canAccess ? mod.color : 'var(--ltsteel)'}">
+        ${mod.acronym}<sup style="font-size:0.4em;vertical-align:super;">™</sup>
+      </div>
+      <div class="module-card-theme">${mod.theme}</div>
+      <div class="module-card-title">${mod.title}</div>
+      <span class="module-status ${statusClass}">${statusText}</span>
+    `;
+
+    grid.appendChild(card);
+  });
+
+  // Reveal
+  document.getElementById('loadingScreen').style.display  = 'none';
+  document.getElementById('dashHeader').style.display     = 'block';
+  document.getElementById('dashGrid').style.display       = 'block';
+
+  // Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+}
+
+initDashboard();
+</script>
+</body>
+</html>
