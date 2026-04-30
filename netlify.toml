@@ -1,3 +1,12 @@
 [build]
   publish = "."
   functions = "netlify/functions"
+
+[context.production]
+  SECRETS_SCAN_OMIT_KEYS = "SUPABASE_URL"
+
+[context.branch-deploy]
+  SECRETS_SCAN_OMIT_KEYS = "SUPABASE_URL"
+
+[context.deploy-preview]
+  SECRETS_SCAN_OMIT_KEYS = "SUPABASE_URL"
