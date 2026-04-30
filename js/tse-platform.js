@@ -6,7 +6,7 @@
 // ── CONFIG — fill in after creating Supabase project ─────────────────────────
 const TSE_CONFIG = {
   supabaseUrl:     'https://bkfkupyvwfbposjumcyq.supabase.co',
-  supabaseAnonKey: 'sb_publishable_uBXJ0SDLFnAz7UWh_sQtXA_8e50aZjz',
+  supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJrZmt1cHl2d2ZicG9zanVtY3lxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1NTA0NzAsImV4cCI6MjA5MzEyNjQ3MH0.rrRaCKDgwzfvzVjs0W5NGB00WC78Q57XAf_bNGprDHE',
   courseId:        '7c4c6ad1-97a5-4bb1-a214-8a43387119bd',
 };
 // ─────────────────────────────────────────────────────────────────────────────
