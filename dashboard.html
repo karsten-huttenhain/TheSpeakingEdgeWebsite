@@ -259,8 +259,12 @@ async function initDashboard() {
     tseGetProgress(session.user.id),
   ]);
 
+  // TEMP DEBUG — remove once working
+  document.getElementById('firstName').textContent =
+    'DEBUG uid:' + session.user.id.slice(0,8)
+    + ' profile:' + JSON.stringify(profile)
+    + ' access:' + hasAccess;
   const name = tseFirstName(profile?.full_name);
-  document.getElementById('firstName').textContent = name;
   document.getElementById('navUser').textContent = name;
   document.getElementById('navUser').style.display = 'block';
 
