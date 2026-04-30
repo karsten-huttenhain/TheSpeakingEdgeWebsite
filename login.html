@@ -263,10 +263,10 @@ const SUPABASE_URL      = 'https://bkfkupyvwfbposjumcyq.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_uBXJ0SDLFnAz7UWh_sQtXA_8e50aZjz';
 // ─────────────────────────────────────────────────────────────────────────────
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const authClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // Redirect if already logged in
-supabase.auth.getSession().then(({ data: { session } }) => {
+authClient.auth.getSession().then(({ data: { session } }) => {
   if (session) window.location.href = 'dashboard.html';
 });
 
@@ -319,7 +319,7 @@ async function signIn() {
   setLoading('signin-btn', 'signin-spinner', true);
   clearMessages();
 
-  const { error } = await supabase.auth.signInWithPassword({ email, password });
+  const { error } = await authClient.auth.signInWithPassword({ email, password });
 
   if (error) {
     setLoading('signin-btn', 'signin-spinner', false);
@@ -348,7 +348,7 @@ async function signUp() {
   setLoading('signup-btn', 'signup-spinner', true);
   clearMessages();
 
-  const { error } = await supabase.auth.signUp({
+  const { error } = await authClient.auth.signUp({
     email,
     password,
     options: {
@@ -376,7 +376,7 @@ async function forgotPassword(e) {
     return;
   }
   clearMessages();
-  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+  const { error } = await authClient.auth.resetPasswordForEmail(email, {
     redirectTo: window.location.origin + '/dashboard.html'
   });
   if (error) {
