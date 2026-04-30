@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="W.A.R.M.U.P.™ — Module 01 of the Speaking Confidence Programme. A free taster from The Speaking Edge. Start here.">
+<title>Module 01 — W.A.R.M.U.P.™ Free Taster — The Speaking Edge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/gif" href="images/favicon.gif">
+<link rel="stylesheet" href="css/tse.css">
+<style>
+
+/* ── FREE BADGE ── */
+.free-badge-bar {
+  background: var(--gold);
+  padding: 10px 6%;
+  text-align: center;
+}
+.free-badge-bar p {
+  font-size: 0.78rem; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--midnight);
+}
+.free-badge-bar span {
+  background: var(--midnight); color: var(--gold);
+  padding: 2px 10px; border-radius: 2px; margin-right: 8px;
+  font-size: 0.72rem;
+}
+
+/* ── VIDEO SECTION ── */
+.video-section {
+  background: var(--midnight);
+  padding: 60px 6% 80px;
+}
+.video-inner {
+  max-width: 900px; margin: 0 auto;
+}
+.video-placeholder {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #1a2534;
+  border: 1px solid rgba(255,255,255,0.08);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 1.6rem; position: relative; overflow: hidden;
+}
+.video-placeholder-waveform {
+  opacity: 0.12; position: absolute;
+  top: 50%; left: 50%; transform: translate(-50%, -50%);
+}
+.video-placeholder-content {
+  position: relative; z-index: 2;
+  text-align: center;
+}
+.video-placeholder-content svg { margin-bottom: 1.4rem; display: block; margin-left: auto; margin-right: auto; }
+.video-coming-label {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 0.6rem;
+}
+.video-coming-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.1rem, 2vw, 1.6rem);
+  font-weight: 700; color: rgba(255,255,255,0.85);
+  line-height: 1.3;
+}
+
+/* ── PAIN POINT ── */
+.pain-section {
+  background: var(--cream);
+  padding: 80px 6%;
+}
+.pain-inner {
+  max-width: 900px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+}
+.pain-text h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 700;
+  color: var(--midnight); line-height: 1.2; margin-bottom: 1.4rem;
+}
+.pain-text p {
+  font-size: 1rem; line-height: 1.8; color: var(--steel); margin-bottom: 1rem;
+}
+.pain-addresses {
+  background: var(--white);
+  border-left: 4px solid var(--vermillion);
+  padding: 1.4rem 1.8rem;
+}
+.pain-addresses-label {
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--vermillion); margin-bottom: 0.5rem;
+}
+.pain-addresses p {
+  font-size: 0.95rem; line-height: 1.6; color: var(--midnight);
+  font-weight: 600; margin: 0;
+}
+
+/* ── ACRONYM BREAKDOWN ── */
+.acronym-section {
+  background: var(--midnight);
+  padding: 80px 6%;
+}
+.acronym-header {
+  text-align: center; max-width: 560px; margin: 0 auto 4rem;
+}
+.acronym-header h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 700;
+  color: var(--white); line-height: 1.15; margin-bottom: 1rem;
+}
+.acronym-header p {
+  font-size: 1rem; line-height: 1.7; color: rgba(255,255,255,0.55);
+}
+.acronym-grid {
+  display: flex; flex-direction: column;
+  gap: 2px; max-width: 900px; margin: 0 auto;
+}
+.acronym-row {
+  display: grid; grid-template-columns: 80px 1fr;
+  background: rgba(255,255,255,0.03);
+  border-left: 3px solid transparent;
+  transition: all 0.2s;
+}
+.acronym-row:hover {
+  background: rgba(255,255,255,0.06);
+  border-left-color: var(--gold);
+}
+.acronym-letter {
+  display: flex; align-items: center; justify-content: center;
+  padding: 1.8rem 1rem;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 3rem; font-weight: 900;
+  color: var(--vermillion); line-height: 1;
+}
+.acronym-row:nth-child(even) .acronym-letter { color: var(--gold); }
+.acronym-content {
+  padding: 1.8rem 2rem 1.8rem 1rem;
+  border-left: 1px solid rgba(255,255,255,0.06);
+}
+.acronym-title {
+  font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--white); margin-bottom: 0.5rem;
+}
+.acronym-desc {
+  font-size: 0.95rem; line-height: 1.7;
+  color: rgba(255,255,255,0.55);
+}
+
+/* ── WORKBOOK ── */
+.workbook-section {
+  background: var(--cream);
+  padding: 80px 6%;
+}
+.workbook-inner {
+  max-width: 900px; margin: 0 auto;
+  background: var(--white);
+  display: grid; grid-template-columns: 1fr auto;
+  gap: 3rem; align-items: center;
+  padding: 2.8rem 3rem;
+}
+.workbook-icon {
+  width: 48px; height: 48px; margin-bottom: 1.2rem;
+}
+.workbook-text h3 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.4rem; font-weight: 700;
+  color: var(--midnight); margin-bottom: 0.5rem;
+}
+.workbook-text p {
+  font-size: 0.92rem; line-height: 1.7; color: var(--steel); margin-bottom: 0;
+}
+.workbook-badge {
+  display: inline-block; font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--steel); background: var(--ltsteel);
+  padding: 3px 10px; border-radius: 2px; margin-bottom: 0.8rem;
+}
+.btn-download {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  background: var(--midnight); color: var(--white);
+  padding: 14px 28px; border-radius: 4px;
+  font-size: 0.82rem; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; text-decoration: none;
+  transition: background 0.2s; white-space: nowrap;
+  border: none; cursor: not-allowed; opacity: 0.55;
+}
+
+/* ── CTA SECTION ── */
+.course-cta {
+  background: var(--midnight);
+  padding: 100px 6%;
+  text-align: center;
+}
+.course-cta-header {
+  max-width: 580px; margin: 0 auto 4rem;
+}
+.course-cta-header h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 700;
+  color: var(--white); line-height: 1.15; margin-bottom: 1rem;
+}
+.course-cta-header p {
+  font-size: 1rem; line-height: 1.7; color: rgba(255,255,255,0.6);
+}
+.cta-cards {
+  display: flex; gap: 1.5rem; justify-content: center;
+  flex-wrap: wrap; max-width: 1000px; margin: 0 auto;
+}
+.cta-card {
+  flex: 0 1 300px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 2.4rem 2rem;
+  text-align: left; position: relative;
+  transition: background 0.2s;
+}
+.cta-card:hover { background: rgba(255,255,255,0.08); }
+.cta-card.primary {
+  background: var(--vermillion);
+  border-color: var(--vermillion);
+}
+.cta-card.primary:hover { background: var(--vermillion-dark); }
+.cta-card-badge {
+  position: absolute; top: -1px; right: 1.4rem;
+  background: var(--gold); color: var(--midnight);
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; padding: 4px 10px;
+}
+.cta-card h3 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.2rem; font-weight: 700;
+  color: var(--white); margin-bottom: 0.3rem;
+}
+.cta-card-price {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 2rem; font-weight: 900; color: var(--white);
+  line-height: 1; margin-bottom: 0.8rem;
+}
+.cta-card-price span {
+  font-size: 0.85rem; font-weight: 400;
+  font-family: 'Source Sans 3', Arial, sans-serif;
+  color: rgba(255,255,255,0.6);
+}
+.cta-card p {
+  font-size: 0.88rem; line-height: 1.65;
+  color: rgba(255,255,255,0.65); margin-bottom: 1.6rem;
+}
+.cta-card.primary p { color: rgba(255,255,255,0.8); }
+.btn-cta-card {
+  display: block; text-align: center;
+  background: var(--white); color: var(--midnight);
+  padding: 12px 20px; border-radius: 3px;
+  font-size: 0.8rem; font-weight: 700; letter-spacing: 0.07em;
+  text-transform: uppercase; text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+.btn-cta-card:hover { background: var(--cream); }
+.cta-card.primary .btn-cta-card {
+  background: var(--midnight); color: var(--white);
+}
+.cta-card.primary .btn-cta-card:hover { background: #1a252f; }
+.btn-cta-card-outline {
+  display: block; text-align: center;
+  background: transparent; color: rgba(255,255,255,0.7);
+  padding: 12px 20px; border-radius: 3px; border: 1px solid rgba(255,255,255,0.25);
+  font-size: 0.8rem; font-weight: 700; letter-spacing: 0.07em;
+  text-transform: uppercase; text-decoration: none;
+  transition: border-color 0.2s, color 0.2s;
+}
+.btn-cta-card-outline:hover { border-color: rgba(255,255,255,0.6); color: var(--white); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  .pain-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  .workbook-inner { grid-template-columns: 1fr; text-align: center; }
+  .workbook-icon { margin-left: auto; margin-right: auto; }
+}
+@media (max-width: 768px) {
+  .video-section, .pain-section, .acronym-section,
+  .workbook-section, .course-cta { padding-left: 5%; padding-right: 5%; }
+  .acronym-letter { font-size: 2.2rem; padding: 1.4rem 0.8rem; }
+  .workbook-inner { padding: 2rem 1.6rem; }
+  .cta-cards { flex-direction: column; align-items: center; }
+  .cta-card { flex: none; width: 100%; max-width: 360px; }
+}
+</style>
+</head>
+<body>
+
+<div id="tse-nav"></div>
+
+<!-- FREE BADGE BAR -->
+<div class="free-badge-bar">
+  <p><span>Free</span> This is a free taster module — no account required. Modules 02–06 require enrolment.</p>
+</div>
+
+<!-- PAGE HEADER -->
+<header class="page-header">
+  <div class="page-header-eyebrow">The Speaking Confidence Programme — Module 01</div>
+  <h1>W.A.R.M.U.P.<sup style="font-size:0.45em;vertical-align:super;color:var(--gold);">™</sup></h1>
+  <p>Comfortable with being uncomfortable — the psychological foundation of everything that follows.</p>
+</header>
+
+<!-- VIDEO -->
+<section class="video-section">
+  <div class="video-inner reveal">
+    <div class="video-placeholder">
+      <!-- Background waveform -->
+      <svg class="video-placeholder-waveform" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" width="600" aria-hidden="true">
+        <g transform="translate(20,100)">
+          <rect x="0"   y="-20"  width="18" height="40"  rx="9" fill="#FAF6F0"/>
+          <rect x="26"  y="-55"  width="18" height="110" rx="9" fill="#FAF6F0"/>
+          <rect x="52"  y="-35"  width="18" height="70"  rx="9" fill="#FAF6F0"/>
+          <rect x="78"  y="-90"  width="18" height="180" rx="9" fill="#C8392B"/>
+          <rect x="104" y="-45"  width="18" height="90"  rx="9" fill="#FAF6F0"/>
+          <rect x="130" y="-140" width="18" height="280" rx="9" fill="#E8A020"/>
+          <rect x="156" y="-70"  width="18" height="140" rx="9" fill="#FAF6F0"/>
+          <rect x="182" y="-110" width="18" height="220" rx="9" fill="#FAF6F0"/>
+          <rect x="208" y="-50"  width="18" height="100" rx="9" fill="#FAF6F0"/>
+          <rect x="234" y="-30"  width="18" height="60"  rx="9" fill="#FAF6F0"/>
+          <rect x="260" y="-130" width="18" height="260" rx="9" fill="#C8392B"/>
+          <rect x="286" y="-60"  width="18" height="120" rx="9" fill="#FAF6F0"/>
+        </g>
+      </svg>
+      <!-- Foreground content -->
+      <div class="video-placeholder-content">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="56" height="56" aria-hidden="true">
+          <circle cx="32" cy="32" r="30" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+          <polygon points="26,20 48,32 26,44" fill="rgba(255,255,255,0.25)"/>
+        </svg>
+        <div class="video-coming-label">Video coming soon</div>
+        <div class="video-coming-title">Module 01 — W.A.R.M.U.P.™</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT THIS MODULE ADDRESSES -->
+<section class="pain-section">
+  <div class="pain-inner">
+    <div class="pain-text reveal">
+      <div class="section-label">What this module is about</div>
+      <div class="gold-divider"></div>
+      <h2>Before any real work begins, the room has to feel safe enough to take risks.</h2>
+      <p>Most speaking programmes go straight to technique — slides, structure, delivery tips. W.A.R.M.U.P.™ does something different. It creates the psychological conditions that make genuine learning possible in the first place.</p>
+      <p>This is not about getting comfortable with public speaking in general. It is about becoming comfortable with the specific discomfort of being seen, heard and evaluated — so that the real work can begin.</p>
+    </div>
+    <div class="reveal">
+      <div class="pain-addresses">
+        <div class="pain-addresses-label">Barrier addressed</div>
+        <p>Fear of vulnerability and judgement in group learning settings</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACRONYM BREAKDOWN -->
+<section class="acronym-section">
+  <div class="acronym-header reveal">
+    <div class="section-label gold center">The W.A.R.M.U.P.™ framework</div>
+    <div class="gold-divider center"></div>
+    <h2>Six elements. One foundation.</h2>
+    <p>Each letter addresses a specific component of psychological readiness for high-stakes speaking.</p>
+  </div>
+
+  <!-- PLACEHOLDER: Replace titles and descriptions below with final module content -->
+  <div class="acronym-grid">
+
+    <div class="acronym-row reveal">
+      <div class="acronym-letter">W</div>
+      <div class="acronym-content">
+        <div class="acronym-title">Welcome</div>
+        <div class="acronym-desc">Creating the conditions where every voice belongs in the room — and where difference becomes a resource rather than a threat.</div>
+      </div>
+    </div>
+
+    <div class="acronym-row reveal">
+      <div class="acronym-letter">A</div>
+      <div class="acronym-content">
+        <div class="acronym-title">Awareness</div>
+        <div class="acronym-desc">Understanding your own patterns of fear and avoidance — where they live in the body, and how they show up before you've said a word.</div>
+      </div>
+    </div>
+
+    <div class="acronym-row reveal">
+      <div class="acronym-letter">R</div>
+      <div class="acronym-content">
+        <div class="acronym-title">Risk</div>
+        <div class="acronym-desc">Taking the first small steps outside your comfort zone — in a space where getting it wrong is part of the method, not a failure of it.</div>
+      </div>
+    </div>
+
+    <div class="acronym-row reveal">
+      <div class="acronym-letter">M</div>
+      <div class="acronym-content">
+        <div class="acronym-title">Mindset</div>
+        <div class="acronym-desc">Shifting from a fixed mindset — "I am not a confident speaker" — to a growth orientation that makes change genuinely possible.</div>
+      </div>
+    </div>
+
+    <div class="acronym-row reveal">
+      <div class="acronym-letter">U</div>
+      <div class="acronym-content">
+        <div class="acronym-title">Uncomfort</div>
+        <div class="acronym-desc">Learning to tolerate and then embrace discomfort as a signal of growth — not as evidence that something is wrong.</div>
+      </div>
+    </div>
+
+    <div class="acronym-row reveal">
+      <div class="acronym-letter">P</div>
+      <div class="acronym-content">
+        <div class="acronym-title">Play</div>
+        <div class="acronym-desc">The professional's secret weapon: approaching practice with curiosity rather than judgement — which is the only state in which real learning happens.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- WORKBOOK DOWNLOAD -->
+<section class="workbook-section">
+  <div class="workbook-inner reveal">
+    <div>
+      <svg class="workbook-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="8" y="4" width="28" height="36" rx="2" stroke="#2C3E50" stroke-width="2" fill="none"/>
+        <rect x="12" y="12" width="16" height="2" rx="1" fill="#E8A020"/>
+        <rect x="12" y="18" width="16" height="2" rx="1" fill="#ECF0F1"/>
+        <rect x="12" y="24" width="10" height="2" rx="1" fill="#ECF0F1"/>
+        <circle cx="36" cy="36" r="10" fill="#2C3E50"/>
+        <path d="M36 30v8M33 35l3 3 3-3" stroke="#E8A020" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="workbook-badge">Module Workbook</div>
+      <h3>W.A.R.M.U.P.™ Workbook &amp; Reflection Journal</h3>
+      <p>Your companion guide for this module — exercises, prompts and space to work through the W.A.R.M.U.P.™ framework at your own pace.</p>
+    </div>
+    <!-- Download link to be added when PDF is ready -->
+    <button class="btn-download" disabled title="Coming soon">
+      <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M10 2a1 1 0 011 1v8.586l2.293-2.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L9 11.586V3a1 1 0 011-1zM4 16a1 1 0 100 2h12a1 1 0 100-2H4z"/></svg>
+      Download PDF — Coming Soon
+    </button>
+  </div>
+</section>
+
+<!-- CTA SECTION -->
+<section class="course-cta">
+  <div class="course-cta-header reveal">
+    <div class="section-label gold center">Ready to go further?</div>
+    <div class="gold-divider center"></div>
+    <h2>This is where the work begins.</h2>
+    <p>W.A.R.M.U.P.™ is the foundation. Modules 02–06 build everything on top of it — story, body, voice, mind, and integrated delivery.</p>
+  </div>
+
+  <div class="cta-cards">
+
+    <!-- Primary: Online Course -->
+    <div class="cta-card primary reveal">
+      <div class="cta-card-badge">Best value</div>
+      <h3>Online Course</h3>
+      <div class="cta-card-price">£197 <span>one-off</span></div>
+      <p>All six modules. Self-paced online access. Workbooks, reflection journal and submission tools included.</p>
+      <!-- Stripe payment link to be added -->
+      <a href="#enrol" class="btn-cta-card">Unlock the full course</a>
+    </div>
+
+    <!-- Secondary: Live Programme -->
+    <div class="cta-card reveal">
+      <h3>Live Programme</h3>
+      <div class="cta-card-price">£495 <span>per person</span></div>
+      <p>The complete programme delivered live online as a group cohort — six weekly sessions with real-time coaching and peer practice.</p>
+      <a href="https://buy.stripe.com/bJe8wRa420VSd9B4mM6wE00" target="_blank" rel="noopener" class="btn-cta-card">Book your place</a>
+    </div>
+
+    <!-- Tertiary: Discovery Call -->
+    <div class="cta-card reveal">
+      <h3>Not sure yet?</h3>
+      <div class="cta-card-price" style="font-size:1.3rem;padding-top:0.3rem;">Free call</div>
+      <p>A 20-minute conversation to find out which format fits your goals, context and budget. No obligation.</p>
+      <a href="https://tidycal.com/speakingedgeglobal/discovery-call" target="_blank" rel="noopener" class="btn-cta-card-outline">Book a discovery call</a>
+    </div>
+
+  </div>
+</section>
+
+<div id="tse-footer"></div>
+<script src="js/components.js"></script>
+<script src="js/tse.js"></script>
+</body>
+</html>

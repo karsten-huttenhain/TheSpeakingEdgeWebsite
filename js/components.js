@@ -74,6 +74,7 @@ const TSE_NAV = `
   <a href="index.html" class="nav-logo">${TSE_LOGO_SVG}</a>
   <ul class="nav-links">
     <li><a href="programme.html">Programme</a></li>
+    <li><a href="courses.html">Free Module</a></li>
     <li><a href="about.html">About</a></li>
     <li><a href="contact.html">Contact</a></li>
   </ul>
