@@ -267,6 +267,8 @@ footer {
     z-index: 99;
   }
   .nav-toggle { display: flex; }
+  .nav-cta { display: none; }
+  .nav-logo svg { width: 55vw; max-width: 220px; height: auto; }
   .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
 }
 

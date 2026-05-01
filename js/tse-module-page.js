@@ -13,19 +13,19 @@ async function initModulePage() {
   if (!_session) return;
   _userId = _session.user.id;
 
-  // Check course access (free modules skip this)
-  if (!TSE_MODULE_DATA.free) {
+  // Load profile first — needed for admin bypass below
+  const profile = await tseGetProfile(_userId);
+  const el = document.getElementById('navUser');
+  if (el) { el.textContent = tseFirstName(profile?.full_name); el.style.display = 'block'; }
+
+  // Check course access (free modules and admins always pass)
+  if (!TSE_MODULE_DATA.free && profile?.role !== 'admin') {
     const hasAccess = await tseHasCourseAccess(_userId);
     if (!hasAccess) {
       window.location.href = '/dashboard.html';
       return;
     }
   }
-
-  // Load nav user name
-  const profile = await tseGetProfile(_userId);
-  const el = document.getElementById('navUser');
-  if (el) { el.textContent = tseFirstName(profile?.full_name); el.style.display = 'block'; }
 
   // Load progress
   const progressMap = await tseGetProgress(_userId);

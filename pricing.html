@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Enrol in The Speaking Edge — speaking confidence programmes for professionals. Online self-paced, live cohort and corporate formats available.">
+<title>Pricing &amp; Enrolment — The Speaking Edge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/gif" href="images/favicon.gif">
+<link rel="stylesheet" href="css/tse.css">
+<style>
+
+/* ── HERO ── */
+.pricing-hero {
+  background: var(--midnight);
+  padding: 130px 6% 80px;
+  text-align: center;
+  border-bottom: 3px solid var(--gold);
+}
+.pricing-hero h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2.2rem, 4vw, 3.4rem);
+  font-weight: 700; color: var(--white);
+  line-height: 1.1; margin-bottom: 1.2rem;
+}
+.pricing-hero p {
+  font-size: 1.05rem; color: rgba(255,255,255,0.6);
+  max-width: 540px; margin: 0 auto; line-height: 1.7;
+}
+
+/* ── SHARED SECTION UTILITIES ── */
+.section-label {
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem;
+}
+.section-label.light { color: rgba(232,160,32,0.8); }
+.gold-divider {
+  width: 40px; height: 2px; background: var(--gold); margin-bottom: 1.6rem;
+}
+.center { text-align: center; margin-left: auto; margin-right: auto; }
+
+/* ── PRICING SECTIONS ── */
+.pricing-section { padding: 100px 6%; background: var(--cream); }
+.pricing-section.bosswell-section { background: var(--midnight); }
+
+.pricing-section-header {
+  text-align: center; max-width: 580px; margin: 0 auto 5rem;
+}
+.pricing-section-header h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 700;
+  color: var(--midnight); line-height: 1.15; margin-bottom: 1rem;
+}
+.bosswell-section .pricing-section-header h2 { color: var(--white); }
+.pricing-section-header p {
+  font-size: 1rem; line-height: 1.7; color: var(--steel);
+}
+.bosswell-section .pricing-section-header p { color: rgba(255,255,255,0.55); }
+
+/* ── PRICING GRID ── */
+.pricing-grid {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: 1.5rem; max-width: 1140px; margin: 0 auto 2rem;
+}
+.price-card {
+  flex: 0 1 260px;
+  background: var(--white); padding: 2.4rem 2rem;
+  position: relative; display: flex; flex-direction: column;
+  border-top: 3px solid var(--ltsteel);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.price-card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(44,62,80,0.10); }
+.price-card.featured { border-top-color: var(--vermillion); }
+.price-card.gold-top { border-top-color: var(--gold); }
+.price-card.placeholder { border-style: dashed; border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.04); }
+.price-card.placeholder:hover { transform: none; box-shadow: none; }
+
+.price-card-badge {
+  position: absolute; top: -1px; right: 1.6rem;
+  background: var(--vermillion); color: #fff;
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; padding: 4px 12px;
+}
+.price-card-top { margin-bottom: 1.6rem; }
+.price-label {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.3rem; font-weight: 700; color: var(--midnight);
+  margin-bottom: 0.3rem;
+}
+.placeholder .price-label { color: rgba(255,255,255,0.55); }
+.price-format {
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--steel); margin-bottom: 1.2rem;
+}
+.placeholder .price-format { color: rgba(255,255,255,0.3); }
+.price-amount {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 2.2rem; font-weight: 900; color: var(--midnight);
+  line-height: 1; margin-bottom: 1rem;
+}
+.price-amount span {
+  font-size: 0.85rem; font-weight: 400; color: var(--steel);
+  font-family: 'Source Sans 3', Arial, sans-serif;
+}
+.placeholder .price-amount { color: rgba(255,255,255,0.4); }
+.price-desc { font-size: 0.88rem; line-height: 1.7; color: var(--steel); }
+.placeholder .price-desc { color: rgba(255,255,255,0.35); }
+
+.price-includes {
+  list-style: none; display: flex; flex-direction: column;
+  gap: 0.5rem; margin-bottom: 1.8rem; flex: 1; margin-top: 1.2rem;
+}
+.price-includes li {
+  font-size: 0.83rem; color: var(--midnight); font-weight: 600;
+  padding-left: 1.4rem; position: relative; line-height: 1.5;
+}
+.price-includes li::before { content: '—'; position: absolute; left: 0; color: var(--gold); }
+.placeholder .price-includes li { color: rgba(255,255,255,0.4); }
+
+.btn-price {
+  display: block; text-align: center;
+  background: var(--midnight); color: var(--white);
+  padding: 12px 24px; font-size: 0.82rem; font-weight: 700;
+  letter-spacing: 0.07em; text-transform: uppercase;
+  text-decoration: none; transition: background 0.2s; margin-top: auto;
+}
+.btn-price:hover { background: var(--vermillion); }
+.price-card.featured .btn-price { background: var(--vermillion); }
+.price-card.featured .btn-price:hover { background: var(--vermillion-dark); }
+.btn-price.btn-disabled {
+  background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.3);
+  cursor: default; pointer-events: none;
+}
+
+.pricing-note {
+  text-align: center; font-size: 0.82rem; color: var(--steel);
+  max-width: 600px; margin: 2rem auto 0; line-height: 1.7;
+}
+.pricing-note a { color: var(--vermillion); text-decoration: none; }
+.pricing-note a:hover { text-decoration: underline; }
+.bosswell-section .pricing-note { color: rgba(255,255,255,0.35); }
+
+/* ── BOSSWELL DIVIDER ── */
+.company-divider {
+  display: flex; align-items: center; gap: 1.5rem;
+  margin: 0 auto 5rem; max-width: 800px;
+}
+.company-divider::before, .company-divider::after {
+  content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.12);
+}
+.company-name {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 2.2rem; font-weight: 900;
+  color: var(--white); letter-spacing: -0.02em; white-space: nowrap;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .price-card { flex: 0 1 300px; }
+}
+@media (max-width: 680px) {
+  .pricing-section { padding-left: 5%; padding-right: 5%; }
+  .pricing-hero { padding-left: 5%; padding-right: 5%; }
+  .price-card { flex: 1 1 100%; }
+}
+
+</style>
+</head>
+<body>
+
+<div id="tse-nav"></div>
+
+<!-- HERO -->
+<section class="pricing-hero">
+  <div class="section-label center">Enrol</div>
+  <div class="gold-divider center"></div>
+  <h1>Find your speaking edge.</h1>
+  <p>Every format delivers the same methodology — adapted for your context, goals and budget. Choose what works for you.</p>
+</section>
+
+
+<!-- ══ THE SPEAKING EDGE ══════════════════════════════════════════ -->
+<section class="pricing-section" id="tse">
+
+  <div class="pricing-section-header">
+    <div class="section-label center">The Speaking Edge</div>
+    <div class="gold-divider center"></div>
+    <h2>Speaking Confidence Programme</h2>
+    <p>Six modules built on acting technique, communication craft and personal transformation. Start free or commit to the full programme.</p>
+  </div>
+
+  <div class="pricing-grid">
+
+    <!-- Free taster -->
+    <div class="price-card reveal">
+      <div class="price-card-top">
+        <div class="price-label">Free Taster</div>
+        <div class="price-format">Online · Self-paced · No commitment</div>
+        <div class="price-amount">Free</div>
+        <div class="price-desc">Try the W.A.R.M.U.P.™ introduction module at no cost. Create an account and access it immediately.</div>
+      </div>
+      <ul class="price-includes">
+        <li>W.A.R.M.U.P.™ — full introduction module</li>
+        <li>Private reflection journal</li>
+        <li>Practice video submission</li>
+        <li>No card required</li>
+      </ul>
+      <a href="login.html" class="btn-price">Start for free</a>
+    </div>
+
+    <!-- Online self-paced — featured -->
+    <div class="price-card featured reveal">
+      <div class="price-card-badge">Most popular</div>
+      <div class="price-card-top">
+        <div class="price-label">Online Programme</div>
+        <div class="price-format">Self-paced · All 6 modules · Lifetime access</div>
+        <div class="price-amount">£197</div>
+        <div class="price-desc">The complete Speaking Confidence Programme at your own pace. Lifetime access to all six modules, tools and future updates.</div>
+      </div>
+      <ul class="price-includes">
+        <li>All 6 modules — W.A.R.M.U.P.™ through I.M.P.A.C.T. T.H.E.M.™</li>
+        <li>Video lessons for each module</li>
+        <li>Private reflection journal</li>
+        <li>Practice video submission per module</li>
+        <li>Lifetime access</li>
+      </ul>
+      <a href="https://buy.stripe.com/bJe8wRa420VSd9B4mM6wE00" target="_blank" rel="noopener" class="btn-price">Enrol now — £197</a>
+    </div>
+
+    <!-- Live 6-week programme -->
+    <div class="price-card gold-top reveal">
+      <div class="price-card-top">
+        <div class="price-label">Live Programme</div>
+        <div class="price-format">Live online · Group cohort · Fixed dates</div>
+        <div class="price-amount">£495 <span>per person</span></div>
+        <div class="price-desc">The complete programme delivered live as a facilitated group cohort. The most intensive and interactive format.</div>
+      </div>
+      <ul class="price-includes">
+        <li>All six modules delivered live</li>
+        <li>Facilitated sessions with peer practice</li>
+        <li>Downloadable workbook</li>
+        <li>Access to recordings</li>
+        <li>Personal development plan</li>
+      </ul>
+      <a href="https://forms.gle/43pDkqfoQdtGBK9v8" target="_blank" rel="noopener" class="btn-price">Join the waitlist</a>
+    </div>
+
+    <!-- Corporate -->
+    <div class="price-card reveal">
+      <div class="price-card-top">
+        <div class="price-label">Corporate Workshop</div>
+        <div class="price-format">In-person or online · Bespoke · Your team</div>
+        <div class="price-amount">From £895</div>
+        <div class="price-desc">A bespoke workshop tailored to your team, sector and communication challenges. Half or full day, up to 20 participants.</div>
+      </div>
+      <ul class="price-includes">
+        <li>Half day (3 hrs) — from £895</li>
+        <li>Full day (6 hrs) — from £1,500</li>
+        <li>Up to 20 participants</li>
+        <li>Fully tailored content and exercises</li>
+        <li>Travel and expenses additional outside Edinburgh</li>
+      </ul>
+      <a href="contact.html" class="btn-price">Discuss your needs</a>
+    </div>
+
+  </div>
+
+  <p class="pricing-note">All prices exclude VAT. Corporate pricing is for groups based in the UK. <a href="contact.html">Get in touch</a> to discuss international delivery, bespoke packages or group discounts.</p>
+
+</section>
+
+
+<!-- ══ BOSSWELL ═══════════════════════════════════════════════════ -->
+<section class="pricing-section bosswell-section" id="bosswell">
+
+  <div class="company-divider">
+    <div class="company-name">Bosswell</div>
+  </div>
+
+  <div class="pricing-section-header">
+    <div class="section-label light center">Partner Programme</div>
+    <div class="gold-divider center"></div>
+    <h2>Bosswell Courses</h2>
+    <p>Bosswell course descriptions and pricing to be added here. Placeholder cards below — update with course names, prices and Stripe links when ready.</p>
+  </div>
+
+  <div class="pricing-grid">
+
+    <!-- Placeholder card 1 -->
+    <div class="price-card placeholder">
+      <div class="price-card-top">
+        <div class="price-label">Course Name TBD</div>
+        <div class="price-format">Format TBD</div>
+        <div class="price-amount">£TBD</div>
+        <div class="price-desc">Course description to be added.</div>
+      </div>
+      <ul class="price-includes">
+        <li>Module details TBD</li>
+        <li>Module details TBD</li>
+        <li>Module details TBD</li>
+      </ul>
+      <a href="#" class="btn-price btn-disabled">Coming soon</a>
+    </div>
+
+    <!-- Placeholder card 2 -->
+    <div class="price-card placeholder">
+      <div class="price-card-top">
+        <div class="price-label">Course Name TBD</div>
+        <div class="price-format">Format TBD</div>
+        <div class="price-amount">£TBD</div>
+        <div class="price-desc">Course description to be added.</div>
+      </div>
+      <ul class="price-includes">
+        <li>Module details TBD</li>
+        <li>Module details TBD</li>
+        <li>Module details TBD</li>
+      </ul>
+      <a href="#" class="btn-price btn-disabled">Coming soon</a>
+    </div>
+
+    <!-- Placeholder card 3 -->
+    <div class="price-card placeholder">
+      <div class="price-card-top">
+        <div class="price-label">Course Name TBD</div>
+        <div class="price-format">Format TBD</div>
+        <div class="price-amount">£TBD</div>
+        <div class="price-desc">Course description to be added.</div>
+      </div>
+      <ul class="price-includes">
+        <li>Module details TBD</li>
+        <li>Module details TBD</li>
+        <li>Module details TBD</li>
+      </ul>
+      <a href="#" class="btn-price btn-disabled">Coming soon</a>
+    </div>
+
+  </div>
+
+  <p class="pricing-note">Replace placeholder hrefs above with Bosswell Stripe payment links when courses are ready.</p>
+
+</section>
+
+
+<div id="tse-footer"></div>
+<script src="js/components.js"></script>
+<script src="js/tse.js"></script>
+</body>
+</html>
