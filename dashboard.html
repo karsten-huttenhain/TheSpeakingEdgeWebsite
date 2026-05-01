@@ -261,10 +261,11 @@ async function initDashboard() {
   const session = await tseRequireAuth();
   if (!session) return;
 
-  const [profile, hasAccess, progressMap] = await Promise.all([
+  const [profile, hasAccess, progressMap, modules] = await Promise.all([
     tseGetProfile(session.user.id),
     tseHasCourseAccess(session.user.id),
     tseGetProgress(session.user.id),
+    tseGetModules(TSE_CONFIG.courseId),
   ]);
 
   const name = tseFirstName(profile?.full_name);
@@ -276,9 +277,9 @@ async function initDashboard() {
   }
 
   // Progress
-  const completed = TSE_MODULES.filter(m => progressMap[m.id]?.status === 'complete').length;
-  document.getElementById('progressText').textContent = `${completed} of 6 modules complete`;
-  document.getElementById('progressFill').style.width = `${Math.round((completed / 6) * 100)}%`;
+  const completed = modules.filter(m => progressMap[m.slug]?.status === 'complete').length;
+  document.getElementById('progressText').textContent = `${completed} of ${modules.length} modules complete`;
+  document.getElementById('progressFill').style.width = `${modules.length ? Math.round((completed / modules.length) * 100) : 0}%`;
 
   // Upgrade banner
   if (!hasAccess) {
@@ -287,23 +288,22 @@ async function initDashboard() {
 
   // Build module grid
   const grid = document.getElementById('moduleGrid');
-  TSE_MODULES.forEach(mod => {
-    const prog    = progressMap[mod.id];
+  modules.forEach(mod => {
+    const prog       = progressMap[mod.slug];
     const isComplete = prog?.status === 'complete';
-    const canAccess  = mod.free || hasAccess;
+    const canAccess  = mod.is_free || hasAccess;
+    const numStr     = String(mod.module_number).padStart(2, '0');
 
     const card = document.createElement('a');
-    card.href  = canAccess ? mod.url : '#';
+    card.href  = canAccess ? `/dashboard/module.html?m=${mod.slug}` : '#';
     card.className = 'module-card reveal'
       + (isComplete ? ' complete' : '')
       + (!canAccess  ? ' locked'   : '');
 
-    // Accent colour on top border
     if (canAccess && !isComplete) card.style.borderTopColor = mod.color;
 
-    // Status label
     let statusClass, statusText;
-    if (mod.free)              { statusClass = 'status-free';     statusText = 'Free module'; }
+    if (mod.is_free)           { statusClass = 'status-free';     statusText = 'Free module'; }
     else if (!hasAccess)       { statusClass = 'status-locked';   statusText = '🔒 Locked'; }
     else if (isComplete)       { statusClass = 'status-complete'; statusText = '✓ Complete'; }
     else if (prog?.status === 'in_progress') { statusClass = 'status-progress'; statusText = 'In progress'; }
@@ -312,7 +312,7 @@ async function initDashboard() {
     card.innerHTML = `
       ${isComplete ? '<svg class="check-icon" viewBox="0 0 20 20" width="20" height="20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/></svg>' : ''}
       ${!canAccess  ? '<svg class="lock-icon" viewBox="0 0 20 20" width="20" height="20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"/></svg>' : ''}
-      <div class="module-card-num">Module ${mod.num}</div>
+      <div class="module-card-num">Module ${numStr}</div>
       <div class="module-card-acronym" style="color:${canAccess ? mod.color : 'var(--ltsteel)'}">
         ${mod.acronym}<sup style="font-size:0.4em;vertical-align:super;">™</sup>
       </div>

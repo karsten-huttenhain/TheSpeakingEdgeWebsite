@@ -254,11 +254,12 @@ async function initAdmin() {
   if (navUser) { navUser.textContent = tseFirstName(profile.full_name); navUser.style.display = 'block'; }
 
   // Load all data
-  const [studentsRes, accessRes, progressRes, subsRes] = await Promise.all([
+  const [studentsRes, accessRes, progressRes, subsRes, modules] = await Promise.all([
     db.from('profiles').select('id, full_name, created_at').eq('role', 'student').order('created_at', { ascending: false }),
     db.from('course_access').select('user_id, granted_at'),
     db.from('progress').select('user_id, module_id, status'),
     db.from('submissions').select('user_id, module_id, created_at'),
+    tseGetModules(TSE_CONFIG.courseId),
   ]);
 
   const students    = studentsRes.data  || [];
@@ -300,8 +301,8 @@ async function initAdmin() {
         day: 'numeric', month: 'short', year: 'numeric'
       });
 
-      const dots = TSE_MODULES.map(m => {
-        const s = userProgress[m.id];
+      const dots = modules.map(m => {
+        const s = userProgress[m.slug];
         if (s === 'complete')    return `<span class="mod-dot complete" title="${m.acronym}">✓</span>`;
         if (s === 'in_progress') return `<span class="mod-dot started"  title="${m.acronym}">▸</span>`;
         return                          `<span class="mod-dot none"     title="${m.acronym}"></span>`;
@@ -315,7 +316,7 @@ async function initAdmin() {
           : '<span class="tag free">Free only</span>'}</td>
         <td>
           <div class="mod-dots">${dots}</div>
-          <span class="prog-text">${completed} of 6 complete</span>
+          <span class="prog-text">${completed} of ${modules.length} complete</span>
         </td>
         <td class="${subCount ? '' : 'text-muted'}">${subCount || '—'}</td>
         <td class="text-muted">${joined}</td>

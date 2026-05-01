@@ -13,63 +13,25 @@ const TSE_CONFIG = {
 
 const db = window.supabase.createClient(TSE_CONFIG.supabaseUrl, TSE_CONFIG.supabaseAnonKey);
 
-// ── MODULE REGISTRY ───────────────────────────────────────────────────────────
-const TSE_MODULES = [
-  {
-    id: '01-warmup', num: '01',
-    acronym: 'W.A.R.M.U.P.', tm: true,
-    theme: 'Introduction',
-    title: 'Comfortable with being uncomfortable',
-    color: '#C8392B',
-    url: '/courses.html',
-    free: true,
-  },
-  {
-    id: '02-scribe', num: '02',
-    acronym: 'S.C.R.I.B.E.', tm: true,
-    theme: 'Story',
-    title: 'The art of storytelling',
-    color: '#E8A020',
-    url: '/dashboard/02-scribe.html',
-    free: false,
-  },
-  {
-    id: '03-physcl', num: '03',
-    acronym: 'P.H.Y.S.C.L.', tm: true,
-    theme: 'Body',
-    title: 'Connecting with the body as a communication tool',
-    color: '#4A7A8A',
-    url: '/dashboard/03-physcl.html',
-    free: false,
-  },
-  {
-    id: '04-voices', num: '04',
-    acronym: 'V.O.I.C.E.S.', tm: true,
-    theme: 'Voice',
-    title: 'Developing vocal delivery and control',
-    color: '#C8392B',
-    url: '/dashboard/04-voices.html',
-    free: false,
-  },
-  {
-    id: '05-rainbows', num: '05',
-    acronym: 'R.A.I.N.B.O.W.S.', tm: true,
-    theme: 'Mind',
-    title: 'Managing fear and building a growth mindset',
-    color: '#E8A020',
-    url: '/dashboard/05-rainbows.html',
-    free: false,
-  },
-  {
-    id: '06-impact', num: '06',
-    acronym: 'I.M.P.A.C.T. T.H.E.M.', tm: true,
-    theme: 'Delivery',
-    title: 'Delivery mastery — integrating all skills',
-    color: '#27AE60',
-    url: '/dashboard/06-impact.html',
-    free: false,
-  },
-];
+// ── MODULES (database-driven) ─────────────────────────────────────────────────
+async function tseGetModules(courseId) {
+  const { data } = await db
+    .from('modules')
+    .select('id, slug, module_number, acronym, theme, title, color, is_free, sort_order')
+    .eq('course_id', courseId || TSE_CONFIG.courseId)
+    .order('sort_order');
+  return data || [];
+}
+
+async function tseGetModule(slug, courseId) {
+  const { data } = await db
+    .from('modules')
+    .select('*')
+    .eq('course_id', courseId || TSE_CONFIG.courseId)
+    .eq('slug', slug)
+    .single();
+  return data;
+}
 
 // ── AUTH ──────────────────────────────────────────────────────────────────────
 async function tseGetSession() {

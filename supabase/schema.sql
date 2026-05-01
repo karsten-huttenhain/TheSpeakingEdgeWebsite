@@ -216,3 +216,67 @@ create policy "storage: own read"
     bucket_id = 'participant-submissions'
     and auth.uid()::text = (string_to_array(name, '/'))[2]
   );
+
+
+-- ════════════════════════════════════════════════════════════════
+-- MODULES TABLE
+-- Run this after the initial schema to enable database-driven modules.
+-- ════════════════════════════════════════════════════════════════
+
+create table public.modules (
+  id                  uuid primary key default gen_random_uuid(),
+  course_id           uuid not null references public.courses on delete cascade,
+  slug                text not null,
+  module_number       int  not null,
+  acronym             text not null,
+  theme               text not null,
+  title               text not null,
+  color               text not null default '#C8392B',
+  is_free             boolean not null default false,
+  about_text          text,
+  quote               text,
+  upload_instructions text,
+  video_url           text,
+  sort_order          int  not null default 0,
+  created_at          timestamptz default now(),
+  unique (course_id, slug),
+  unique (course_id, sort_order)
+);
+
+alter table public.modules enable row level security;
+
+-- Anyone (including unauthenticated) can read module metadata
+create policy "modules_public_read" on public.modules
+  for select using (true);
+
+-- Only admins can create/edit/delete modules
+create policy "modules_admin_write" on public.modules
+  for all
+  using (public.get_user_role() = 'admin')
+  with check (public.get_user_role() = 'admin');
+
+grant select on public.modules to anon, authenticated;
+grant insert, update, delete on public.modules to authenticated;
+
+-- ── SEED: Speaking Confidence Programme modules ────────────────
+insert into public.modules
+  (course_id, slug, module_number, acronym, theme, title, color, is_free, quote, sort_order)
+values
+  ('7c4c6ad1-97a5-4bb1-a214-8a43387119bd', '01-warmup',   1, 'W.A.R.M.U.P.',
+   'Introduction', 'Comfortable with being uncomfortable', '#C8392B', true,
+   '"The body achieves what the mind believes. Get comfortable with discomfort."', 10),
+  ('7c4c6ad1-97a5-4bb1-a214-8a43387119bd', '02-scribe',   2, 'S.C.R.I.B.E.',
+   'Story', 'The art of storytelling', '#E8A020', false,
+   '"Facts inform. Stories persuade. The best speakers know the difference."', 20),
+  ('7c4c6ad1-97a5-4bb1-a214-8a43387119bd', '03-physcl',   3, 'P.H.Y.S.C.L.',
+   'Body', 'Connecting with the body as a communication tool', '#4A7A8A', false,
+   '"Your body speaks before you open your mouth. Make sure it says the right thing."', 30),
+  ('7c4c6ad1-97a5-4bb1-a214-8a43387119bd', '04-voices',   4, 'V.O.I.C.E.S.',
+   'Voice', 'Developing vocal delivery and control', '#C8392B', false,
+   '"The voice is an instrument. Like any instrument, it rewards daily practice."', 40),
+  ('7c4c6ad1-97a5-4bb1-a214-8a43387119bd', '05-rainbows', 5, 'R.A.I.N.B.O.W.S.',
+   'Mind', 'Managing fear and building a growth mindset', '#E8A020', false,
+   '"Nerves are not the enemy — they are energy waiting to be directed."', 50),
+  ('7c4c6ad1-97a5-4bb1-a214-8a43387119bd', '06-impact',   6, 'I.M.P.A.C.T. T.H.E.M.',
+   'Delivery', 'Delivery mastery — integrating all skills', '#27AE60', false,
+   '"The goal is not perfection. The goal is presence, clarity, and connection."', 60);

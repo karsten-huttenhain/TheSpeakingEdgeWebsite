@@ -159,5 +159,4 @@ function showUploadMessage(msg, type) {
   el.className = 'upload-message ' + (type || '');
 }
 
-// ── START ─────────────────────────────────────────────────────────────────────
-initModulePage();
+// ── START: called explicitly by each module page after setting TSE_MODULE_DATA ─
