@@ -143,13 +143,8 @@ async function initGenericModule() {
     quoteEl.style.display = '';
   }
 
-  if (mod.video_url) {
-    document.getElementById('videoPlaceholder').style.display = 'none';
-    document.getElementById('videoIframe').src = mod.video_url;
-    document.getElementById('videoEmbed').style.display = '';
-  } else {
-    document.getElementById('vpTitle').textContent = `Module ${numStr} — ${mod.acronym}™`;
-  }
+  // Video title for placeholder (shown until/unless video loads)
+  document.getElementById('vpTitle').textContent = `Module ${numStr} — ${mod.acronym}™`;
 
   if (mod.about_text) {
     document.getElementById('moduleAbout').innerHTML = mod.about_text;
@@ -181,6 +176,36 @@ async function initGenericModule() {
   }
 
   await initModulePage();
+
+  if (mod.bunny_video_id) {
+    loadVideo(mod.bunny_video_id);
+  }
+}
+
+async function loadVideo(videoId) {
+  try {
+    const { data: { session } } = await db.auth.getSession();
+    if (!session) return;
+
+    const res = await fetch('/.netlify/functions/get-video-url', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${session.access_token}`,
+      },
+      body: JSON.stringify({ videoId }),
+    });
+
+    if (!res.ok) throw new Error(`Function returned ${res.status}`);
+
+    const { embedUrl } = await res.json();
+    document.getElementById('videoPlaceholder').style.display = 'none';
+    document.getElementById('videoIframe').src = embedUrl;
+    document.getElementById('videoEmbed').style.display = '';
+  } catch (err) {
+    console.error('Video load error:', err);
+    // Placeholder remains visible on error
+  }
 }
 
 initGenericModule();
