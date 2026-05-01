@@ -110,6 +110,23 @@
   font-style: italic; line-height: 1.6;
   border-top: 1px solid rgba(255,255,255,0.07); padding-top: 1.2rem; margin-top: auto;
 }
+.exp-barrier {
+  border-top: 1px solid rgba(255,255,255,0.07);
+  padding-top: 1.2rem; margin-top: auto;
+}
+.exp-barrier-label {
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--mc); opacity: 0.7; margin-bottom: 0.35rem;
+}
+.exp-barrier h4 {
+  font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; color: rgba(255,255,255,0.65);
+  margin-bottom: 0.3rem;
+}
+.exp-barrier p {
+  font-size: 0.72rem; color: rgba(255,255,255,0.32);
+  font-style: italic; line-height: 1.6; margin: 0;
+}
 
 /* Hint dots */
 .module-hint {
@@ -167,10 +184,11 @@
 }
 .delivery-header p { font-size: 1rem; line-height: 1.7; color: rgba(255,255,255,0.6); }
 .dcards {
-  display: grid; grid-template-columns: repeat(3, 1fr);
+  display: flex; flex-wrap: wrap; justify-content: center;
   gap: 2px; max-width: 1100px; margin: 0 auto;
 }
 .dcard {
+  flex: 1 1 280px; max-width: 400px;
   background: rgba(255,255,255,0.04); padding: 2.8rem 2.2rem;
   position: relative; transition: background 0.2s;
 }
@@ -236,11 +254,11 @@
   .panel-letters { flex-direction: row; gap: 0; }
   .panel-letters span { font-size: 1.1rem; }
   .barriers-inner { grid-template-columns: 1fr; gap: 3rem; }
-  .dcards { grid-template-columns: 1fr 1fr; }
+  .dcard { max-width: 480px; }
   .act-inner { grid-template-columns: 1fr; gap: 3rem; }
 }
 @media (max-width: 768px) {
-  .dcards { grid-template-columns: 1fr; }
+  .dcard { max-width: 100%; }
   .barriers-section, .act-section, .delivery-section { padding-left: 5%; padding-right: 5%; }
 }
 
@@ -361,8 +379,8 @@
   <div class="modules-header">
     <div class="section-label gold center">The programme</div>
     <div class="gold-divider center"></div>
-    <h2>Select a module to explore</h2>
-    <p>Every barrier to confident speaking has a specific solution. Click any module to discover what it addresses — and what changes when you do.</p>
+    <h2>Six Barriers. <em>Six Solutions.</em></h2>
+    <p>The Speaking Confidence Programme was built by identifying the six most consistent barriers to confident professional speaking — then designing a precise solution for each one. Click any module to explore what it addresses.</p>
   </div>
 
   <div class="module-strip" id="moduleStrip">
@@ -383,7 +401,11 @@
             <p class="exp-desc">The foundation of everything. This module creates the psychological conditions that make genuine learning possible — turning a room of nervous professionals into a group ready to do something difficult together.</p>
             <span class="exp-tag">Psychological safety &amp; play</span>
           </div>
-          <p class="exp-focus">Addresses: fear of vulnerability and judgement in group learning settings</p>
+          <div class="exp-barrier">
+            <div class="exp-barrier-label">Barrier 01</div>
+            <h4>Psychological unsafety</h4>
+            <p>The fear of being judged, exposed or embarrassed — solved before anything else begins.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -404,7 +426,11 @@
             <p class="exp-desc">Most professionals know what they want to say. Fewer know how to make it land. This module teaches the architecture of compelling narrative — from the opening hook to the close that drives action.</p>
             <span class="exp-tag">Narrative &amp; structure</span>
           </div>
-          <p class="exp-focus">Addresses: inability to craft and deliver messages that stick</p>
+          <div class="exp-barrier">
+            <div class="exp-barrier-label">Barrier 02</div>
+            <h4>Weak storytelling</h4>
+            <p>Messages that don't land, don't persuade and aren't remembered — rebuilt from the ground up.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -425,7 +451,11 @@
             <p class="exp-desc">Before a word is spoken, the body has already communicated. Posture, gesture, stillness, eye contact — each a deliberate instrument of authority. This module teaches professionals to use them intentionally.</p>
             <span class="exp-tag">Presence &amp; physicality</span>
           </div>
-          <p class="exp-focus">Addresses: disconnection from the body as a communication instrument</p>
+          <div class="exp-barrier">
+            <div class="exp-barrier-label">Barrier 03</div>
+            <h4>Disconnected physicality</h4>
+            <p>A body that undermines what the voice is saying — brought back into alignment.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -446,7 +476,11 @@
             <p class="exp-desc">Pace, pitch, resonance, silence — the elements of a voice that commands attention rather than simply filling space. This module treats the voice as the instrument it is.</p>
             <span class="exp-tag">Vocal technique &amp; control</span>
           </div>
-          <p class="exp-focus">Addresses: underdeveloped and uncontrolled vocal delivery</p>
+          <div class="exp-barrier">
+            <div class="exp-barrier-label">Barrier 04</div>
+            <h4>Undeveloped voice</h4>
+            <p>A voice that fills space but doesn't command it — trained as the instrument it is.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -467,7 +501,11 @@
             <p class="exp-desc">The most common barrier to speaking confidence is psychological. This module addresses the fear response at its source — building the internal conditions for calm, focused performance under pressure.</p>
             <span class="exp-tag">Mindset &amp; fear management</span>
           </div>
-          <p class="exp-focus">Addresses: unmanaged fear and a fixed mindset around speaking</p>
+          <div class="exp-barrier">
+            <div class="exp-barrier-label">Barrier 05</div>
+            <h4>Unmanaged fear</h4>
+            <p>Anxiety that produces a diminished version of the speaker — addressed at its physical source.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -488,7 +526,11 @@
             <p class="exp-desc">The capstone. Voice, story, mind and body — brought together under real performance conditions. Participants deliver, receive structured feedback, and leave with a personal development plan for what comes next.</p>
             <span class="exp-tag">Integration &amp; performance</span>
           </div>
-          <p class="exp-focus">Addresses: inability to integrate skills and perform under real conditions</p>
+          <div class="exp-barrier">
+            <div class="exp-barrier-label">Barrier 06</div>
+            <h4>Skills that don't transfer</h4>
+            <p>Techniques that work in practice but collapse under pressure — integrated until they're fluent.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -503,73 +545,26 @@
   </div>
 </section>
 
-<!-- SIX BARRIERS -->
-<section class="barriers-section">
-  <div class="barriers-inner">
-    <div class="barriers-text reveal">
-      <div class="section-label">Six barriers. Six solutions.</div>
-      <div class="gold-divider"></div>
-      <h2>Every module solves a specific problem</h2>
-      <p>The Speaking Confidence Programme was built by identifying the six most consistent barriers to confident professional speaking — then designing a precise solution for each one.</p>
-      <p>Nothing is generic. Nothing is filler. Each module addresses exactly what it says it does.</p>
-      <a href="pricing.html" class="btn-primary" style="margin-top:1.4rem;">View pricing &amp; enrol</a>
-    </div>
-    <div class="barrier-list">
-      <div class="barrier reveal">
-        <div class="b-num">01</div>
-        <div class="b-text">
-          <h4>Psychological unsafety</h4>
-          <p>The fear of being judged, exposed or embarrassed — solved before anything else begins.</p>
-        </div>
-      </div>
-      <div class="barrier reveal">
-        <div class="b-num">02</div>
-        <div class="b-text">
-          <h4>Weak storytelling</h4>
-          <p>Messages that don't land, don't persuade and aren't remembered — rebuilt from the ground up.</p>
-        </div>
-      </div>
-      <div class="barrier reveal">
-        <div class="b-num">03</div>
-        <div class="b-text">
-          <h4>Disconnected physicality</h4>
-          <p>A body that undermines what the voice is saying — brought back into alignment.</p>
-        </div>
-      </div>
-      <div class="barrier reveal">
-        <div class="b-num">04</div>
-        <div class="b-text">
-          <h4>Undeveloped voice</h4>
-          <p>A voice that fills space but doesn't command it — trained as the instrument it is.</p>
-        </div>
-      </div>
-      <div class="barrier reveal">
-        <div class="b-num">05</div>
-        <div class="b-text">
-          <h4>Unmanaged fear</h4>
-          <p>Anxiety that produces a diminished version of the speaker — addressed at its physical source.</p>
-        </div>
-      </div>
-      <div class="barrier reveal">
-        <div class="b-num">06</div>
-        <div class="b-text">
-          <h4>Skills that don't transfer</h4>
-          <p>Techniques that work in practice but collapse under pressure — integrated until they're fluent.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- DELIVERY -->
 <section class="delivery-section">
   <div class="delivery-header">
     <div class="section-label gold center">How we work</div>
     <div class="gold-divider center"></div>
-    <h2>Two ways to experience the programme</h2>
+    <h2>Three ways to access the programme</h2>
     <p>Formats can be combined or offered independently. Each delivers the full methodology — adapted for context and scale.</p>
   </div>
   <div class="dcards">
+    <div class="dcard d1 reveal">
+      <h3>Online Self-Paced</h3>
+      <span class="dcard-for">Best for — independent learners</span>
+      <p>The full six-module programme delivered online — work through video lessons and downloadable workbooks in your own time, worldwide.</p>
+      <ul>
+        <li>Instant access on enrolment</li>
+        <li>Video lessons for every module</li>
+        <li>Downloadable workbooks</li>
+        <li>Work at your own pace</li>
+      </ul>
+    </div>
     <div class="dcard d2 reveal">
       <h3>Live Workshops</h3>
       <span class="dcard-for">Best for — teams &amp; cohorts</span>
