@@ -177,6 +177,9 @@ async function initGenericModule() {
 
   await initModulePage();
 
+  console.log('Module data from Supabase:', mod);
+  console.log('Bunny video ID:', mod?.bunny_video_id);
+
   if (mod.bunny_video_id) {
     loadVideo(mod.bunny_video_id);
   }
