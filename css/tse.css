@@ -272,3 +272,9 @@ footer {
   .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
 }
 
+/* Kit.com — hide competitor recommendations after form submission */
+.formkit-recommended-creators,
+[data-formkit-recommended-creators] {
+  display: none !important;
+}
+
