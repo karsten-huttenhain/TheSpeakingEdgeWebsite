@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Quiet Influence — the introvert's guide to commanding the room. A practical field guide for introverted professionals who lead meetings, presentations, and need to be heard. The Speaking Edge.">
+<title>Quiet Influence — The Speaking Edge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/gif" href="images/favicon.gif">
+<link rel="stylesheet" href="css/tse.css">
+<style>
+/* ── WHO IT'S FOR ── */
+.qi-who {
+  padding: 100px 6%;
+  background: var(--cream);
+}
+.qi-who-inner { max-width: 780px; margin: 0 auto; }
+.qi-who h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 700;
+  color: var(--midnight); line-height: 1.15; margin-bottom: 1.6rem;
+}
+.qi-who p { font-size: 1rem; line-height: 1.8; color: var(--steel); margin-bottom: 1.3rem; }
+.qi-callout {
+  border-left: 4px solid var(--gold);
+  padding: 1.4rem 1.8rem; margin-top: 2rem;
+  font-size: 0.92rem; line-height: 1.7; color: var(--midnight); font-weight: 600;
+}
+
+/* ── WHAT'S INSIDE ── */
+.qi-inside {
+  padding: 80px 6% 100px;
+  background: var(--cream);
+  border-top: 1px solid rgba(93,109,126,0.12);
+}
+.qi-inside-inner { max-width: 780px; margin: 0 auto; }
+.qi-inside h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 700;
+  color: var(--midnight); line-height: 1.15; margin-bottom: 2rem;
+}
+.qi-parts { display: flex; flex-direction: column; gap: 1px; margin-bottom: 2rem; }
+.qi-part {
+  display: flex; gap: 1.6rem; align-items: flex-start;
+  padding: 1.4rem 1.8rem; background: var(--white);
+  border-left: 3px solid transparent; transition: all 0.2s;
+}
+.qi-part:hover { border-left-color: var(--gold); }
+.qi-part-num {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.6rem; font-weight: 900;
+  color: rgba(232,160,32,0.2); line-height: 1; flex-shrink: 0;
+  width: 28px; transition: color 0.2s;
+}
+.qi-part:hover .qi-part-num { color: var(--gold); }
+.qi-part-body h4 {
+  font-size: 0.85rem; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--midnight); margin-bottom: 0.3rem;
+}
+.qi-part-body p { font-size: 0.88rem; line-height: 1.6; color: var(--steel); margin: 0; }
+.qi-appendix {
+  background: var(--white); border-top: 3px solid var(--gold);
+  padding: 1.4rem 1.8rem;
+  font-size: 0.85rem; color: var(--steel); line-height: 1.7;
+}
+.qi-appendix strong { color: var(--midnight); }
+
+/* ── LEAD MAGNET ── */
+.qi-magnet { padding: 100px 6%; background: var(--midnight); }
+.qi-magnet-inner { max-width: 640px; margin: 0 auto; text-align: center; }
+.qi-magnet h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 700;
+  color: var(--white); line-height: 1.15; margin-bottom: 1.2rem;
+}
+.qi-magnet > .qi-magnet-inner > p {
+  font-size: 1rem; line-height: 1.7; color: rgba(255,255,255,0.6); margin-bottom: 2.4rem;
+}
+.qi-video-placeholder {
+  background: rgba(255,255,255,0.04);
+  border: 2px dashed rgba(255,255,255,0.15);
+  padding: 3.5rem 2rem; margin-bottom: 2.4rem;
+  color: rgba(255,255,255,0.3);
+  font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+}
+.qi-form { display: flex; flex-direction: column; gap: 1rem; text-align: left; }
+.qi-form input[type="text"],
+.qi-form input[type="email"] {
+  width: 100%; padding: 13px 16px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.18);
+  color: var(--white); font-size: 0.95rem;
+  font-family: 'Source Sans 3', Arial, sans-serif;
+  outline: none; transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+.qi-form input[type="text"]:focus,
+.qi-form input[type="email"]:focus { border-color: var(--gold); }
+.qi-form input::placeholder { color: rgba(255,255,255,0.35); }
+.qi-form-btn {
+  display: block; width: 100%; padding: 14px 24px;
+  background: var(--vermillion); color: var(--white);
+  font-size: 0.88rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; border: none; cursor: pointer;
+  font-family: 'Source Sans 3', Arial, sans-serif;
+  transition: background 0.2s;
+}
+.qi-form-btn:hover { background: var(--vermillion-dark); }
+.qi-success {
+  display: none; text-align: center; margin-top: 1.2rem;
+  color: var(--gold); font-size: 1rem; line-height: 1.7; font-style: italic;
+}
+
+/* ── PURCHASE ── */
+.qi-purchase { padding: 100px 6%; background: var(--cream); text-align: center; }
+.qi-purchase-inner { max-width: 540px; margin: 0 auto; }
+.qi-purchase h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 700;
+  color: var(--midnight); line-height: 1.15; margin-bottom: 1.2rem;
+}
+.qi-price {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 3.4rem; font-weight: 900; color: var(--midnight);
+  line-height: 1; margin-bottom: 0.6rem;
+}
+.qi-price-format {
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--steel); margin-bottom: 1.6rem;
+}
+.qi-price-desc {
+  font-size: 1rem; line-height: 1.75; color: var(--steel); margin-bottom: 2.2rem;
+}
+.qi-cta-secondary {
+  display: block; margin-top: 1.4rem;
+  font-size: 0.88rem; color: var(--steel); text-decoration: none;
+}
+.qi-cta-secondary:hover { color: var(--vermillion); text-decoration: underline; }
+
+@media (max-width: 768px) {
+  .qi-who, .qi-inside, .qi-magnet, .qi-purchase { padding-left: 5%; padding-right: 5%; }
+}
+</style>
+</head>
+<body>
+
+<div id="tse-nav"></div>
+
+<!-- PAGE HEADER -->
+<header class="page-header">
+  <div class="page-header-eyebrow">For introverted professionals</div>
+  <h1>Quiet <em>Influence</em></h1>
+  <p>The introvert's guide to commanding the room — without pretending to be someone else.</p>
+</header>
+
+<!-- WHO IT'S FOR -->
+<section class="qi-who">
+  <div class="qi-who-inner reveal">
+    <div class="section-label">Who it's for</div>
+    <div class="gold-divider"></div>
+    <h2>You're not the problem. The advice is.</h2>
+    <p>Most speaking coaching is written by extroverts, for extroverts. It tells you to project more, perform more, fill the silence. It treats your natural style as something to fix.</p>
+    <p>Quiet Influence takes a different position. The qualities that make you an introvert — deep preparation, careful listening, considered language, comfort with silence — are not deficits. They are leadership assets. When used deliberately, they make you more authoritative than the loudest person in the room.</p>
+    <p>This guide will not teach you to fake extroversion. It will teach you to lead from where you already stand.</p>
+    <div class="qi-callout">
+      For: Introverted managers, technical leads, and quiet professionals who lead meetings, deliver presentations, and need to be heard.
+    </div>
+  </div>
+</section>
+
+<!-- WHAT'S INSIDE -->
+<section class="qi-inside">
+  <div class="qi-inside-inner reveal">
+    <div class="section-label">Contents</div>
+    <div class="gold-divider"></div>
+    <h2>19 chapters. Six parts. One field guide.</h2>
+    <div class="qi-parts">
+      <div class="qi-part">
+        <div class="qi-part-num">1</div>
+        <div class="qi-part-body">
+          <h4>The Introvert Advantage</h4>
+          <p>A reframe of what commanding presence actually means</p>
+        </div>
+      </div>
+      <div class="qi-part">
+        <div class="qi-part-num">2</div>
+        <div class="qi-part-body">
+          <h4>Engineer the Room</h4>
+          <p>Pre-meeting protocol, opening 30 seconds, questions to anticipate</p>
+        </div>
+      </div>
+      <div class="qi-part">
+        <div class="qi-part-num">3</div>
+        <div class="qi-part-body">
+          <h4>Commanding the Room (Quietly)</h4>
+          <p>The considered pause, voice, body language, strategic silence</p>
+        </div>
+      </div>
+      <div class="qi-part">
+        <div class="qi-part-num">4</div>
+        <div class="qi-part-body">
+          <h4>Difficult Moments, Handled</h4>
+          <p>Scripts for interruptions, hostile questions, stage fright</p>
+        </div>
+      </div>
+      <div class="qi-part">
+        <div class="qi-part-num">5</div>
+        <div class="qi-part-body">
+          <h4>Energy Is the Hidden Skill</h4>
+          <p>Why introverts burn out by 3pm and how to stop</p>
+        </div>
+      </div>
+      <div class="qi-part">
+        <div class="qi-part-num">6</div>
+        <div class="qi-part-body">
+          <h4>Build Long-Term Quiet Influence</h4>
+          <p>The habits that compound over months and years</p>
+        </div>
+      </div>
+    </div>
+    <div class="qi-appendix">
+      <strong>Appendix includes:</strong> Pre-meeting prep sheet &middot; 12 phrases for hard moments &middot; Self-assessment &middot; 30-day plan
+    </div>
+  </div>
+</section>
+
+<!-- LEAD MAGNET -->
+<section class="qi-magnet">
+  <div class="qi-magnet-inner">
+    <div class="section-label gold center">Free resource</div>
+    <div class="gold-divider center"></div>
+    <h2>Free: Calm Your Nerves Before Any Meeting</h2>
+    <p>A short video covering the single most effective technique for managing nerves before high-stakes moments. Free when you sign up.</p>
+
+    <!-- VIDEO EMBED PLACEHOLDER -->
+    <div class="qi-video-placeholder">Video embed — to be added</div>
+
+    <form class="qi-form" id="leadMagnetForm" name="tse-lead-magnet" data-netlify="true" data-netlify-honeypot="bot-field" novalidate>
+      <input type="hidden" name="form-name" value="tse-lead-magnet">
+      <p style="display:none;"><input name="bot-field"></p>
+      <input type="text" name="name" placeholder="Your name" required autocomplete="name">
+      <input type="email" name="email" placeholder="Your email address" required autocomplete="email">
+      <button type="submit" class="qi-form-btn">Send me the video &rarr;</button>
+    </form>
+    <div class="qi-success" id="leadMagnetSuccess">Check your inbox — your video is on its way.</div>
+  </div>
+</section>
+
+<!-- PURCHASE -->
+<section class="qi-purchase">
+  <div class="qi-purchase-inner reveal">
+    <div class="section-label center">Investment</div>
+    <div class="gold-divider center"></div>
+    <h2>Get the guide</h2>
+    <div class="qi-price">£47</div>
+    <div class="qi-price-format">PDF download &middot; Instant access &middot; 34 pages &middot; Print-friendly</div>
+    <p class="qi-price-desc">The introvert's field guide to commanding rooms. Practical scripts, worksheets and tools for quiet professionals who lead.</p>
+    <a href="https://payhip.com/b/CWwy3" target="_blank" rel="noopener" class="btn-primary">Get Quiet Influence — £47 &rarr;</a>
+    <a href="https://tidycal.com/speakingedgeglobal/60-min-coaching" class="qi-cta-secondary">Book a free discovery call instead &rarr;</a>
+  </div>
+</section>
+
+<div id="tse-footer"></div>
+<script src="js/components.js"></script>
+<script src="js/tse.js"></script>
+<script>
+(function () {
+  var form = document.getElementById('leadMagnetForm');
+  var success = document.getElementById('leadMagnetSuccess');
+  if (!form) return;
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var data = new FormData(form);
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(data).toString()
+    }).then(function (res) {
+      form.style.display = 'none';
+      success.style.display = 'block';
+    }).catch(function () {
+      form.style.display = 'none';
+      success.style.display = 'block';
+    });
+  });
+})();
+</script>
+</body>
+</html>

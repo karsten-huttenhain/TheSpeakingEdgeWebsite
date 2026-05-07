@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="The Speaking Confidence Programme — six focused modules addressing key barriers to confident professional speaking. The Speaking Edge, Edinburgh.">
+<meta name="description" content="The Speaking Confidence Programme — six focused modules addressing key barriers to confident professional speaking, plus the Quiet Influence workbook for introverted professionals. The Speaking Edge, Edinburgh.">
 <title>The Programme — The Speaking Edge</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -291,7 +291,7 @@
 }
 .price-card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(44,62,80,0.10); }
 .price-card.featured { border-top-color: var(--vermillion); }
-.price-card.waitlist { border-top-color: var(--gold); opacity: 0.85; }
+.price-card.gold-top { border-top-color: var(--gold); }
 .price-card-badge {
   position: absolute; top: -1px; right: 1.6rem;
   background: var(--vermillion); color: #fff;
@@ -317,7 +317,6 @@
   font-size: 0.85rem; font-weight: 400; color: var(--steel);
   font-family: 'Source Sans 3', Arial, sans-serif;
 }
-.waitlist-price { opacity: 0.45; }
 .price-desc { font-size: 0.88rem; line-height: 1.7; color: var(--steel); }
 .price-includes {
   list-style: none; display: flex; flex-direction: column;
@@ -338,14 +337,6 @@
 .btn-price:hover { background: var(--vermillion); }
 .price-card.featured .btn-price { background: var(--vermillion); }
 .price-card.featured .btn-price:hover { background: var(--vermillion-dark); }
-.btn-price-waitlist { background: var(--steel) !important; }
-.btn-price-waitlist:hover { background: var(--gold) !important; color: var(--midnight) !important; }
-.waitlist-badge {
-  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--gold);
-  margin-bottom: 1rem; text-align: center;
-}
-.waitlist-badge span { font-size: 0.6rem; }
 .pricing-note {
   text-align: center; font-size: 0.82rem; color: var(--steel);
   max-width: 600px; margin: 2rem auto 0; line-height: 1.7;
@@ -353,12 +344,9 @@
 .pricing-note a { color: var(--vermillion); text-decoration: none; }
 .pricing-note a:hover { text-decoration: underline; }
 
-@media (max-width: 1100px) {
-  .pricing-grid { grid-template-columns: repeat(2, 1fr); }
-  .price-card { grid-column: span 1 !important; }
-}
 @media (max-width: 680px) {
-  .pricing-grid { grid-template-columns: 1fr; }
+  .pricing-grid { flex-direction: column; align-items: center; }
+  .price-card { flex: 1 1 100%; max-width: 100%; }
   .pricing-section { padding-left: 5%; padding-right: 5%; }
 }
 </style>
@@ -591,15 +579,37 @@
 </section>
 
 
-<!-- PRICING LINK -->
-<section class="pricing-section" style="text-align:center; padding: 80px 6%;">
+<!-- PRICING -->
+<section class="pricing-section">
   <div class="pricing-header">
-    <div class="section-label center">Investment</div>
+    <div class="section-label center">Also available</div>
     <div class="gold-divider center"></div>
-    <h2>View full pricing</h2>
-    <p>Four formats — from a free taster module to a bespoke corporate workshop. Find what fits your goals and budget.</p>
+    <h2>The Quiet Influence guide</h2>
+    <p>A standalone resource for introverted professionals — no programme commitment required.</p>
   </div>
-  <a href="pricing.html" class="btn-primary">See all pricing &amp; enrol</a>
+
+  <div class="pricing-grid">
+
+    <!-- Quiet Influence -->
+    <div class="price-card gold-top reveal">
+      <div class="price-card-top">
+        <div class="price-label">Quiet Influence</div>
+        <div class="price-format">PDF download &middot; Instant access &middot; 34 pages</div>
+        <div class="price-amount">£47</div>
+        <div class="price-desc">The introvert's field guide to commanding rooms. Practical scripts, worksheets and tools for quiet professionals who lead.</div>
+      </div>
+      <ul class="price-includes">
+        <li>19 chapters across six parts</li>
+        <li>Pre-meeting prep sheets and checklists</li>
+        <li>12 scripts for difficult moments</li>
+        <li>30-day quiet leadership plan</li>
+      </ul>
+      <a href="/quiet-influence.html" class="btn-price">Get the guide &rarr;</a>
+    </div>
+
+  </div>
+
+  <p class="pricing-note">Looking for the full programme? <a href="pricing.html">View all pricing &amp; formats &rarr;</a></p>
 </section>
 
 <!-- ACT METHOD -->
