@@ -74,14 +74,14 @@ const TSE_NAV = `
   <a href="index.html" class="nav-logo">${TSE_LOGO_SVG}</a>
   <ul class="nav-links">
     <li><a href="programme.html">Programme</a></li>
-    <li><a href="pricing.html">Workbooks &amp; Courses</a></li>
+    <li><a href="workbooks-and-courses.html">Workbooks &amp; Courses</a></li>
     <li><a href="about.html">About</a></li>
     <li><a href="contact.html">Contact</a></li>
   </ul>
   <button class="nav-toggle" aria-label="Toggle menu">
     <span></span><span></span><span></span>
   </button>
-  <a href="pricing.html" class="nav-cta">Get started</a>
+  <a href="workbooks-and-courses.html" class="nav-cta">Get started</a>
 </nav>`;
 
 /* ── FOOTER ── */
@@ -106,7 +106,7 @@ const TSE_FOOTER = `
       <h5>Contact</h5>
       <ul>
         <li><a href="contact.html">Send an enquiry</a></li>
-        <li><a href="pricing.html">View pricing &amp; enrol</a></li>
+        <li><a href="workbooks-and-courses.html">View pricing &amp; enrol</a></li>
         <li><a href="about.html">About Karsten</a></li>
         <li><a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a></li>
       </ul>
