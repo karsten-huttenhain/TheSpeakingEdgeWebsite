@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Admin — The Speaking Edge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/gif" href="images/favicon.gif">
+<link rel="stylesheet" href="css/tse.css">
+<style>
+
+/* ── NAV ── */
+.dash-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(44,62,80,0.97); backdrop-filter: blur(8px);
+  border-bottom: 2px solid var(--vermillion);
+  height: 64px; padding: 0 6%;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.dash-nav-logo {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 700; font-size: 1.1rem; color: var(--white);
+  text-decoration: none; letter-spacing: 0.01em;
+}
+.dash-nav-logo span { color: var(--vermillion); }
+.dash-nav-right { display: flex; align-items: center; gap: 1.5rem; }
+.dash-nav-back {
+  font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: rgba(255,255,255,0.5);
+  text-decoration: none; transition: color 0.2s;
+}
+.dash-nav-back:hover { color: var(--gold); }
+.dash-nav-user {
+  font-size: 0.85rem; font-weight: 600; color: rgba(255,255,255,0.8); display: none;
+}
+.btn-signout {
+  background: none; border: 1px solid rgba(255,255,255,0.25);
+  color: rgba(255,255,255,0.6); padding: 6px 16px; border-radius: 3px;
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; cursor: pointer; font-family: inherit; transition: all 0.2s;
+}
+.btn-signout:hover { border-color: rgba(255,255,255,0.6); color: var(--white); }
+
+/* ── LOADING ── */
+.loading-screen {
+  min-height: 100vh; background: var(--midnight);
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 1.2rem;
+}
+.loading-screen p {
+  font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: rgba(255,255,255,0.35);
+}
+.loading-ring {
+  width: 40px; height: 40px; border-radius: 50%;
+  border: 3px solid rgba(255,255,255,0.1);
+  border-top-color: var(--vermillion);
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── ADMIN HEADER ── */
+.admin-header {
+  background: var(--midnight);
+  padding: 88px 6% 56px;
+  border-bottom: 3px solid var(--gold);
+}
+.admin-eyebrow {
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem;
+  display: flex; align-items: center; gap: 10px;
+}
+.admin-eyebrow::before { content: ''; display: block; width: 20px; height: 2px; background: var(--gold); }
+.admin-header h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 700;
+  color: var(--white); margin-bottom: 2rem;
+}
+
+/* ── STATS ── */
+.admin-stats {
+  display: flex; gap: 1.5rem; flex-wrap: wrap;
+}
+.stat-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-top: 3px solid var(--gold);
+  padding: 1.2rem 1.8rem; min-width: 130px;
+}
+.stat-num {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 2.2rem; font-weight: 700; color: var(--gold); line-height: 1;
+  margin-bottom: 0.3rem;
+}
+.stat-label {
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: rgba(255,255,255,0.4);
+}
+
+/* ── SECTION ── */
+.admin-section {
+  padding: 3rem 6%;
+  background: var(--cream);
+}
+.admin-section + .admin-section {
+  border-top: 1px solid var(--ltsteel);
+}
+.admin-section h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.4rem; font-weight: 700; color: var(--midnight);
+  margin-bottom: 1.5rem;
+}
+
+/* ── STUDENT TABLE ── */
+.table-wrap { overflow-x: auto; }
+.student-table {
+  width: 100%; border-collapse: collapse;
+  font-size: 0.88rem;
+}
+.student-table th {
+  text-align: left; padding: 0.7rem 1rem;
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--steel);
+  border-bottom: 2px solid var(--ltsteel);
+  background: var(--white);
+}
+.student-table td {
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--ltsteel);
+  color: var(--midnight); vertical-align: middle;
+}
+.student-table tr:last-child td { border-bottom: none; }
+.student-table tr:hover td { background: #f7f9fc; }
+.student-name { font-weight: 600; }
+.text-muted { color: var(--steel); font-size: 0.82rem; }
+
+/* Tags */
+.tag {
+  display: inline-block; font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 3px 9px; border-radius: 2px;
+}
+.tag.enrolled { background: #f0faf4; color: #1e8449; }
+.tag.free     { background: var(--ltsteel); color: var(--steel); }
+
+/* Module progress dots */
+.mod-dots { display: flex; gap: 4px; align-items: center; margin-bottom: 3px; }
+.mod-dot {
+  width: 18px; height: 18px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 0.6rem; font-weight: 700;
+}
+.mod-dot.complete  { background: #27AE60; color: #fff; }
+.mod-dot.started   { background: var(--gold); color: var(--midnight); }
+.mod-dot.none      { background: var(--ltsteel); color: var(--steel); }
+.prog-text { font-size: 0.75rem; color: var(--steel); }
+
+/* Empty state */
+.empty-state {
+  padding: 3rem; text-align: center;
+  color: var(--steel); font-size: 0.9rem;
+  border: 1px dashed var(--ltsteel); border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+  .admin-header { padding: 88px 5% 48px; }
+  .admin-section { padding: 2rem 5%; }
+  .admin-stats { gap: 1rem; }
+  .stat-card { flex: 1; min-width: 110px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="dash-nav">
+  <a href="index.html" class="dash-nav-logo">The Speaking <span>Edge</span></a>
+  <div class="dash-nav-right">
+    <a href="dashboard.html" class="dash-nav-back">← My Dashboard</a>
+    <span class="dash-nav-user" id="navUser"></span>
+    <button class="btn-signout" onclick="tseSignOut()">Sign Out</button>
+  </div>
+</nav>
+
+<div class="loading-screen" id="loadingScreen">
+  <div class="loading-ring"></div>
+  <p>Loading admin view…</p>
+</div>
+
+<div id="adminContent" style="display:none;">
+
+  <header class="admin-header">
+    <div class="admin-eyebrow">Admin</div>
+    <h1>Course Overview</h1>
+    <div class="admin-stats">
+      <div class="stat-card">
+        <div class="stat-num" id="statStudents">—</div>
+        <div class="stat-label">Accounts</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="statEnrolled">—</div>
+        <div class="stat-label">Enrolled</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="statCompletions">—</div>
+        <div class="stat-label">Completions</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="statSubmissions">—</div>
+        <div class="stat-label">Submissions</div>
+      </div>
+    </div>
+  </header>
+
+  <section class="admin-section">
+    <h2>Students</h2>
+    <div class="table-wrap" id="tableWrap">
+      <table class="student-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Module progress</th>
+            <th>Submissions</th>
+            <th>Joined</th>
+          </tr>
+        </thead>
+        <tbody id="studentTableBody"></tbody>
+      </table>
+    </div>
+    <div class="empty-state" id="noStudents" style="display:none;">No student accounts yet.</div>
+  </section>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/tse-platform.js"></script>
+<script>
+'use strict';
+
+async function initAdmin() {
+  const session = await tseRequireAuth();
+  if (!session) return;
+
+  const profile = await tseGetProfile(session.user.id);
+  if (profile?.role !== 'admin') {
+    window.location.href = '/dashboard.html';
+    return;
+  }
+
+  const navUser = document.getElementById('navUser');
+  if (navUser) { navUser.textContent = tseFirstName(profile.full_name); navUser.style.display = 'block'; }
+
+  // Load all data
+  const [studentsRes, accessRes, progressRes, subsRes, modules] = await Promise.all([
+    db.from('profiles').select('id, full_name, created_at').eq('role', 'student').order('created_at', { ascending: false }),
+    db.from('course_access').select('user_id, granted_at'),
+    db.from('progress').select('user_id, module_id, status'),
+    db.from('submissions').select('user_id, module_id, created_at'),
+    tseGetModules(TSE_CONFIG.courseId),
+  ]);
+
+  const students    = studentsRes.data  || [];
+  const accessList  = accessRes.data    || [];
+  const progressAll = progressRes.data  || [];
+  const subsAll     = subsRes.data      || [];
+
+  // Build lookup maps
+  const accessMap = Object.fromEntries(accessList.map(r => [r.user_id, r]));
+
+  const progressByUser = {};
+  progressAll.forEach(r => {
+    if (!progressByUser[r.user_id]) progressByUser[r.user_id] = {};
+    progressByUser[r.user_id][r.module_id] = r.status;
+  });
+
+  const subCountByUser = {};
+  subsAll.forEach(r => { subCountByUser[r.user_id] = (subCountByUser[r.user_id] || 0) + 1; });
+
+  // Stats
+  document.getElementById('statStudents').textContent    = students.length;
+  document.getElementById('statEnrolled').textContent    = students.filter(s => accessMap[s.id]).length;
+  document.getElementById('statCompletions').textContent = progressAll.filter(r => r.status === 'complete').length;
+  document.getElementById('statSubmissions').textContent = subsAll.length;
+
+  // Student table
+  const tbody = document.getElementById('studentTableBody');
+
+  if (students.length === 0) {
+    document.getElementById('tableWrap').style.display = 'none';
+    document.getElementById('noStudents').style.display = 'block';
+  } else {
+    students.forEach(student => {
+      const isEnrolled   = !!accessMap[student.id];
+      const userProgress = progressByUser[student.id] || {};
+      const completed    = Object.values(userProgress).filter(s => s === 'complete').length;
+      const subCount     = subCountByUser[student.id] || 0;
+      const joined       = new Date(student.created_at).toLocaleDateString('en-GB', {
+        day: 'numeric', month: 'short', year: 'numeric'
+      });
+
+      const dots = modules.map(m => {
+        const s = userProgress[m.slug];
+        if (s === 'complete')    return `<span class="mod-dot complete" title="${m.acronym}">✓</span>`;
+        if (s === 'in_progress') return `<span class="mod-dot started"  title="${m.acronym}">▸</span>`;
+        return                          `<span class="mod-dot none"     title="${m.acronym}"></span>`;
+      }).join('');
+
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="student-name">${student.full_name || '<span class="text-muted">No name</span>'}</td>
+        <td>${isEnrolled
+          ? '<span class="tag enrolled">Enrolled</span>'
+          : '<span class="tag free">Free only</span>'}</td>
+        <td>
+          <div class="mod-dots">${dots}</div>
+          <span class="prog-text">${completed} of ${modules.length} complete</span>
+        </td>
+        <td class="${subCount ? '' : 'text-muted'}">${subCount || '—'}</td>
+        <td class="text-muted">${joined}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  document.getElementById('loadingScreen').style.display = 'none';
+  document.getElementById('adminContent').style.display  = 'block';
+}
+
+initAdmin();
+</script>
+</body>
+</html>

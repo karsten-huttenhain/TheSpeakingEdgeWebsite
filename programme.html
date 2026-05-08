@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="The Speaking Confidence Programme — six transformative modules addressing every barrier to confident professional speaking. The Speaking Edge, Edinburgh.">
+<meta name="description" content="The Speaking Edge Framework — six focused modules addressing key barriers to confident professional speaking, plus the Quiet Influence workbook for introverted professionals. The Speaking Edge, Edinburgh.">
 <title>The Programme — The Speaking Edge</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -110,6 +110,23 @@
   font-style: italic; line-height: 1.6;
   border-top: 1px solid rgba(255,255,255,0.07); padding-top: 1.2rem; margin-top: auto;
 }
+.exp-barrier {
+  border-top: 1px solid rgba(255,255,255,0.07);
+  padding-top: 1.2rem; margin-top: auto;
+}
+.exp-barrier-label {
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--mc); opacity: 0.7; margin-bottom: 0.35rem;
+}
+.exp-barrier h4 {
+  font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; color: rgba(255,255,255,0.65);
+  margin-bottom: 0.3rem;
+}
+.exp-barrier p {
+  font-size: 0.72rem; color: rgba(255,255,255,0.32);
+  font-style: italic; line-height: 1.6; margin: 0;
+}
 
 /* Hint dots */
 .module-hint {
@@ -167,10 +184,11 @@
 }
 .delivery-header p { font-size: 1rem; line-height: 1.7; color: rgba(255,255,255,0.6); }
 .dcards {
-  display: grid; grid-template-columns: repeat(3, 1fr);
+  display: flex; flex-wrap: wrap; justify-content: center;
   gap: 2px; max-width: 1100px; margin: 0 auto;
 }
 .dcard {
+  flex: 1 1 280px; max-width: 400px;
   background: rgba(255,255,255,0.04); padding: 2.8rem 2.2rem;
   position: relative; transition: background 0.2s;
 }
@@ -236,11 +254,11 @@
   .panel-letters { flex-direction: row; gap: 0; }
   .panel-letters span { font-size: 1.1rem; }
   .barriers-inner { grid-template-columns: 1fr; gap: 3rem; }
-  .dcards { grid-template-columns: 1fr 1fr; }
+  .dcard { max-width: 480px; }
   .act-inner { grid-template-columns: 1fr; gap: 3rem; }
 }
 @media (max-width: 768px) {
-  .dcards { grid-template-columns: 1fr; }
+  .dcard { max-width: 100%; }
   .barriers-section, .act-section, .delivery-section { padding-left: 5%; padding-right: 5%; }
 }
 
@@ -273,7 +291,7 @@
 }
 .price-card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(44,62,80,0.10); }
 .price-card.featured { border-top-color: var(--vermillion); }
-.price-card.waitlist { border-top-color: var(--gold); opacity: 0.85; }
+.price-card.gold-top { border-top-color: var(--gold); }
 .price-card-badge {
   position: absolute; top: -1px; right: 1.6rem;
   background: var(--vermillion); color: #fff;
@@ -299,7 +317,6 @@
   font-size: 0.85rem; font-weight: 400; color: var(--steel);
   font-family: 'Source Sans 3', Arial, sans-serif;
 }
-.waitlist-price { opacity: 0.45; }
 .price-desc { font-size: 0.88rem; line-height: 1.7; color: var(--steel); }
 .price-includes {
   list-style: none; display: flex; flex-direction: column;
@@ -320,14 +337,6 @@
 .btn-price:hover { background: var(--vermillion); }
 .price-card.featured .btn-price { background: var(--vermillion); }
 .price-card.featured .btn-price:hover { background: var(--vermillion-dark); }
-.btn-price-waitlist { background: var(--steel) !important; }
-.btn-price-waitlist:hover { background: var(--gold) !important; color: var(--midnight) !important; }
-.waitlist-badge {
-  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--gold);
-  margin-bottom: 1rem; text-align: center;
-}
-.waitlist-badge span { font-size: 0.6rem; }
 .pricing-note {
   text-align: center; font-size: 0.82rem; color: var(--steel);
   max-width: 600px; margin: 2rem auto 0; line-height: 1.7;
@@ -335,12 +344,9 @@
 .pricing-note a { color: var(--vermillion); text-decoration: none; }
 .pricing-note a:hover { text-decoration: underline; }
 
-@media (max-width: 1100px) {
-  .pricing-grid { grid-template-columns: repeat(2, 1fr); }
-  .price-card { grid-column: span 1 !important; }
-}
 @media (max-width: 680px) {
-  .pricing-grid { grid-template-columns: 1fr; }
+  .pricing-grid { flex-direction: column; align-items: center; }
+  .price-card { flex: 1 1 100%; max-width: 100%; }
   .pricing-section { padding-left: 5%; padding-right: 5%; }
 }
 </style>
@@ -351,19 +357,13 @@
 
 <!-- PAGE HEADER -->
 <header class="page-header">
-  <div class="page-header-eyebrow">The Speaking Confidence Programme</div>
-  <h1>Six modules. <em>One transformation.</em></h1>
-  <p>Each module addresses a distinct barrier to confident professional speaking — with its own methodology, tools and exercises. Delivered sequentially as a full programme, or as standalone workshops.</p>
+  <div class="page-header-eyebrow">The Speaking Edge Framework</div>
+  <h1>One Framework. Six Modules. <em>Six Solutions.</em></h1>
+  <p>Each module addresses a distinct barrier to confident professional speaking — with its own methodology, tools and exercises. Delivered sequentially as a full programme, or as standalone workshops. Click any module to explore what it addresses.</p>
 </header>
 
 <!-- MODULE INTERACTIVE STRIP -->
 <section class="modules-section">
-  <div class="modules-header">
-    <div class="section-label gold center">The programme</div>
-    <div class="gold-divider center"></div>
-    <h2>Select a module to explore</h2>
-    <p>Every barrier to confident speaking has a specific solution. Click any module to discover what it addresses — and what changes when you do.</p>
-  </div>
 
   <div class="module-strip" id="moduleStrip">
 
@@ -383,7 +383,11 @@
             <p class="exp-desc">The foundation of everything. This module creates the psychological conditions that make genuine learning possible — turning a room of nervous professionals into a group ready to do something difficult together.</p>
             <span class="exp-tag">Psychological safety &amp; play</span>
           </div>
-          <p class="exp-focus">Addresses: fear of vulnerability and judgement in group learning settings</p>
+          <div class="exp-barrier">
+            <div class="exp-barrier-label">Barrier 01</div>
+            <h4>Psychological unsafety</h4>
+            <p>The fear of being judged, exposed or embarrassed — solved before anything else begins.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -404,7 +408,11 @@
             <p class="exp-desc">Most professionals know what they want to say. Fewer know how to make it land. This module teaches the architecture of compelling narrative — from the opening hook to the close that drives action.</p>
             <span class="exp-tag">Narrative &amp; structure</span>
           </div>
-          <p class="exp-focus">Addresses: inability to craft and deliver messages that stick</p>
+          <div class="exp-barrier">
+            <div class="exp-barrier-label">Barrier 02</div>
+            <h4>Weak storytelling</h4>
+            <p>Messages that don't land, don't persuade and aren't remembered — rebuilt from the ground up.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -425,7 +433,11 @@
             <p class="exp-desc">Before a word is spoken, the body has already communicated. Posture, gesture, stillness, eye contact — each a deliberate instrument of authority. This module teaches professionals to use them intentionally.</p>
             <span class="exp-tag">Presence &amp; physicality</span>
           </div>
-          <p class="exp-focus">Addresses: disconnection from the body as a communication instrument</p>
+          <div class="exp-barrier">
+            <div class="exp-barrier-label">Barrier 03</div>
+            <h4>Disconnected physicality</h4>
+            <p>A body that undermines what the voice is saying — brought back into alignment.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -446,7 +458,11 @@
             <p class="exp-desc">Pace, pitch, resonance, silence — the elements of a voice that commands attention rather than simply filling space. This module treats the voice as the instrument it is.</p>
             <span class="exp-tag">Vocal technique &amp; control</span>
           </div>
-          <p class="exp-focus">Addresses: underdeveloped and uncontrolled vocal delivery</p>
+          <div class="exp-barrier">
+            <div class="exp-barrier-label">Barrier 04</div>
+            <h4>Undeveloped voice</h4>
+            <p>A voice that fills space but doesn't command it — trained as the instrument it is.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -467,7 +483,11 @@
             <p class="exp-desc">The most common barrier to speaking confidence is psychological. This module addresses the fear response at its source — building the internal conditions for calm, focused performance under pressure.</p>
             <span class="exp-tag">Mindset &amp; fear management</span>
           </div>
-          <p class="exp-focus">Addresses: unmanaged fear and a fixed mindset around speaking</p>
+          <div class="exp-barrier">
+            <div class="exp-barrier-label">Barrier 05</div>
+            <h4>Unmanaged fear</h4>
+            <p>Anxiety that produces a diminished version of the speaker — addressed at its physical source.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -488,7 +508,11 @@
             <p class="exp-desc">The capstone. Voice, story, mind and body — brought together under real performance conditions. Participants deliver, receive structured feedback, and leave with a personal development plan for what comes next.</p>
             <span class="exp-tag">Integration &amp; performance</span>
           </div>
-          <p class="exp-focus">Addresses: inability to integrate skills and perform under real conditions</p>
+          <div class="exp-barrier">
+            <div class="exp-barrier-label">Barrier 06</div>
+            <h4>Skills that don't transfer</h4>
+            <p>Techniques that work in practice but collapse under pressure — integrated until they're fluent.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -503,73 +527,26 @@
   </div>
 </section>
 
-<!-- SIX BARRIERS -->
-<section class="barriers-section">
-  <div class="barriers-inner">
-    <div class="barriers-text reveal">
-      <div class="section-label">Six barriers. Six solutions.</div>
-      <div class="gold-divider"></div>
-      <h2>Every module solves a specific problem</h2>
-      <p>The Speaking Confidence Programme was built by identifying the six most consistent barriers to confident professional speaking — then designing a precise solution for each one.</p>
-      <p>Nothing is generic. Nothing is filler. Each module addresses exactly what it says it does.</p>
-      <a href="https://tidycal.com/speakingedgeglobal/discovery-call" target="_blank" rel="noopener" class="btn-primary" style="margin-top:1.4rem;">Book a discovery call</a>
-    </div>
-    <div class="barrier-list">
-      <div class="barrier reveal">
-        <div class="b-num">01</div>
-        <div class="b-text">
-          <h4>Psychological unsafety</h4>
-          <p>The fear of being judged, exposed or embarrassed — solved before anything else begins.</p>
-        </div>
-      </div>
-      <div class="barrier reveal">
-        <div class="b-num">02</div>
-        <div class="b-text">
-          <h4>Weak storytelling</h4>
-          <p>Messages that don't land, don't persuade and aren't remembered — rebuilt from the ground up.</p>
-        </div>
-      </div>
-      <div class="barrier reveal">
-        <div class="b-num">03</div>
-        <div class="b-text">
-          <h4>Disconnected physicality</h4>
-          <p>A body that undermines what the voice is saying — brought back into alignment.</p>
-        </div>
-      </div>
-      <div class="barrier reveal">
-        <div class="b-num">04</div>
-        <div class="b-text">
-          <h4>Undeveloped voice</h4>
-          <p>A voice that fills space but doesn't command it — trained as the instrument it is.</p>
-        </div>
-      </div>
-      <div class="barrier reveal">
-        <div class="b-num">05</div>
-        <div class="b-text">
-          <h4>Unmanaged fear</h4>
-          <p>Anxiety that produces a diminished version of the speaker — addressed at its physical source.</p>
-        </div>
-      </div>
-      <div class="barrier reveal">
-        <div class="b-num">06</div>
-        <div class="b-text">
-          <h4>Skills that don't transfer</h4>
-          <p>Techniques that work in practice but collapse under pressure — integrated until they're fluent.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- DELIVERY -->
 <section class="delivery-section">
   <div class="delivery-header">
     <div class="section-label gold center">How we work</div>
     <div class="gold-divider center"></div>
-    <h2>Two ways to experience the programme</h2>
+    <h2>Three ways to access the programme</h2>
     <p>Formats can be combined or offered independently. Each delivers the full methodology — adapted for context and scale.</p>
   </div>
   <div class="dcards">
+    <div class="dcard d1 reveal">
+      <h3>Online Self-Paced</h3>
+      <span class="dcard-for">Best for — independent learners</span>
+      <p>The full six-module programme delivered online — work through video lessons and downloadable workbooks in your own time, worldwide.</p>
+      <ul>
+        <li>Instant access on enrolment</li>
+        <li>Video lessons for every module</li>
+        <li>Downloadable workbooks</li>
+        <li>Work at your own pace</li>
+      </ul>
+    </div>
     <div class="dcard d2 reveal">
       <h3>Live Workshops</h3>
       <span class="dcard-for">Best for — teams &amp; cohorts</span>
@@ -595,77 +572,6 @@
   </div>
 </section>
 
-
-<!-- PRICING -->
-<section class="pricing-section">
-  <div class="pricing-header">
-    <div class="section-label center">Investment</div>
-    <div class="gold-divider center"></div>
-    <h2>Choose your path in</h2>
-    <p>Every format delivers the same methodology — adapted for your context, goals and budget. All prices exclude VAT.</p>
-  </div>
-
-  <div class="pricing-grid">
-
-    <!-- Full Programme -->
-    <div class="price-card featured reveal">
-      <div class="price-card-badge">Most popular</div>
-      <div class="price-card-top">
-        <div class="price-label">6 Week Programme</div>
-        <div class="price-format">Live online · Group cohort · 6 modules</div>
-        <div class="price-amount">£495 <span>per person</span></div>
-        <div class="price-desc">The complete Speaking Confidence Programme — all six modules delivered as a live group experience. The most transformative format. Fixed Dates.</div>
-      </div>
-      <ul class="price-includes">
-        <li>All six modules — W.A.R.M.U.P.™ through I.M.P.A.C.T. T.H.E.M.™</li>
-        <li>Live facilitated sessions with peer practice</li>
-        <li>Downloadable workbook and reflection journal</li>
-        <li>Access to recordings for the duration</li>
-        <li>Personal development plan</li>
-      </ul>
-      <a href="https://buy.stripe.com/bJe8wRa420VSd9B4mM6wE00" target="_blank" rel="noopener" class="btn-price">Book your place</a>
-    </div>
-
-    <!-- 1:1 Coaching -->
-    <div class="price-card reveal">
-      <div class="price-card-top">
-        <div class="price-label">1:1 Coaching</div>
-        <div class="price-format">Individual · Bespoke · Online or Edinburgh</div>
-        <div class="price-amount">£120 <span>per session</span></div>
-        <div class="price-desc">Fully tailored coaching around your specific goals, context and career stage. Available as single sessions or as a six-session package.</div>
-      </div>
-      <ul class="price-includes">
-        <li>Single session — £120</li>
-        <li>Six-session package — £595</li>
-        <li>Executives, senior leaders, career changers</li>
-        <li>High-stakes presentations and interviews</li>
-        <li>Online or in-person, Edinburgh</li>
-      </ul>
-      <a href="https://tidycal.com/speakingedgeglobal/60-min-coaching" target="_blank" rel="noopener" class="btn-price">Book Your Session</a>
-    </div>
-
-    <!-- Corporate Workshop -->
-    <div class="price-card reveal">
-      <div class="price-card-top">
-        <div class="price-label">Corporate Workshop</div>
-        <div class="price-format">In-person or online · Bespoke · Your team</div>
-        <div class="price-amount">From £895</div>
-        <div class="price-desc">A bespoke workshop for your team or organisation — tailored to your sector, culture and communication challenges. Half or full day.</div>
-      </div>
-      <ul class="price-includes">
-        <li>Half day (3hrs) — from £895</li>
-        <li>Full day (6hrs) — from £1,500</li>
-        <li>Up to 20 participants</li>
-        <li>Tailored content and exercises</li>
-        <li>Travel and expenses additional outside Edinburgh</li>
-      </ul>
-      <a href="contact.html" class="btn-price">Discuss your needs</a>
-    </div>
-
-  </div>
-
-  <p class="pricing-note">All prices exclude VAT. Corporate pricing is for groups based in the UK. <a href="contact.html">Get in touch</a> to discuss international delivery, bespoke packages or group discounts.</p>
-</section>
 
 <!-- ACT METHOD -->
 <section class="act-section">
@@ -702,7 +608,7 @@
           <div class="act-l">T</div>
           <div class="act-c">
             <h4>Transformation</h4>
-            <p>The lasting shift — from someone who fears speaking to someone who uses it as a professional advantage.</p>
+            <p>The potential for lasting change — developing the confidence to use speaking as a professional advantage.</p>
           </div>
         </div>
       </div>
@@ -713,9 +619,8 @@
 <!-- CTA -->
 <section class="cta-section">
   <h2>Ready to find your speaking edge?</h2>
-  <p>Book a free 20-minute discovery call. We'll talk through which format fits your goals and context.</p>
-  <a href="https://tidycal.com/speakingedgeglobal/discovery-call" target="_blank" rel="noopener" class="btn-cta-white">Book a discovery call</a>
-  <p class="cta-sub">Free. No obligation. No script.</p>
+  <p>Choose the format that fits your goals, schedule and budget. Start free or enrol in the full programme today.</p>
+  <a href="workbooks-and-courses.html" class="btn-cta-white">View pricing &amp; enrol</a>
 </section>
 
 <div id="tse-footer"></div>
