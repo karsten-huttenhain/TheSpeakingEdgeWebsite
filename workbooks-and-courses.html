@@ -134,6 +134,21 @@
   cursor: default; pointer-events: none;
 }
 
+/* ── INLINE WAITLIST FORM ── */
+.waitlist-form { display: none; flex-direction: column; gap: 0.6rem; margin-top: 0.8rem; }
+.waitlist-form.open { display: flex; }
+.waitlist-form input {
+  width: 100%; padding: 10px 12px; box-sizing: border-box;
+  border: 1.5px solid var(--ltsteel); font-size: 0.88rem;
+  font-family: 'Source Sans 3', Arial, sans-serif;
+  color: var(--midnight); outline: none; transition: border-color 0.2s;
+}
+.waitlist-form input:focus { border-color: var(--gold); }
+.waitlist-success {
+  display: none; font-size: 0.82rem; color: var(--gold);
+  font-style: italic; margin-top: 0.8rem; line-height: 1.5;
+}
+
 .pricing-note {
   text-align: center; font-size: 0.82rem; color: var(--steel);
   max-width: 600px; margin: 2rem auto 0; line-height: 1.7;
@@ -261,7 +276,17 @@
         <li>Access to recordings</li>
         <li>Personal development plan</li>
       </ul>
-      <a data-formkit-toggle="2a3c59b0d9" href="https://the-speaking-edge.kit.com/2a3c59b0d9" class="btn-price">Join the waitlist</a>
+      <div class="waitlist-form-wrap" id="waitlistWrap">
+        <button type="button" class="btn-price" id="waitlistToggle">Join the waitlist</button>
+        <form class="waitlist-form" id="waitlistForm" name="tse-waitlist" data-netlify="true" data-netlify-honeypot="bot-field" novalidate>
+          <input type="hidden" name="form-name" value="tse-waitlist">
+          <p style="display:none;"><input name="bot-field"></p>
+          <input type="text" name="name" placeholder="Your name" required autocomplete="name">
+          <input type="email" name="email" placeholder="Your email address" required autocomplete="email">
+          <button type="submit" class="btn-price">Notify me when it opens</button>
+        </form>
+        <p class="waitlist-success" id="waitlistSuccess">You're on the list — we'll be in touch when dates are confirmed.</p>
+      </div>
     </div>
 
     <!-- Corporate -->
@@ -363,6 +388,35 @@
 <div id="tse-footer"></div>
 <script src="js/components.js"></script>
 <script src="js/tse.js"></script>
-<script async data-uid="2a3c59b0d9" src="https://the-speaking-edge.kit.com/2a3c59b0d9/index.js"></script>
+<script>
+(function () {
+  var toggle = document.getElementById('waitlistToggle');
+  var form = document.getElementById('waitlistForm');
+  var success = document.getElementById('waitlistSuccess');
+  if (!toggle || !form) return;
+
+  toggle.addEventListener('click', function () {
+    toggle.style.display = 'none';
+    form.classList.add('open');
+    form.querySelector('input[name="name"]').focus();
+  });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var data = new FormData(form);
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(data).toString()
+    }).then(function () {
+      form.style.display = 'none';
+      success.style.display = 'block';
+    }).catch(function () {
+      form.style.display = 'none';
+      success.style.display = 'block';
+    });
+  });
+})();
+</script>
 </body>
 </html>
