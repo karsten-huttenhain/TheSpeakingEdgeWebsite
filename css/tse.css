@@ -272,3 +272,18 @@ footer {
   .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
 }
 
+/* ── TEXT ALIGNMENT — left on desktop, centred on mobile ── */
+@media (min-width: 1024px) {
+  .price-card,
+  .delivery-card,
+  .dcard { text-align: left; }
+}
+@media (max-width: 1023px) {
+  .price-card,
+  .delivery-card,
+  .dcard { text-align: center; }
+  .price-includes,
+  .delivery-card ul,
+  .dcard ul { text-align: left; }
+}
+
