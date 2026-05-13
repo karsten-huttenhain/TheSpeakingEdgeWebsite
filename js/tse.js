@@ -43,4 +43,34 @@ document.addEventListener('DOMContentLoaded', function () {
 
   /* ── Contact form — let Netlify handle submission natively ── */
 
+  /* ── Module strip accordion ── */
+  var moduleStrip = document.getElementById('moduleStrip');
+  if (moduleStrip) {
+    var mPanels = moduleStrip.querySelectorAll('.module-panel');
+    var mDots   = document.querySelectorAll('#hintDots span');
+    var mActive = 0;
+    var mCycle;
+
+    function activatePanel(idx) {
+      mPanels.forEach(function(p) { p.classList.remove('active'); });
+      mDots.forEach(function(d)   { d.classList.remove('on'); });
+      mPanels[idx].classList.add('active');
+      if (mDots[idx]) mDots[idx].classList.add('on');
+      mActive = idx;
+    }
+
+    mPanels.forEach(function(panel, i) {
+      panel.addEventListener('click', function() {
+        clearInterval(mCycle);
+        activatePanel(i);
+      });
+    });
+
+    mCycle = setInterval(function() {
+      var next = (mActive + 1) % mPanels.length;
+      activatePanel(next);
+      if (next === mPanels.length - 1) clearInterval(mCycle);
+    }, 2000);
+  }
+
 });

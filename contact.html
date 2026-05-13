@@ -156,13 +156,6 @@
   <p>Whether you're preparing for a career-defining interview, developing leadership communication, or exploring a workshop for your team — get in touch. The first conversation is always free.</p>
 </header>
 
-<!-- PRICING CTA -->
-<section class="cta-section">
-  <h2>Ready to get started?</h2>
-  <p>View all formats and pricing — from a free taster module to a bespoke corporate workshop.</p>
-  <a href="workbooks-and-courses.html" class="btn-cta-white">View pricing &amp; enrol</a>
-</section>
-
 <!-- CONTACT MAIN -->
 <section class="contact-main">
 
@@ -171,7 +164,9 @@
     <p class="form-intro">Tell me a little about what you need and I'll be in touch within one working day.</p>
     <form class="contact-form" id="contact-form" name="tse-enquiry" action="/thank-you.html" method="POST" netlify netlify-honeypot="bot-field">
       <input type="hidden" name="form-name" value="tse-enquiry">
-      <p style="display:none;"><label>Don't fill this out: <input name="bot-field"></label></p>
+      <div aria-hidden="true" style="position:absolute;left:-9999px;" tabindex="-1">
+        Don't fill this out: <input type="text" name="honeypot" autocomplete="off" tabindex="-1">
+      </div>
       <div class="form-row">
         <div class="form-group">
           <label for="fname">First name</label>
@@ -263,6 +258,13 @@
 </section>
 
 
+
+<!-- PRICING CTA -->
+<section class="cta-section">
+  <h2>Ready to get started?</h2>
+  <p>View all formats and pricing — from a free taster module to a bespoke corporate workshop.</p>
+  <a href="workbooks-and-courses.html" class="btn-cta-white">View pricing &amp; enrol</a>
+</section>
 
 <div id="tse-footer"></div>
 <script src="js/components.js"></script>
