@@ -115,6 +115,21 @@
   .about-main, .brand-principles, .credentials { padding-left: 5%; padding-right: 5%; }
   .principles-grid { grid-template-columns: 1fr; }
 }
+
+.about-body .section-label {
+  font-size: 1.1rem; letter-spacing: 0.1em; margin-bottom: 1.8rem;
+}
+.about-stage-wrap {
+  position: relative;
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, black 12%, black 82%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, black 12%, black 82%, transparent 100%);
+  mask-composite: intersect;
+}
 </style>
 </head>
 <body>
@@ -124,7 +139,7 @@
 <!-- PAGE HEADER -->
 <header class="page-header">
   <div class="page-header-eyebrow">The Speaking Edge</div>
-  <h1>About <em>Karsten</em></h1>
+  <h1>Karsten Huttenhain</h1>
   <p>Nearly two decades on stage — in theatre, theatre-in-education, film and TV — now brought directly to bear on one of the most universal challenges in professional life.</p>
 </header>
 
@@ -148,8 +163,6 @@
   </div>
   <div class="about-body reveal">
     <div class="section-label gold">Founder &amp; speaking confidence coach</div>
-    <div class="gold-divider"></div>
-    <h2>The actor who became a coach — and why that matters</h2>
     <p>Karsten Huttenhain is an Edinburgh-based speaking confidence coach with nearly two decades of professional acting experience across theatre, theatre-in-education, film, TV commercials and corporate productions.</p>
     <p>His methodology is not borrowed from another coaching tradition. It comes directly from the rehearsal room, the stage and the screen — from the discipline of <strong>using the body, breath and voice as precision instruments</strong>, and from learning to be present, authentic and compelling under pressure.</p>
     <p>He has worked as a science communicator with Edinburgh Science and Generation Science, delivering STEM workshops in schools across Scotland — giving him unusual depth in making complex ideas land clearly for any audience, in any room.</p>
@@ -162,17 +175,15 @@
 <!-- IN ACTION -->
 <section style="background:var(--midnight);padding:0 6% 80px;">
   <div style="max-width:1100px;margin:0 auto;">
-    <div style="position:relative;">
+    <div class="about-stage-wrap">
       <img src="images/karsten-sligo-auditorium.jpg"
            alt="Karsten Huttenhain on stage at the AbbVie Auditorium, Sligo — holding a full room"
            style="width:100%;display:block;object-fit:cover;max-height:520px;object-position:center 30%;">
-      <div style="position:absolute;bottom:0;left:0;right:0;padding:1.6rem 2rem;
-                  background:linear-gradient(transparent,rgba(44,62,80,0.92));">
-        <p style="font-family:'Playfair Display',Georgia,serif;font-style:italic;
-                  font-size:1rem;color:rgba(255,255,255,0.8);margin:0;">
-          Holding a room — AbbVie Auditorium, Sligo
-        </p>
-      </div>
+      <p style="position:absolute;bottom:1.6rem;left:2rem;
+                font-family:'Playfair Display',Georgia,serif;font-style:italic;
+                font-size:1rem;color:rgba(255,255,255,0.8);margin:0;">
+        Holding a room — AbbVie Auditorium, Sligo
+      </p>
     </div>
   </div>
 </section>
