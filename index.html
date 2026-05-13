@@ -93,16 +93,12 @@
 /* Belief */
 .belief {
   padding: 100px 6%; background: var(--cream);
-  display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center;
+  display: flex; flex-direction: column; align-items: center; gap: 3rem;
 }
-.belief h2 {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 700;
-  line-height: 1.15; margin-bottom: 1.6rem; color: var(--midnight);
-}
-.belief h2 em { font-style: italic; color: var(--vermillion); }
+.belief-header { text-align: center; width: 100%; }
 .belief p { font-size: 1.05rem; line-height: 1.75; color: var(--steel); margin-bottom: 1.2rem; }
-.belief-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.belief-text { max-width: 720px; }
+.belief-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; width: 100%; max-width: 1200px; }
 .stat-card {
   background: var(--white); padding: 2rem;
   border-left: 4px solid var(--gold);
@@ -202,7 +198,7 @@
   .hero-inner { grid-template-columns: 1fr; }
   .hero-image-wrap { display: none; }
   .perform-grid { grid-template-columns: repeat(4, 1fr); }
-  .belief { grid-template-columns: 1fr; gap: 3rem; }
+  .belief-stats { grid-template-columns: 1fr 1fr; }
   .delivery-card { max-width: 480px; }
 }
 @media (max-width: 768px) {
@@ -269,24 +265,6 @@
   </div>
 </div>
 
-<!-- BELIEF -->
-<section class="belief">
-  <div class="belief-text reveal">
-    <div class="section-label">Why it works</div>
-    <div class="gold-divider"></div>
-    <h2>This is not a presentation <em>tips</em> course</h2>
-    <p>Most speaking coaching addresses symptoms. We address the source. Fear of speaking lives in the body — in shallow breath, locked posture, and a voice that hides. The Speaking Edge works at that level: physical, specific, and grounded in professional performance technique.</p>
-    <p>Our founder Karsten Huttenhain brings nearly two decades as a theatre and screen actor to corporate coaching. We teach you to inhabit your voice, command your body, and own your story.</p>
-    <a href="programme.html" class="btn-primary" style="margin-top:1.4rem;">See the full programme</a>
-  </div>
-  <div class="belief-stats">
-    <div class="stat-card reveal"><div class="stat-num">20<span>+</span></div><div class="stat-label">Years of professional acting experience underpinning the methodology</div></div>
-    <div class="stat-card reveal"><div class="stat-num">6</div><div class="stat-label">Distinct modules each solving a specific barrier to confident speaking</div></div>
-    <div class="stat-card reveal"><div class="stat-num">3</div><div class="stat-label">Delivery formats — live workshops, bespoke 1:1 coaching and self-paced online</div></div>
-    <div class="stat-card reveal"><div class="stat-num">1<span>:1</span></div><div class="stat-label">Bespoke coaching available for executives and high-stakes situations</div></div>
-  </div>
-</section>
-
 <!-- MODULE PREVIEW -->
 <section class="perform-preview">
   <div class="perform-header">
@@ -335,6 +313,25 @@
   </div>
   <div class="perform-preview-cta">
     <a href="programme.html" class="btn-primary">Explore every module</a>
+  </div>
+</section>
+
+<!-- BELIEF -->
+<section class="belief">
+  <div class="belief-header reveal">
+    <div class="section-label center">Why it works</div>
+    <div class="gold-divider center"></div>
+  </div>
+  <div class="belief-stats">
+    <div class="stat-card reveal"><div class="stat-num">20<span>+</span></div><div class="stat-label">Years of professional acting experience underpinning the methodology</div></div>
+    <div class="stat-card reveal"><div class="stat-num">6</div><div class="stat-label">Distinct modules each solving a specific barrier to confident speaking</div></div>
+    <div class="stat-card reveal"><div class="stat-num">3</div><div class="stat-label">Delivery formats — live workshops, bespoke 1:1 coaching and self-paced online</div></div>
+    <div class="stat-card reveal"><div class="stat-num">1<span>:1</span></div><div class="stat-label">Bespoke coaching available for executives and high-stakes situations</div></div>
+  </div>
+  <div class="belief-text reveal">
+    <p>Most speaking coaching addresses symptoms. We address the source. Fear of speaking lives in the body — in shallow breath, locked posture, and a voice that hides. The Speaking Edge works at that level: physical, specific, and grounded in professional performance technique.</p>
+    <p>Our founder Karsten Huttenhain brings nearly two decades as a theatre and screen actor to corporate coaching. We teach you to inhabit your voice, command your body, and own your story.</p>
+    <a href="programme.html" class="btn-primary" style="margin-top:1.4rem;">See the full programme</a>
   </div>
 </section>
 
