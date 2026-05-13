@@ -111,44 +111,7 @@
 .stat-num span { color: var(--vermillion); }
 .stat-label { font-size: 0.82rem; line-height: 1.5; color: var(--steel); font-weight: 600; }
 
-/* PERFORM preview */
-.perform-preview {
-  padding: 100px 6%; background: var(--midnight); color: var(--white);
-}
-.perform-header { text-align: center; max-width: 620px; margin: 0 auto 4rem; }
-.perform-header h2 {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 700;
-  line-height: 1.15; margin-bottom: 1rem; color: var(--white);
-}
-.perform-header p { font-size: 1rem; line-height: 1.7; color: rgba(255,255,255,0.65); }
-.perform-grid {
-  display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px;
-  background: rgba(255,255,255,0.08); max-width: 1200px; margin: 0 auto 3rem;
-}
-.perform-card {
-  background: var(--midnight); padding: 2.2rem 1.4rem;
-  transition: background 0.25s; position: relative;
-}
-.perform-card:hover { background: var(--midnight-light); }
-.perform-letter {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 3.6rem; font-weight: 900; line-height: 1;
-  color: var(--vermillion); margin-bottom: 0.7rem; display: block;
-}
-.perform-card:nth-child(2) .perform-letter,
-.perform-card:nth-child(6) .perform-letter { color: var(--gold); }
-.perform-module {
-  font-size: 0.76rem; font-weight: 700; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--white); margin-bottom: 0.7rem;
-}
-.perform-desc { font-size: 0.8rem; line-height: 1.6; color: rgba(255,255,255,0.52); }
-.perform-week {
-  position: absolute; top: 1rem; right: 1rem;
-  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em;
-  text-transform: uppercase; color: rgba(255,255,255,0.22);
-}
-.perform-preview-cta { text-align: center; }
+.perform-preview-cta { text-align: center; padding: 2.5rem 6% 0; }
 
 /* Delivery cards */
 .delivery { padding: 100px 6%; background: var(--cream); }
@@ -197,13 +160,11 @@
 @media (max-width: 1024px) {
   .hero-inner { grid-template-columns: 1fr; }
   .hero-image-wrap { display: none; }
-  .perform-grid { grid-template-columns: repeat(4, 1fr); }
   .belief-stats { grid-template-columns: 1fr 1fr; }
   .delivery-card { max-width: 480px; }
 }
 @media (max-width: 768px) {
-  .hero, .belief, .perform-preview, .delivery { padding-left: 5%; padding-right: 5%; }
-  .perform-grid { grid-template-columns: 1fr 1fr; }
+  .hero, .belief, .delivery { padding-left: 5%; padding-right: 5%; }
   .belief-stats { grid-template-columns: 1fr; }
   .delivery-cards { grid-template-columns: 1fr; }
 }
@@ -272,54 +233,144 @@
 </div>
 
 <!-- MODULE PREVIEW -->
-<section class="perform-preview">
-  <div class="perform-header">
+<section class="modules-section">
+
+  <div class="modules-header">
     <div class="section-label gold center">The Speaking Edge Framework</div>
     <div class="gold-divider center"></div>
     <h2>Six modules. <em style="font-style:italic;color:var(--vermillion);">One framework.</em></h2>
     <p>Each module addresses a distinct barrier to confident professional speaking — with its own methodology, tools and exercises.</p>
   </div>
-  <div class="perform-grid" style="grid-template-columns:repeat(6,1fr);">
-    <div class="perform-card reveal">
-      <span class="perform-week">Module 01</span>
-      <span class="perform-letter" style="font-size:1.6rem;letter-spacing:0.04em;">W.A.R.M.U.P.<sup style="font-size:0.4em;color:var(--gold);">™</sup></span>
-      <div class="perform-module">Introduction</div>
-      <div class="perform-desc">Comfortable with being uncomfortable — the psychological foundation.</div>
+
+  <div class="module-strip" id="moduleStrip">
+
+    <div class="module-panel active" data-mod="1">
+      <div class="panel-accent"></div>
+      <div class="panel-inner">
+        <div class="panel-collapsed">
+          <span class="panel-num">01</span>
+          <div class="panel-letters"><span>W</span><span>A</span><span>R</span><span>M</span><span>U</span><span>P</span></div>
+        </div>
+        <div class="panel-expanded">
+          <div>
+            <div class="exp-num">Module 01 — Introduction</div>
+            <div class="exp-acronym">W.A.R.M.U.P.<span class="exp-tm">™</span></div>
+            <div class="exp-theme">Comfortable with being uncomfortable</div>
+            <p class="exp-desc">The psychological foundation — creating the conditions that make genuine learning and risk-taking possible.</p>
+            <span class="exp-tag">Psychological safety &amp; play</span>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="perform-card reveal">
-      <span class="perform-week">Module 02</span>
-      <span class="perform-letter" style="font-size:1.6rem;letter-spacing:0.04em;color:var(--gold);">S.C.R.I.B.E.<sup style="font-size:0.4em;color:var(--gold);">™</sup></span>
-      <div class="perform-module">Story</div>
-      <div class="perform-desc">The art of storytelling — from opening hook to closing impact.</div>
+
+    <div class="module-panel" data-mod="2">
+      <div class="panel-accent"></div>
+      <div class="panel-inner">
+        <div class="panel-collapsed">
+          <span class="panel-num">02</span>
+          <div class="panel-letters"><span>S</span><span>C</span><span>R</span><span>I</span><span>B</span><span>E</span></div>
+        </div>
+        <div class="panel-expanded">
+          <div>
+            <div class="exp-num">Module 02 — Story</div>
+            <div class="exp-acronym">S.C.R.I.B.E.<span class="exp-tm">™</span></div>
+            <div class="exp-theme">The art of storytelling</div>
+            <p class="exp-desc">From opening hook to closing impact — the architecture of narrative that persuades, not just informs.</p>
+            <span class="exp-tag">Narrative &amp; structure</span>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="perform-card reveal">
-      <span class="perform-week">Module 03</span>
-      <span class="perform-letter" style="font-size:1.6rem;letter-spacing:0.04em;">P.H.Y.S.C.L.<sup style="font-size:0.4em;color:var(--gold);">™</sup></span>
-      <div class="perform-module">Body</div>
-      <div class="perform-desc">The body as a communication instrument — presence, gesture, authority.</div>
+
+    <div class="module-panel" data-mod="3">
+      <div class="panel-accent"></div>
+      <div class="panel-inner">
+        <div class="panel-collapsed">
+          <span class="panel-num">03</span>
+          <div class="panel-letters"><span>P</span><span>H</span><span>Y</span><span>S</span><span>C</span><span>L</span></div>
+        </div>
+        <div class="panel-expanded">
+          <div>
+            <div class="exp-num">Module 03 — Body</div>
+            <div class="exp-acronym">P.H.Y.S.C.L.<span class="exp-tm">™</span></div>
+            <div class="exp-theme">The body as a communication instrument</div>
+            <p class="exp-desc">Posture, gesture, stillness, eye contact — each a deliberate instrument of authority, taught to be used intentionally.</p>
+            <span class="exp-tag">Presence &amp; physicality</span>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="perform-card reveal">
-      <span class="perform-week">Module 04</span>
-      <span class="perform-letter" style="font-size:1.6rem;letter-spacing:0.04em;color:var(--gold);">V.O.I.C.E.S.<sup style="font-size:0.4em;color:var(--gold);">™</sup></span>
-      <div class="perform-module">Voice</div>
-      <div class="perform-desc">Vocal delivery and control — pace, pitch, resonance and silence.</div>
+
+    <div class="module-panel" data-mod="4">
+      <div class="panel-accent"></div>
+      <div class="panel-inner">
+        <div class="panel-collapsed">
+          <span class="panel-num">04</span>
+          <div class="panel-letters"><span>V</span><span>O</span><span>I</span><span>C</span><span>E</span><span>S</span></div>
+        </div>
+        <div class="panel-expanded">
+          <div>
+            <div class="exp-num">Module 04 — Voice</div>
+            <div class="exp-acronym">V.O.I.C.E.S.<span class="exp-tm">™</span></div>
+            <div class="exp-theme">Vocal delivery and control</div>
+            <p class="exp-desc">Pace, pitch, resonance, silence — the elements of a voice that commands attention rather than simply filling space.</p>
+            <span class="exp-tag">Vocal technique &amp; control</span>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="perform-card reveal">
-      <span class="perform-week">Module 05</span>
-      <span class="perform-letter" style="font-size:1.35rem;letter-spacing:0.03em;">R.A.I.N.B.O.W.S.<sup style="font-size:0.4em;color:var(--gold);">™</sup></span>
-      <div class="perform-module">Mind</div>
-      <div class="perform-desc">Managing fear and building a growth mindset — from the inside out.</div>
+
+    <div class="module-panel" data-mod="5">
+      <div class="panel-accent"></div>
+      <div class="panel-inner">
+        <div class="panel-collapsed">
+          <span class="panel-num">05</span>
+          <div class="panel-letters"><span>R</span><span>A</span><span>I</span><span>N</span><span>B</span><span>O</span><span>W</span><span>S</span></div>
+        </div>
+        <div class="panel-expanded">
+          <div>
+            <div class="exp-num">Module 05 — Mind</div>
+            <div class="exp-acronym">R.A.I.N.B.O.W.S.<span class="exp-tm">™</span></div>
+            <div class="exp-theme">Managing fear and building a growth mindset</div>
+            <p class="exp-desc">Fear of speaking is a physical response — and it can be retrained. This module builds the internal conditions for calm, focused performance.</p>
+            <span class="exp-tag">Mindset &amp; fear management</span>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="perform-card reveal">
-      <span class="perform-week">Module 06</span>
-      <span class="perform-letter" style="font-size:1.2rem;letter-spacing:0.03em;color:var(--gold);">I.M.P.A.C.T. T.H.E.M.<sup style="font-size:0.4em;color:var(--gold);">™</sup></span>
-      <div class="perform-module">Delivery</div>
-      <div class="perform-desc">The capstone — all skills integrated under real performance conditions.</div>
+
+    <div class="module-panel" data-mod="6">
+      <div class="panel-accent"></div>
+      <div class="panel-inner">
+        <div class="panel-collapsed">
+          <span class="panel-num">06</span>
+          <div class="panel-letters"><span>I</span><span>M</span><span>P</span><span>A</span><span>C</span><span>T</span></div>
+        </div>
+        <div class="panel-expanded">
+          <div>
+            <div class="exp-num">Module 06 — Delivery</div>
+            <div class="exp-acronym">I.M.P.A.C.T. T.H.E.M.<span class="exp-tm">™</span></div>
+            <div class="exp-theme">All skills integrated under real performance conditions</div>
+            <p class="exp-desc">The capstone. Voice, story, mind and body brought together — until they're fluent under pressure.</p>
+            <span class="exp-tag">Integration &amp; performance</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="module-hint">
+    <span>Explore each module</span>
+    <div class="hint-dots" id="hintDots">
+      <span class="on"></span><span></span><span></span><span></span><span></span><span></span>
     </div>
   </div>
+
   <div class="perform-preview-cta">
     <a href="programme.html" class="btn-primary">Explore every module</a>
   </div>
+
 </section>
 
 <!-- BELIEF -->
