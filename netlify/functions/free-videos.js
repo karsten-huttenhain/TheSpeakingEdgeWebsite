@@ -59,7 +59,7 @@ exports.handler = async () => {
     const videos = filtered.map(v => ({
       title:    v.title,
       guid:     v.guid,
-      embedUrl: `https://player.mediadelivery.net/embed/${libraryId}/${v.guid}`,
+      embedUrl: `https://player.mediadelivery.net/embed/${libraryId}/${v.guid}?autoplay=false&loop=false&muted=false&preload=true`,
     }));
 
     return {
