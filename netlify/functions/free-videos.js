@@ -1,12 +1,15 @@
 'use strict';
 
+const crypto = require('crypto');
+
 exports.handler = async () => {
   const libraryId = process.env.BUNNY_LIBRARY_ID;
   const apiKey    = process.env.BUNNY_API_KEY;
+  const tokenKey  = process.env.BUNNY_TOKEN_KEY;
 
-  console.log('[free-videos] libraryId present:', !!libraryId, '| apiKey present:', !!apiKey);
+  console.log('[free-videos] libraryId present:', !!libraryId, '| apiKey present:', !!apiKey, '| tokenKey present:', !!tokenKey);
 
-  if (!libraryId || !apiKey) {
+  if (!libraryId || !apiKey || !tokenKey) {
     console.error('Missing Bunny env vars');
     return {
       statusCode: 500,
@@ -60,11 +63,17 @@ exports.handler = async () => {
     const data = await res.json();
     console.log('[free-videos] videos returned:', (data.items || []).length);
 
+    const expires = Math.floor(Date.now() / 1000) + 21600; // 6 hours
+
     const videos = (data.items || []).map(v => {
+      const token = crypto
+        .createHash('sha256')
+        .update(tokenKey + libraryId + v.guid + expires)
+        .digest('hex');
       const item = {
         title:    v.title,
         guid:     v.guid,
-        embedUrl: `https://iframe.mediadelivery.net/embed/${libraryId}/${v.guid}`,
+        embedUrl: `https://iframe.mediadelivery.net/embed/${libraryId}/${v.guid}?token=${token}&expires=${expires}`,
       };
       if (v.description) item.description = v.description;
       return item;
