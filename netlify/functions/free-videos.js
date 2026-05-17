@@ -20,7 +20,7 @@ exports.handler = async () => {
 
   const bunnyHeaders = { AccessKey: apiKey, accept: 'application/json' };
 
-  // Step 1 — find the "Free Tasters" collection GUID (deploy trigger)
+  // Step 1 — find the "Free Tasters" collection GUID
   let collectionGuid;
   try {
     const res = await fetch(
