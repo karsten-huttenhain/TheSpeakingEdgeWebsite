@@ -151,7 +151,7 @@
       }
       videos.forEach(function (v) {
         var card = document.createElement('div');
-        card.className = 'free-video-item reveal';
+        card.className = 'free-video-item';
 
         var info = document.createElement('div');
         info.className = 'free-video-info';
@@ -174,7 +174,6 @@
       });
       grid.style.display = 'grid';
 
-      if (typeof window.tseReveal === 'function') window.tseReveal();
     })
     .catch(function () {
       loading.style.display = 'none';
