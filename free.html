@@ -156,7 +156,7 @@
 
   fetch('/.netlify/functions/free-videos')
     .then(function (res) {
-      if (!res.ok) throw new Error('Network error');
+      if (!res.ok) throw new Error('HTTP ' + res.status);
       return res.json();
     })
     .then(function (videos) {
@@ -193,7 +193,8 @@
       /* trigger reveal animations for newly added cards */
       if (typeof window.tseReveal === 'function') window.tseReveal();
     })
-    .catch(function () {
+    .catch(function (err) {
+      console.error('[free-videos] fetch failed:', err);
       loading.style.display = 'none';
       error.style.display = 'block';
     });
