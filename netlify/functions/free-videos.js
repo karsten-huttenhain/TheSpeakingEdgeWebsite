@@ -69,8 +69,8 @@ exports.handler = async () => {
     console.log('[free-videos] now:', Math.floor(Date.now() / 1000), '| expires:', expiresStr);
 
     const videos = (data.items || []).map((v, i) => {
-      const hashInput = tokenKey + libIdStr + v.guid + expiresStr;
-      if (i === 0) console.log('[free-videos] hash input (key redacted): [REDACTED]' + libIdStr + v.guid + expiresStr);
+      const hashInput = tokenKey + v.guid + expiresStr;
+      if (i === 0) console.log('[free-videos] hash input (key redacted): [REDACTED]' + v.guid + expiresStr);
       const token = crypto
         .createHash('sha256')
         .update(hashInput)
