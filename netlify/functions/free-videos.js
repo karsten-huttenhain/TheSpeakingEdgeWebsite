@@ -55,7 +55,7 @@ exports.handler = async () => {
   // Step 2 — fetch videos in that collection
   try {
     const videosUrl = `https://video.bunnycdn.com/library/${libraryId}/videos?collectionId=${collectionGuid}&itemsPerPage=100&orderBy=date`;
-    console.log('[free-videos] videos API URL:', videosUrl);
+    console.log('[free-videos] videos fetch URL:', videosUrl);
     const res = await fetch(videosUrl, { headers: bunnyHeaders });
     console.log('[free-videos] videos API status:', res.status);
     if (!res.ok) throw new Error(`Videos API returned ${res.status}`);
