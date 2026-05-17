@@ -138,14 +138,6 @@
   var grid    = document.getElementById('freeGrid');
   var error   = document.getElementById('freeError');
 
-  function escapeHtml(str) {
-    return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;');
-  }
-
   fetch('/.netlify/functions/free-videos')
     .then(function (res) {
       if (!res.ok) throw new Error('HTTP ' + res.status);
@@ -161,20 +153,23 @@
         var card = document.createElement('div');
         card.className = 'free-video-item reveal';
 
-        var infoHtml = '<div class="free-video-info">'
-          + '<h3>' + escapeHtml(v.title) + '</h3>'
-          + '</div>';
+        var info = document.createElement('div');
+        info.className = 'free-video-info';
+        var h3 = document.createElement('h3');
+        h3.textContent = v.title;
+        info.appendChild(h3);
 
-        var embedHtml = '<div class="video-wrapper">'
-          + '<iframe'
-          + ' src="' + escapeHtml(v.embedUrl) + '"'
-          + ' loading="lazy"'
-          + ' allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;"'
-          + ' allowfullscreen="true">'
-          + '</iframe>'
-          + '</div>';
+        var wrapper = document.createElement('div');
+        wrapper.className = 'video-wrapper';
+        var iframe = document.createElement('iframe');
+        iframe.src = v.embedUrl;
+        iframe.loading = 'lazy';
+        iframe.setAttribute('allow', 'accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;fullscreen;');
+        iframe.setAttribute('allowfullscreen', 'true');
+        wrapper.appendChild(iframe);
 
-        card.innerHTML = infoHtml + embedHtml;
+        card.appendChild(info);
+        card.appendChild(wrapper);
         grid.appendChild(card);
       });
       grid.style.display = 'grid';
