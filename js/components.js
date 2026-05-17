@@ -91,7 +91,7 @@ const TSE_FOOTER = `
   <div class="footer-inner">
     <div class="footer-brand">
       <div class="footer-logo">The Speaking <span>Edge</span></div>
-      <div class="footer-tagline">Transform your relationship with speaking.</div>
+      <div class="footer-tagline">Make Speaking <em>Your</em> Edge</div>
       <p>A speaking confidence programme grounded in professional acting technique. Edinburgh, Scotland — delivering worldwide.</p>
     </div>
     <div class="footer-col">

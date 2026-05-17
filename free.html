@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Free taster videos from W.A.R.M.U.P.™ — Module 01 of the Speaking Edge Framework. Comfortable with being uncomfortable.">
+<title>Free Taster — W.A.R.M.U.P.™ Module 01 — The Speaking Edge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/gif" href="images/favicon.gif">
+<link rel="stylesheet" href="css/tse.css">
+<style>
+
+/* ── PAGE HEADER OVERRIDES ── */
+.page-header { background: var(--midnight); }
+.free-header-support {
+  font-size: 0.85rem; color: rgba(255,255,255,0.38);
+  margin-top: 0.8rem; font-style: italic; font-weight: 300;
+  max-width: 480px;
+}
+
+/* ── VIDEO SECTION ── */
+.free-videos-section {
+  background: var(--midnight);
+  padding: 80px 6% 100px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.free-videos-inner { max-width: 1100px; margin: 0 auto; }
+
+.free-loading, .free-error {
+  text-align: center; padding: 4rem 0;
+  font-size: 1rem; font-style: italic;
+  color: rgba(255,255,255,0.38);
+}
+
+.free-grid {
+  display: none;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2.5rem;
+}
+
+.free-video-item {
+  background: rgba(255,255,255,0.04);
+  border-top: 3px solid var(--gold);
+  overflow: hidden;
+}
+.free-video-info { padding: 1.4rem 1.6rem 1.2rem; }
+.free-video-info h3 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.2rem; font-weight: 700; color: var(--white);
+  line-height: 1.25; margin-bottom: 0.5rem;
+}
+.free-video-info p {
+  font-size: 0.87rem; line-height: 1.65; color: rgba(255,255,255,0.5); margin: 0;
+}
+
+/* 16:9 wrapper */
+.video-wrapper {
+  position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;
+}
+.video-wrapper iframe {
+  border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;
+}
+
+/* ── TRANSITION NOTE ── */
+.free-transition {
+  background: var(--cream);
+  padding: 60px 6%;
+  text-align: center;
+  border-top: 3px solid var(--ltsteel);
+}
+.free-transition p {
+  font-size: 1rem; line-height: 1.75; color: var(--steel);
+  max-width: 580px; margin: 0 auto;
+}
+
+/* ── CTA TWO-BUTTON ── */
+.cta-actions {
+  display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap;
+}
+.btn-cta-outline {
+  border: 2px solid rgba(255,255,255,0.5); color: var(--white);
+  padding: 15px 36px; border-radius: 4px;
+  font-size: 0.9rem; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; text-decoration: none;
+  transition: border-color 0.2s, background 0.2s;
+  display: inline-block;
+}
+.btn-cta-outline:hover { border-color: var(--white); background: rgba(255,255,255,0.1); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .free-videos-section { padding-left: 5%; padding-right: 5%; }
+  .free-transition { padding-left: 5%; padding-right: 5%; }
+  .free-grid { grid-template-columns: 1fr; }
+}
+
+</style>
+</head>
+<body>
+
+<div id="tse-nav"></div>
+
+<!-- PAGE HEADER -->
+<header class="page-header">
+  <div class="page-header-eyebrow">Free taster</div>
+  <h1>W.A.R.M.U.P.™ — Module 01</h1>
+  <p>Comfortable with being uncomfortable</p>
+  <p class="free-header-support">This is a selection of taster videos from Module 01 — not the full module.</p>
+</header>
+
+<!-- VIDEOS -->
+<section class="free-videos-section">
+  <div class="free-videos-inner">
+    <div class="free-loading" id="freeLoading">Loading videos&hellip;</div>
+    <div class="free-grid" id="freeGrid"></div>
+    <div class="free-error" id="freeError" style="display:none;">
+      No free videos are available right now — check back soon.
+    </div>
+  </div>
+</section>
+
+<!-- TRANSITION NOTE -->
+<div class="free-transition">
+  <p>The full W.A.R.M.U.P.™ module — and the five that follow — are available in the complete programme below.</p>
+</div>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>Make Speaking <em style="font-style:italic;color:rgba(255,255,255,0.9);">Your</em> Edge</h2>
+  <p>Two ways to access the complete six-module Speaking Confidence Programme.</p>
+  <div class="cta-actions">
+    <a href="https://payhip.com/b/FMNGA" target="_blank" rel="noopener" class="btn-cta-white">Enrol in the full course — £197</a>
+    <a href="https://buy.stripe.com/bJe8wRa420VSd9B4mM6wE00" target="_blank" rel="noopener" class="btn-cta-outline">Book a live place — £495</a>
+  </div>
+</section>
+
+<div id="tse-footer"></div>
+
+<script src="js/components.js"></script>
+<script src="js/tse.js"></script>
+<script>
+(function () {
+  var loading = document.getElementById('freeLoading');
+  var grid    = document.getElementById('freeGrid');
+  var error   = document.getElementById('freeError');
+
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  fetch('/.netlify/functions/free-videos')
+    .then(function (res) {
+      if (!res.ok) throw new Error('Network error');
+      return res.json();
+    })
+    .then(function (videos) {
+      loading.style.display = 'none';
+      if (!Array.isArray(videos) || videos.length === 0) {
+        error.style.display = 'block';
+        return;
+      }
+      videos.forEach(function (v) {
+        var card = document.createElement('div');
+        card.className = 'free-video-item reveal';
+
+        var infoHtml = '<div class="free-video-info">'
+          + '<h3>' + escapeHtml(v.title) + '</h3>';
+        if (v.description) {
+          infoHtml += '<p>' + escapeHtml(v.description) + '</p>';
+        }
+        infoHtml += '</div>';
+
+        var embedHtml = '<div class="video-wrapper">'
+          + '<iframe'
+          + ' src="' + escapeHtml(v.embedUrl) + '"'
+          + ' loading="lazy"'
+          + ' allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;"'
+          + ' allowfullscreen="true">'
+          + '</iframe>'
+          + '</div>';
+
+        card.innerHTML = infoHtml + embedHtml;
+        grid.appendChild(card);
+      });
+      grid.style.display = 'grid';
+
+      /* trigger reveal animations for newly added cards */
+      if (typeof window.tseReveal === 'function') window.tseReveal();
+    })
+    .catch(function () {
+      loading.style.display = 'none';
+      error.style.display = 'block';
+    });
+})();
+</script>
+</body>
+</html>
