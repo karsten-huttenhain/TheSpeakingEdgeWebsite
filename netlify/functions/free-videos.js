@@ -79,6 +79,8 @@ exports.handler = async () => {
       return item;
     });
 
+    if (videos.length > 0) console.log('[free-videos] sample embed URL:', videos[0].embedUrl);
+
     return {
       statusCode: 200,
       headers: {
