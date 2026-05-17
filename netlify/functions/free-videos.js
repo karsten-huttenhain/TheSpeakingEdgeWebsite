@@ -63,18 +63,22 @@ exports.handler = async () => {
     const data = await res.json();
     console.log('[free-videos] videos returned:', (data.items || []).length);
 
-    const expires = Math.floor(Date.now() / 1000) + 21600; // 6 hours
-    console.log('[free-videos] now:', Math.floor(Date.now() / 1000), '| expires:', expires);
+    const expires    = Math.floor(Date.now() / 1000) + 21600; // 6 hours
+    const expiresStr = String(expires);
+    const libIdStr   = String(libraryId);
+    console.log('[free-videos] now:', Math.floor(Date.now() / 1000), '| expires:', expiresStr);
 
-    const videos = (data.items || []).map(v => {
+    const videos = (data.items || []).map((v, i) => {
+      const hashInput = tokenKey + libIdStr + v.guid + expiresStr;
+      if (i === 0) console.log('[free-videos] hash input (key redacted): [REDACTED]' + libIdStr + v.guid + expiresStr);
       const token = crypto
         .createHash('sha256')
-        .update(tokenKey + libraryId + v.guid + expires)
+        .update(hashInput)
         .digest('hex');
       const item = {
         title:    v.title,
         guid:     v.guid,
-        embedUrl: `https://iframe.mediadelivery.net/embed/${libraryId}/${v.guid}?token=${token}&expires=${expires}`,
+        embedUrl: `https://iframe.mediadelivery.net/embed/${libIdStr}/${v.guid}?token=${token}&expires=${expiresStr}`,
       };
       if (v.description) item.description = v.description;
       return item;
