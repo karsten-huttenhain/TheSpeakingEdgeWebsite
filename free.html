@@ -157,17 +157,13 @@
         error.style.display = 'block';
         return;
       }
-      console.log('[free-videos] rendering', videos.length, 'video(s)');
       videos.forEach(function (v) {
         var card = document.createElement('div');
         card.className = 'free-video-item reveal';
 
         var infoHtml = '<div class="free-video-info">'
-          + '<h3>' + escapeHtml(v.title) + '</h3>';
-        if (v.description) {
-          infoHtml += '<p>' + escapeHtml(v.description) + '</p>';
-        }
-        infoHtml += '</div>';
+          + '<h3>' + escapeHtml(v.title) + '</h3>'
+          + '</div>';
 
         var embedHtml = '<div class="video-wrapper">'
           + '<iframe'
@@ -182,13 +178,10 @@
         grid.appendChild(card);
       });
       grid.style.display = 'grid';
-      console.log('[free-videos] iframes in DOM:', grid.querySelectorAll('iframe').length);
 
-      /* trigger reveal animations for newly added cards */
       if (typeof window.tseReveal === 'function') window.tseReveal();
     })
-    .catch(function (err) {
-      console.error('[free-videos] fetch failed:', err);
+    .catch(function () {
       loading.style.display = 'none';
       error.style.display = 'block';
     });

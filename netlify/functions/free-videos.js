@@ -1,16 +1,14 @@
 'use strict';
 
-const crypto = require('crypto');
+// Note: BUNNY_TOKEN_KEY is no longer needed — embed view token auth has been disabled
+// in the Bunny dashboard. Remove from Netlify env vars when convenient.
 
 exports.handler = async () => {
   const libraryId = process.env.BUNNY_LIBRARY_ID;
   const apiKey    = process.env.BUNNY_API_KEY;
-  const tokenKey  = process.env.BUNNY_TOKEN_KEY;
 
-  console.log('[free-videos] libraryId present:', !!libraryId, '| apiKey present:', !!apiKey, '| tokenKey present:', !!tokenKey);
-
-  if (!libraryId || !apiKey || !tokenKey) {
-    console.error('Missing Bunny env vars');
+  if (!libraryId || !apiKey) {
+    console.error('free-videos: missing BUNNY_LIBRARY_ID or BUNNY_API_KEY');
     return {
       statusCode: 500,
       headers: { 'Content-Type': 'application/json' },
@@ -21,30 +19,25 @@ exports.handler = async () => {
   const bunnyHeaders = { AccessKey: apiKey, accept: 'application/json' };
 
   // Step 1 — find the "Free Tasters" collection GUID
-  let collectionGuid;
+  let freeTastersGuid;
   try {
     const res = await fetch(
       `https://video.bunnycdn.com/library/${libraryId}/collections?itemsPerPage=100`,
       { headers: bunnyHeaders }
     );
-    console.log('[free-videos] collections API status:', res.status);
     if (!res.ok) throw new Error(`Collections API returned ${res.status}`);
     const data = await res.json();
-    const names = (data.items || []).map(c => c.name);
-    console.log('[free-videos] collections found:', names);
     const match = (data.items || []).find(c => c.name === 'Free Tasters');
     if (!match) {
-      console.log('[free-videos] "Free Tasters" collection not found — returning empty array');
       return {
         statusCode: 200,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify([]),
       };
     }
-    console.log('[free-videos] "Free Tasters" found, GUID:', match.guid);
-    collectionGuid = match.guid;
+    freeTastersGuid = match.guid;
   } catch (err) {
-    console.error('Failed to fetch collections:', err);
+    console.error('free-videos: failed to fetch collections:', err.message);
     return {
       statusCode: 500,
       headers: { 'Content-Type': 'application/json' },
@@ -52,38 +45,22 @@ exports.handler = async () => {
     };
   }
 
-  // Step 2 — fetch videos in that collection
+  // Step 2 — fetch videos, filter strictly by collection GUID, return clean list
   try {
-    const videosUrl = `https://video.bunnycdn.com/library/${libraryId}/videos?collectionId=${collectionGuid}&itemsPerPage=100&orderBy=date`;
-    console.log('[free-videos] videos fetch URL:', videosUrl);
-    const res = await fetch(videosUrl, { headers: bunnyHeaders });
-    console.log('[free-videos] videos API status:', res.status);
+    const res = await fetch(
+      `https://video.bunnycdn.com/library/${libraryId}/videos?collectionId=${freeTastersGuid}&itemsPerPage=100&orderBy=date`,
+      { headers: bunnyHeaders }
+    );
     if (!res.ok) throw new Error(`Videos API returned ${res.status}`);
     const data = await res.json();
-    console.log('[free-videos] videos returned:', (data.items || []).length);
 
-    const expires    = Math.floor(Date.now() / 1000) + 21600; // 6 hours
-    const expiresStr = String(expires);
-    const libIdStr   = String(libraryId);
-    console.log('[free-videos] now:', Math.floor(Date.now() / 1000), '| expires:', expiresStr);
+    const filtered = (data.items || []).filter(v => v.collectionId === freeTastersGuid);
 
-    const videos = (data.items || []).map((v, i) => {
-      const hashInput = tokenKey + v.guid + expiresStr;
-      if (i === 0) console.log('[free-videos] hash input (key redacted): [REDACTED]' + v.guid + expiresStr);
-      const token = crypto
-        .createHash('sha256')
-        .update(hashInput)
-        .digest('hex');
-      const item = {
-        title:    v.title,
-        guid:     v.guid,
-        embedUrl: `https://iframe.mediadelivery.net/embed/${libIdStr}/${v.guid}?token=${token}&expires=${expiresStr}`,
-      };
-      if (v.description) item.description = v.description;
-      return item;
-    });
-
-    if (videos.length > 0) console.log('[free-videos] sample embed URL:', videos[0].embedUrl);
+    const videos = filtered.map(v => ({
+      title:    v.title,
+      guid:     v.guid,
+      embedUrl: `https://iframe.mediadelivery.net/embed/${libraryId}/${v.guid}`,
+    }));
 
     return {
       statusCode: 200,
@@ -94,7 +71,7 @@ exports.handler = async () => {
       body: JSON.stringify(videos),
     };
   } catch (err) {
-    console.error('Failed to fetch videos:', err);
+    console.error('free-videos: failed to fetch videos:', err.message);
     return {
       statusCode: 500,
       headers: { 'Content-Type': 'application/json' },
