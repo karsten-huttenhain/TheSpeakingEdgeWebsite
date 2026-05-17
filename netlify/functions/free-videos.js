@@ -64,6 +64,7 @@ exports.handler = async () => {
     console.log('[free-videos] videos returned:', (data.items || []).length);
 
     const expires = Math.floor(Date.now() / 1000) + 21600; // 6 hours
+    console.log('[free-videos] now:', Math.floor(Date.now() / 1000), '| expires:', expires);
 
     const videos = (data.items || []).map(v => {
       const token = crypto
