@@ -121,13 +121,11 @@ async function tseRequireGuideAccess() {
   const session = await tseRequireAuth();
   if (!session) return null;
 
-  console.log('[TSE] guide_access query — key present:', !!TSE_CONFIG.supabaseAnonKey, '— url:', TSE_CONFIG.supabaseUrl);
-  const { data, error } = await db
+  const { data } = await db
     .from('guide_access')
     .select('expires_at')
     .eq('user_id', session.user.id)
     .maybeSingle();
-  if (error) console.warn('[TSE] guide_access error:', error.message, error.hint);
 
   let expiresAt;
 
