@@ -11,7 +11,7 @@
   <style>body{visibility:hidden}</style>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../js/tse-platform.js"></script>
-  <script>tseRequireAuth().then(function(s){if(s)document.body.style.visibility='';});</script>
+  <script>tseRequireGuideAccess().then(function(r){if(r){document.body.style.visibility='';tseShowGuideBanner(r.expiresAt);}}).catch(function(e){console.error('[TSE guide]',e);document.body.style.visibility='';});</script>
 </head>
 <body>
 

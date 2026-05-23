@@ -116,6 +116,50 @@ async function tseHasCourseAccess(userId) {
   return !!data;
 }
 
+// ── GUIDE ACCESS (14-day trial) ───────────────────────────────────────────────
+async function tseRequireGuideAccess() {
+  const session = await tseRequireAuth();
+  if (!session) return null;
+
+  const { data } = await db
+    .from('guide_access')
+    .select('expires_at')
+    .eq('user_id', session.user.id)
+    .maybeSingle();
+
+  let expiresAt;
+
+  if (!data) {
+    // First visit — start the 14-day trial
+    const expiry = new Date();
+    expiry.setDate(expiry.getDate() + 14);
+    expiresAt = expiry.toISOString();
+    await db.from('guide_access').insert({ user_id: session.user.id, expires_at: expiresAt });
+  } else {
+    expiresAt = data.expires_at;
+  }
+
+  if (new Date(expiresAt) < new Date()) {
+    window.location.href = '/index.html';
+    return null;
+  }
+
+  return { session, expiresAt };
+}
+
+function tseShowGuideBanner(expiresAt) {
+  const msPerDay = 86400000;
+  const days = Math.ceil((new Date(expiresAt) - new Date()) / msPerDay);
+  const msg = days <= 1
+    ? 'Your free access expires today.'
+    : `Your free access expires in ${days} day${days === 1 ? '' : 's'}.`;
+  const banner = document.createElement('div');
+  banner.id = 'guide-access-banner';
+  banner.innerHTML = msg + ' <a href="/index.html" style="color:#fff;text-decoration:underline;">Learn more &rarr;</a>';
+  banner.style.cssText = 'background:#C8392B;color:#fff;text-align:center;padding:8px 16px;font-size:14px;position:sticky;top:0;z-index:1000;';
+  document.body.insertBefore(banner, document.body.firstChild);
+}
+
 async function tseSignOut() {
   await db.auth.signOut();
   window.location.href = '/index.html';
