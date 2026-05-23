@@ -156,8 +156,12 @@ function tseShowGuideBanner(expiresAt) {
   const banner = document.createElement('div');
   banner.id = 'guide-access-banner';
   banner.innerHTML = msg + ' <a href="/index.html" style="color:#fff;text-decoration:underline;">Learn more &rarr;</a>';
-  banner.style.cssText = 'background:#C8392B;color:#fff;text-align:center;padding:8px 16px;font-size:14px;position:sticky;top:0;z-index:1000;';
-  document.body.insertBefore(banner, document.body.firstChild);
+  banner.style.cssText = 'background:#C8392B;color:#fff;text-align:center;padding:8px 16px;font-size:14px;position:fixed;top:64px;left:0;right:0;z-index:850;transition:opacity 0.6s ease;';
+  document.body.appendChild(banner);
+  setTimeout(function() {
+    banner.style.opacity = '0';
+    setTimeout(function() { banner.remove(); }, 650);
+  }, 6000);
 }
 
 async function tseSignOut() {
