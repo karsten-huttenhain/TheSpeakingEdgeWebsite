@@ -94,7 +94,10 @@ async function tseGetSession() {
 
 async function tseRequireAuth() {
   const session = await tseGetSession();
-  if (!session) { window.location.href = '/login.html'; return null; }
+  if (!session) {
+    window.location.href = '/login.html?redirect=' + encodeURIComponent(window.location.pathname);
+    return null;
+  }
   return session;
 }
 

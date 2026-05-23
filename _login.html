@@ -265,9 +265,11 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 
 const authClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+const _loginRedirect = new URLSearchParams(window.location.search).get('redirect') || 'dashboard.html';
+
 // Redirect if already logged in
 authClient.auth.getSession().then(({ data: { session } }) => {
-  if (session) window.location.href = 'dashboard.html';
+  if (session) window.location.href = _loginRedirect;
 });
 
 // ── TABS ──────────────────────────────────────────────────────────────────────
@@ -330,7 +332,7 @@ async function signIn() {
     return;
   }
 
-  window.location.href = 'dashboard.html';
+  window.location.href = _loginRedirect;
 }
 
 // ── SIGN UP ───────────────────────────────────────────────────────────────────
