@@ -77,6 +77,7 @@ const TSE_NAV = `
     <li><a href="workbooks-and-courses.html">Workbooks &amp; Courses</a></li>
     <li><a href="about.html">About</a></li>
     <li><a href="contact.html">Contact</a></li>
+    <li><a href="/login.html" id="nav-auth-link">Sign in</a></li>
   </ul>
   <button class="nav-toggle" aria-label="Toggle menu">
     <span></span><span></span><span></span>
@@ -128,4 +129,19 @@ document.addEventListener('DOMContentLoaded', function () {
   const footerEl = document.getElementById('tse-footer');
   if (navEl) navEl.outerHTML = TSE_NAV;
   if (footerEl) footerEl.outerHTML = TSE_FOOTER;
+  updateNavAuth();
 });
+
+function updateNavAuth() {
+  try {
+    const raw = localStorage.getItem('sb-bkfkupyvwfbposjumcyq-auth-token');
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    if (!data?.access_token) return;
+    const link = document.getElementById('nav-auth-link');
+    if (link) {
+      link.textContent = 'Dashboard';
+      link.href = '/dashboard.html';
+    }
+  } catch(e) {}
+}
