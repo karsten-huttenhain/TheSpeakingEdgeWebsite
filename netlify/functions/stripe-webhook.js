@@ -43,6 +43,9 @@ exports.handler = async (event) => {
   }
 
   // Look up the Supabase user by email, then grant access
+  console.log('SUPABASE_URL present:', !!process.env.SUPABASE_URL);
+  console.log('SUPABASE_SERVICE_KEY length:', process.env.SUPABASE_SERVICE_KEY?.length);
+  console.log('SUPABASE_SERVICE_KEY prefix:', process.env.SUPABASE_SERVICE_KEY?.substring(0, 12));
   const db = createClient(
     process.env.SUPABASE_URL,
     process.env.SUPABASE_SERVICE_KEY
