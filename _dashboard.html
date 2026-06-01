@@ -251,6 +251,16 @@
   <div class="module-grid" id="moduleGrid"></div>
 </section>
 
+<!-- Resources -->
+<section class="dash-grid-section" id="dashResources" style="background:var(--white);padding-top:0;padding-bottom:80px;">
+  <h2>Free resources</h2>
+  <a href="guide/index.html" class="module-card" style="border-top-color:var(--gold);max-width:380px;display:block;text-decoration:none;">
+    <div class="module-card-num" style="color:var(--gold);font-size:0.7rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:0.5rem;">Guide</div>
+    <div class="module-card-title" style="font-family:'Playfair Display',Georgia,serif;font-size:1.2rem;font-weight:700;color:var(--midnight);margin-bottom:0.5rem;">Quiet Influence</div>
+    <div class="module-card-theme" style="font-size:0.85rem;color:var(--steel);">The introvert's guide to speaking with authority — 19 chapters, worksheets, and phrase cards. Free with your account.</div>
+  </a>
+</section>
+
 <!-- Supabase + platform -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/tse-platform.js"></script>
@@ -328,6 +338,7 @@ async function initDashboard() {
   document.getElementById('loadingScreen').style.display  = 'none';
   document.getElementById('dashHeader').style.display     = 'block';
   document.getElementById('dashGrid').style.display       = 'block';
+  document.getElementById('dashResources').style.display  = 'block';
 
   // Scroll reveal
   const observer = new IntersectionObserver(entries => {

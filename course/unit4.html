@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unit Four — [Title] | Speaking Confidence Programme</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400;1,700&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>body{visibility:hidden}</style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/tse-platform.js"></script>
+  <script>tseRequireCourseAccess().then(function(r){if(r){document.body.style.visibility='visible';tseShowCourseBanner(r.expiresAt);}}).catch(function(e){console.error('[TSE course]',e);document.body.style.visibility='visible';});</script>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<header class="site-header">
+  <a href="index.html" class="header-brand">
+    <div id="header-logo"></div>
+    <div>
+      <span class="header-wordmark">The Speaking Edge</span>
+      <span class="header-tagline">Make Speaking Your Edge</span>
+    </div>
+  </a>
+  <nav class="nav-chapters" aria-label="Course navigation">
+    <button class="btn-chapters" aria-expanded="false" aria-haspopup="true">
+      Course <span class="caret">&#9660;</span>
+    </button>
+    <div class="chapters-dropdown" role="menu">
+      <a href="index.html" class="dd-ch"><span class="n">—</span>&ensp;Course Overview</a>
+      <div class="dd-part-label" data-page="unit1.html">Unit One &mdash; [Unit title]</div>
+      <div class="dd-section-label">Section One &mdash; [Section title]</div>
+      <a href="unit1.html#ch1" class="dd-ch"><span class="n">01</span>&ensp;[Chapter title]</a>
+      <a href="unit1.html#ch2" class="dd-ch"><span class="n">02</span>&ensp;[Chapter title]</a>
+      <div class="dd-section-label">Section Two &mdash; [Section title]</div>
+      <a href="unit1.html#ch3" class="dd-ch"><span class="n">03</span>&ensp;[Chapter title]</a>
+      <a href="unit1.html#ch4" class="dd-ch"><span class="n">04</span>&ensp;[Chapter title]</a>
+      <div class="dd-part-label" data-page="unit2.html">Unit Two &mdash; [Unit title]</div>
+      <div class="dd-section-label">Section One &mdash; [Section title]</div>
+      <a href="unit2.html#ch1" class="dd-ch"><span class="n">01</span>&ensp;[Chapter title]</a>
+      <a href="unit2.html#ch2" class="dd-ch"><span class="n">02</span>&ensp;[Chapter title]</a>
+      <div class="dd-section-label">Section Two &mdash; [Section title]</div>
+      <a href="unit2.html#ch3" class="dd-ch"><span class="n">03</span>&ensp;[Chapter title]</a>
+      <a href="unit2.html#ch4" class="dd-ch"><span class="n">04</span>&ensp;[Chapter title]</a>
+      <div class="dd-part-label" data-page="unit3.html">Unit Three &mdash; [Unit title]</div>
+      <div class="dd-section-label">Section One &mdash; [Section title]</div>
+      <a href="unit3.html#ch1" class="dd-ch"><span class="n">01</span>&ensp;[Chapter title]</a>
+      <a href="unit3.html#ch2" class="dd-ch"><span class="n">02</span>&ensp;[Chapter title]</a>
+      <div class="dd-section-label">Section Two &mdash; [Section title]</div>
+      <a href="unit3.html#ch3" class="dd-ch"><span class="n">03</span>&ensp;[Chapter title]</a>
+      <a href="unit3.html#ch4" class="dd-ch"><span class="n">04</span>&ensp;[Chapter title]</a>
+      <div class="dd-part-label" data-page="unit4.html">Unit Four &mdash; [Unit title]</div>
+      <div class="dd-section-label">Section One &mdash; [Section title]</div>
+      <a href="unit4.html#ch1" class="dd-ch"><span class="n">01</span>&ensp;[Chapter title]</a>
+      <a href="unit4.html#ch2" class="dd-ch"><span class="n">02</span>&ensp;[Chapter title]</a>
+      <div class="dd-section-label">Section Two &mdash; [Section title]</div>
+      <a href="unit4.html#ch3" class="dd-ch"><span class="n">03</span>&ensp;[Chapter title]</a>
+      <a href="unit4.html#ch4" class="dd-ch"><span class="n">04</span>&ensp;[Chapter title]</a>
+      <div class="dd-part-label" data-page="unit5.html">Unit Five &mdash; [Unit title]</div>
+      <div class="dd-section-label">Section One &mdash; [Section title]</div>
+      <a href="unit5.html#ch1" class="dd-ch"><span class="n">01</span>&ensp;[Chapter title]</a>
+      <a href="unit5.html#ch2" class="dd-ch"><span class="n">02</span>&ensp;[Chapter title]</a>
+      <div class="dd-section-label">Section Two &mdash; [Section title]</div>
+      <a href="unit5.html#ch3" class="dd-ch"><span class="n">03</span>&ensp;[Chapter title]</a>
+      <a href="unit5.html#ch4" class="dd-ch"><span class="n">04</span>&ensp;[Chapter title]</a>
+      <div class="dd-part-label" data-page="unit6.html">Unit Six &mdash; [Unit title]</div>
+      <div class="dd-section-label">Section One &mdash; [Section title]</div>
+      <a href="unit6.html#ch1" class="dd-ch"><span class="n">01</span>&ensp;[Chapter title]</a>
+      <a href="unit6.html#ch2" class="dd-ch"><span class="n">02</span>&ensp;[Chapter title]</a>
+      <div class="dd-section-label">Section Two &mdash; [Section title]</div>
+      <a href="unit6.html#ch3" class="dd-ch"><span class="n">03</span>&ensp;[Chapter title]</a>
+      <a href="unit6.html#ch4" class="dd-ch"><span class="n">04</span>&ensp;[Chapter title]</a>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+
+  <div class="part-opener" data-part-num="04">
+    <div class="part-opener-content">
+      <div class="part-number">Unit Four</div>
+      <h2>[Unit Four Title]</h2>
+      <p class="part-intro">[Unit Four intro — one or two sentences setting up what this unit covers and why it matters.]</p>
+    </div>
+  </div>
+
+  <div class="content-wrap">
+
+    <!-- Section One -->
+    <div class="section-header">
+      <div class="section-label">Section One</div>
+      <h3 class="section-title">[Section One Title]</h3>
+    </div>
+
+    <!-- Ch 1 -->
+    <div class="accordion-item" id="ch1">
+      <button class="accordion-trigger" aria-expanded="false">
+        <span class="acc-num">01</span>
+        <span class="acc-title">[Chapter one title]</span>
+        <span class="acc-caret">&#9660;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="accordion-content">
+          <hr class="gold-rule">
+          <p>[Chapter 1 content — replace with final copy.]</p>
+          <p>[Continue with chapter content here.]</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ch 2 -->
+    <div class="accordion-item" id="ch2">
+      <button class="accordion-trigger" aria-expanded="false">
+        <span class="acc-num">02</span>
+        <span class="acc-title">[Chapter two title]</span>
+        <span class="acc-caret">&#9660;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="accordion-content">
+          <hr class="gold-rule">
+          <p>[Chapter 2 content — replace with final copy.]</p>
+          <p>[Continue with chapter content here.]</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section Two -->
+    <div class="section-header">
+      <div class="section-label">Section Two</div>
+      <h3 class="section-title">[Section Two Title]</h3>
+    </div>
+
+    <!-- Ch 3 -->
+    <div class="accordion-item" id="ch3">
+      <button class="accordion-trigger" aria-expanded="false">
+        <span class="acc-num">03</span>
+        <span class="acc-title">[Chapter three title]</span>
+        <span class="acc-caret">&#9660;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="accordion-content">
+          <hr class="gold-rule">
+          <p>[Chapter 3 content — replace with final copy.]</p>
+          <p>[Continue with chapter content here.]</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ch 4 -->
+    <div class="accordion-item" id="ch4">
+      <button class="accordion-trigger" aria-expanded="false">
+        <span class="acc-num">04</span>
+        <span class="acc-title">[Chapter four title]</span>
+        <span class="acc-caret">&#9660;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="accordion-content">
+          <hr class="gold-rule">
+          <p>[Chapter 4 content — replace with final copy.]</p>
+          <p>[Continue with chapter content here.]</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="part-nav">
+      <a href="unit3.html" class="part-nav-btn">&larr; Unit Three</a>
+      <a href="unit5.html" class="part-nav-btn next">Unit Five &rarr;</a>
+    </div>
+
+  </div><!-- /.content-wrap -->
+
+</main>
+
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Part Four — Difficult Moments | Quiet Influence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400;1,700&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>body{visibility:hidden}</style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/tse-platform.js"></script>
+  <script>tseRequireGuideAccess().then(function(r){if(r){document.body.style.visibility='visible';tseShowGuideBanner(r.expiresAt);}}).catch(function(e){console.error('[TSE guide]',e);document.body.style.visibility='visible';});</script>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<header class="site-header">
+  <a href="index.html" class="header-brand">
+    <div id="header-logo"></div>
+    <div>
+      <span class="header-wordmark">The Speaking Edge</span>
+      <span class="header-tagline">Make Speaking Your Edge</span>
+    </div>
+  </a>
+  <nav class="nav-chapters" aria-label="Chapters navigation">
+    <button class="btn-chapters" aria-expanded="false" aria-haspopup="true">
+      Chapters <span class="caret">&#9660;</span>
+    </button>
+    <div class="chapters-dropdown" role="menu">
+      <a href="index.html" class="dd-ch"><span class="n">—</span>&ensp;Welcome</a>
+      <div class="dd-part-label" data-page="part1.html">Part One &mdash; The Introvert Advantage</div>
+      <a href="part1.html#ch1" class="dd-ch"><span class="n">01</span>&ensp;Rewriting the story</a>
+      <a href="part1.html#ch2" class="dd-ch"><span class="n">02</span>&ensp;Your five quiet strengths</a>
+      <a href="part1.html#ch3" class="dd-ch"><span class="n">03</span>&ensp;Presence vs performance</a>
+      <div class="dd-part-label" data-page="part2.html">Part Two &mdash; Engineer the Room</div>
+      <a href="part2.html#ch4" class="dd-ch"><span class="n">04</span>&ensp;Pre-meeting protocol</a>
+      <a href="part2.html#ch5" class="dd-ch"><span class="n">05</span>&ensp;Your opening 30 seconds</a>
+      <a href="part2.html#ch6" class="dd-ch"><span class="n">06</span>&ensp;The three questions</a>
+      <div class="dd-part-label" data-page="part3.html">Part Three &mdash; Commanding the Room</div>
+      <a href="part3.html#ch7" class="dd-ch"><span class="n">07</span>&ensp;The considered pause</a>
+      <a href="part3.html#ch8" class="dd-ch"><span class="n">08</span>&ensp;Voice, pace, cadence</a>
+      <a href="part3.html#ch9" class="dd-ch"><span class="n">09</span>&ensp;Body language</a>
+      <a href="part3.html#ch10" class="dd-ch"><span class="n">10</span>&ensp;Strategic silence</a>
+      <div class="dd-part-label" data-page="part4.html">Part Four &mdash; Difficult Moments</div>
+      <a href="part4.html#ch11" class="dd-ch"><span class="n">11</span>&ensp;When you get interrupted</a>
+      <a href="part4.html#ch12" class="dd-ch"><span class="n">12</span>&ensp;When you don't know</a>
+      <a href="part4.html#ch13" class="dd-ch"><span class="n">13</span>&ensp;When pushback turns personal</a>
+      <a href="part4.html#ch14" class="dd-ch"><span class="n">14</span>&ensp;Stage fright</a>
+      <div class="dd-part-label" data-page="part5.html">Part Five &mdash; Energy</div>
+      <a href="part5.html#ch15" class="dd-ch"><span class="n">15</span>&ensp;Why introverts burn out</a>
+      <a href="part5.html#ch16" class="dd-ch"><span class="n">16</span>&ensp;The recovery routine</a>
+      <a href="part5.html#ch17" class="dd-ch"><span class="n">17</span>&ensp;A sustainable week</a>
+      <div class="dd-part-label" data-page="part6.html">Part Six &mdash; Long-Term Influence</div>
+      <a href="part6.html#ch18" class="dd-ch"><span class="n">18</span>&ensp;Becoming who people listen to</a>
+      <a href="part6.html#ch19" class="dd-ch"><span class="n">19</span>&ensp;The 30-day plan</a>
+      <div class="dd-part-label" data-page="appendix.html">Appendix</div>
+      <a href="appendix.html#worksheet1" class="dd-ch"><span class="n">—</span>&ensp;Worksheet One</a>
+      <a href="appendix.html#worksheet2" class="dd-ch"><span class="n">—</span>&ensp;Worksheet Two</a>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+
+  <div class="part-opener" data-part-num="04">
+    <div class="part-opener-content">
+      <div class="part-number">Part Four</div>
+      <h2>Difficult Moments, Handled.</h2>
+      <p class="part-intro">Interruptions, ambush questions, hostile framings, and stage fright — with calm, specific scripts you can actually use.</p>
+    </div>
+  </div>
+
+  <div class="content-wrap">
+
+    <!-- Ch 11 -->
+    <div class="accordion-item" id="ch11">
+      <button class="accordion-trigger" aria-expanded="false">
+        <span class="acc-num">11</span>
+        <span class="acc-title">When you get interrupted.</span>
+        <span class="acc-caret">&#9660;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="accordion-content">
+          <hr class="gold-rule">
+          <p>Getting interrupted is one of the most exhausting parts of meetings for introverted professionals. There's a third option beyond shrinking or escalating: reclaim the floor calmly.</p>
+          <h4>Reclaim phrases</h4>
+          <ul class="styled">
+            <li>"Hold on — let me finish my thought, and then I want to hear you."</li>
+            <li>"I wasn't quite done. Give me thirty seconds to land this and then it's yours."</li>
+            <li>"Sorry, can I just complete the sentence I was on?"</li>
+            <li>"One moment — the part I was getting to is the part that matters."</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ch 12 -->
+    <div class="accordion-item" id="ch12">
+      <button class="accordion-trigger" aria-expanded="false">
+        <span class="acc-num">12</span>
+        <span class="acc-title">When you don't know the answer.</span>
+        <span class="acc-caret">&#9660;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="accordion-content">
+          <hr class="gold-rule">
+          <p>Senior people are trusted not because they always know the answer, but because of how they behave when they don't.</p>
+          <h4>The four senior responses</h4>
+          <ul class="styled">
+            <li>"I don't know yet. Here's how I'd find out."</li>
+            <li>"Good question — I want to give you a real answer rather than a guess. I'll come back to you by [time]."</li>
+            <li>"I don't have data on that, but my read on it is… I'd want to verify before we act on it."</li>
+            <li>"That's outside what I've looked at closely. [Person] would know the specifics. What I can speak to is…"</li>
+          </ul>
+          <div class="callout callout-key reveal">
+            <div class="callout-label">The trust shortcut</div>
+            <p>Get a reputation for saying "I don't know yet" crisply, instead of bluffing. Within six months you will be one of the most trusted people in your organisation.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ch 13 -->
+    <div class="accordion-item" id="ch13">
+      <button class="accordion-trigger" aria-expanded="false">
+        <span class="acc-num">13</span>
+        <span class="acc-title">When pushback turns personal.</span>
+        <span class="acc-caret">&#9660;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="accordion-content">
+          <hr class="gold-rule">
+          <p>Sometimes a question isn't really about the work. It's loaded.</p>
+          <div class="numbered-item"><span class="num">1.</span><div><strong>Don't match the energy.</strong> Slow down. Drop your voice. Take half a breath.</div></div>
+          <div class="numbered-item"><span class="num">2.</span><div><strong>Address content, not subtext.</strong> "What I'm hearing you ask is whether [X]. The answer is [Y]."</div></div>
+          <div class="numbered-item"><span class="num">3.</span><div><strong>Name it, only if needed.</strong> "I want to make sure we're still discussing the work and not something else."</div></div>
+          <div class="numbered-item"><span class="num">4.</span><div><strong>Take it offline.</strong> "Something felt off between us, and I'd rather have the conversation than wonder."</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ch 14 -->
+    <div class="accordion-item" id="ch14">
+      <button class="accordion-trigger" aria-expanded="false">
+        <span class="acc-num">14</span>
+        <span class="acc-title">Stage fright — a kinder approach.</span>
+        <span class="acc-caret">&#9660;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="accordion-content">
+          <hr class="gold-rule">
+          <p>Stage fright is not a sign that you are bad at this. It is a sign that you care.</p>
+          <div class="numbered-item"><span class="num">1.</span><div><strong>Reframe the sensation</strong> — "I'm terrified" and "I'm revved up" are the same body, two different labels. Try the second.</div></div>
+          <div class="numbered-item"><span class="num">2.</span><div><strong>Land in your body, not in your head</strong> — Move your attention to a physical anchor: feet on the floor, weight in your seat.</div></div>
+          <div class="numbered-item"><span class="num">3.</span><div><strong>Use the exhale, not the inhale</strong> — Four seconds in, six seconds out, twice. Your heart rate drops measurably within thirty seconds.</div></div>
+          <div class="numbered-item"><span class="num">4.</span><div><strong>Have a first sentence you can say on autopilot</strong> — Memorise your opening line until you could say it half-asleep.</div></div>
+          <div class="numbered-item"><span class="num">5.</span><div><strong>Make the audience the point, not yourself</strong> — What do they need? What are they worried about? The same nervous energy, redirected outward, becomes generosity.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="part-nav">
+      <a href="part3.html" class="part-nav-btn">&larr; Part Three</a>
+      <a href="part5.html" class="part-nav-btn next">Part Five &rarr;</a>
+    </div>
+
+  </div><!-- /.content-wrap -->
+
+</main>
+
+<script src="js/main.js"></script>
+</body>
+</html>
