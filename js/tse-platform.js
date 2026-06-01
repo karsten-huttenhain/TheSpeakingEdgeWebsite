@@ -164,6 +164,50 @@ function tseShowGuideBanner(expiresAt) {
   }, 6000);
 }
 
+// ── COURSE ACCESS (paid, 6-month) ─────────────────────────────────────────────
+async function tseRequireCourseAccess() {
+  const session = await tseRequireAuth();
+  if (!session) return null;
+
+  const { data } = await db
+    .from('course_access')
+    .select('expires_at')
+    .eq('user_id', session.user.id)
+    .eq('course_id', TSE_CONFIG.courseId)
+    .maybeSingle();
+
+  if (!data) {
+    window.location.href = '/workbooks-and-courses.html';
+    return null;
+  }
+
+  if (data.expires_at && new Date(data.expires_at) < new Date()) {
+    window.location.href = '/workbooks-and-courses.html';
+    return null;
+  }
+
+  return { session, expiresAt: data.expires_at };
+}
+
+function tseShowCourseBanner(expiresAt) {
+  if (!expiresAt) return;
+  const msPerDay = 86400000;
+  const daysLeft = Math.ceil((new Date(expiresAt) - new Date()) / msPerDay);
+  if (daysLeft > 30) return;
+  const msg = daysLeft <= 1
+    ? 'Your course access expires today.'
+    : `Your course access expires in ${daysLeft} day${daysLeft === 1 ? '' : 's'}.`;
+  const banner = document.createElement('div');
+  banner.id = 'course-access-banner';
+  banner.innerHTML = msg + ' <a href="/workbooks-and-courses.html" style="color:#fff;text-decoration:underline;">Renew access &rarr;</a>';
+  banner.style.cssText = 'background:#C8392B;color:#fff;text-align:center;padding:8px 16px;font-size:14px;position:fixed;top:64px;left:0;right:0;z-index:850;transition:opacity 0.6s ease;';
+  document.body.appendChild(banner);
+  setTimeout(function() {
+    banner.style.opacity = '0';
+    setTimeout(function() { banner.remove(); }, 650);
+  }, 6000);
+}
+
 async function tseSignOut() {
   await db.auth.signOut();
   window.location.href = '/index.html';

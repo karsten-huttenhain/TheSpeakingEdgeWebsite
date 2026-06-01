@@ -60,12 +60,16 @@ exports.handler = async (event) => {
   if (!user) {
     // User hasn't created an account yet — store a pending grant keyed by email.
     // When they sign up, the login flow should check this table.
+    const pendingExpiresAt = new Date();
+    pendingExpiresAt.setMonth(pendingExpiresAt.getMonth() + 6);
+
     const { error: pendingError } = await db
       .from('pending_access')
       .upsert({
         email:      customerEmail,
         course_id:  process.env.TSE_COURSE_ID,
         stripe_session_id: session.id,
+        expires_at: pendingExpiresAt.toISOString(),
         created_at: new Date().toISOString(),
       }, { onConflict: 'email,course_id' });
 
@@ -78,13 +82,17 @@ exports.handler = async (event) => {
     return { statusCode: 200, body: 'Pending access recorded' };
   }
 
-  // Grant course access
+  // Grant course access — 6-month expiry
+  const expiresAt = new Date();
+  expiresAt.setMonth(expiresAt.getMonth() + 6);
+
   const { error: accessError } = await db
     .from('course_access')
     .upsert({
       user_id:    user.id,
       course_id:  process.env.TSE_COURSE_ID,
       granted_at: new Date().toISOString(),
+      expires_at: expiresAt.toISOString(),
       stripe_session_id: session.id,
     }, { onConflict: 'user_id,course_id' });
 
