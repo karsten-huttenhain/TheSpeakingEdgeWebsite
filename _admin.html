@@ -178,7 +178,7 @@
 <nav class="dash-nav">
   <a href="index.html" class="dash-nav-logo">The Speaking <span>Edge</span></a>
   <div class="dash-nav-right">
-    <a href="dashboard.html" class="dash-nav-back">← My Dashboard</a>
+    <a href="/course/index.html" class="dash-nav-back">← My Course</a>
     <span class="dash-nav-user" id="navUser"></span>
     <button class="btn-signout" onclick="tseSignOut()">Sign Out</button>
   </div>
@@ -246,7 +246,7 @@ async function initAdmin() {
 
   const profile = await tseGetProfile(session.user.id);
   if (profile?.role !== 'admin') {
-    window.location.href = '/dashboard.html';
+    window.location.href = '/course/index.html';
     return;
   }
 

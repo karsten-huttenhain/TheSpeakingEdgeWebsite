@@ -11,7 +11,6 @@
   <style>body{visibility:hidden}</style>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../js/tse-platform.js"></script>
-  <script>tseRequireCourseAccess().then(function(r){if(r){document.body.style.visibility='visible';tseShowCourseBanner(r.expiresAt);}}).catch(function(e){console.error('[TSE course]',e);document.body.style.visibility='visible';});</script>
 </head>
 <body>
 
@@ -31,42 +30,42 @@
     </button>
     <div class="chapters-dropdown" role="menu">
       <a href="index.html" class="dd-ch"><span class="n">—</span>&ensp;Course Overview</a>
-      <div class="dd-part-label" data-page="unit1.html">Unit One &mdash; [Unit title]</div>
+      <div class="dd-part-label" data-page="unit1.html" data-slug="01-warmup">W.A.R.M.U.P. &mdash; Introduction</div>
       <div class="dd-section-label">Section One &mdash; [Section title]</div>
       <a href="unit1.html#ch1" class="dd-ch"><span class="n">01</span>&ensp;[Chapter title]</a>
       <a href="unit1.html#ch2" class="dd-ch"><span class="n">02</span>&ensp;[Chapter title]</a>
       <div class="dd-section-label">Section Two &mdash; [Section title]</div>
       <a href="unit1.html#ch3" class="dd-ch"><span class="n">03</span>&ensp;[Chapter title]</a>
       <a href="unit1.html#ch4" class="dd-ch"><span class="n">04</span>&ensp;[Chapter title]</a>
-      <div class="dd-part-label" data-page="unit2.html">Unit Two &mdash; [Unit title]</div>
+      <div class="dd-part-label" data-page="unit2.html" data-slug="02-scribe">S.C.R.I.B.E. &mdash; Story</div>
       <div class="dd-section-label">Section One &mdash; [Section title]</div>
       <a href="unit2.html#ch1" class="dd-ch"><span class="n">01</span>&ensp;[Chapter title]</a>
       <a href="unit2.html#ch2" class="dd-ch"><span class="n">02</span>&ensp;[Chapter title]</a>
       <div class="dd-section-label">Section Two &mdash; [Section title]</div>
       <a href="unit2.html#ch3" class="dd-ch"><span class="n">03</span>&ensp;[Chapter title]</a>
       <a href="unit2.html#ch4" class="dd-ch"><span class="n">04</span>&ensp;[Chapter title]</a>
-      <div class="dd-part-label" data-page="unit3.html">Unit Three &mdash; [Unit title]</div>
+      <div class="dd-part-label" data-page="unit3.html" data-slug="03-physcl">P.H.Y.S.C.L. &mdash; Body</div>
       <div class="dd-section-label">Section One &mdash; [Section title]</div>
       <a href="unit3.html#ch1" class="dd-ch"><span class="n">01</span>&ensp;[Chapter title]</a>
       <a href="unit3.html#ch2" class="dd-ch"><span class="n">02</span>&ensp;[Chapter title]</a>
       <div class="dd-section-label">Section Two &mdash; [Section title]</div>
       <a href="unit3.html#ch3" class="dd-ch"><span class="n">03</span>&ensp;[Chapter title]</a>
       <a href="unit3.html#ch4" class="dd-ch"><span class="n">04</span>&ensp;[Chapter title]</a>
-      <div class="dd-part-label" data-page="unit4.html">Unit Four &mdash; [Unit title]</div>
+      <div class="dd-part-label" data-page="unit4.html" data-slug="04-voices">V.O.I.C.E.S. &mdash; Voice</div>
       <div class="dd-section-label">Section One &mdash; [Section title]</div>
       <a href="unit4.html#ch1" class="dd-ch"><span class="n">01</span>&ensp;[Chapter title]</a>
       <a href="unit4.html#ch2" class="dd-ch"><span class="n">02</span>&ensp;[Chapter title]</a>
       <div class="dd-section-label">Section Two &mdash; [Section title]</div>
       <a href="unit4.html#ch3" class="dd-ch"><span class="n">03</span>&ensp;[Chapter title]</a>
       <a href="unit4.html#ch4" class="dd-ch"><span class="n">04</span>&ensp;[Chapter title]</a>
-      <div class="dd-part-label" data-page="unit5.html">Unit Five &mdash; [Unit title]</div>
+      <div class="dd-part-label" data-page="unit5.html" data-slug="05-rainbows">R.A.I.N.B.O.W.S. &mdash; Mind</div>
       <div class="dd-section-label">Section One &mdash; [Section title]</div>
       <a href="unit5.html#ch1" class="dd-ch"><span class="n">01</span>&ensp;[Chapter title]</a>
       <a href="unit5.html#ch2" class="dd-ch"><span class="n">02</span>&ensp;[Chapter title]</a>
       <div class="dd-section-label">Section Two &mdash; [Section title]</div>
       <a href="unit5.html#ch3" class="dd-ch"><span class="n">03</span>&ensp;[Chapter title]</a>
       <a href="unit5.html#ch4" class="dd-ch"><span class="n">04</span>&ensp;[Chapter title]</a>
-      <div class="dd-part-label" data-page="unit6.html">Unit Six &mdash; [Unit title]</div>
+      <div class="dd-part-label" data-page="unit6.html" data-slug="06-impact">I.M.P.A.C.T. T.H.E.M. &mdash; Delivery</div>
       <div class="dd-section-label">Section One &mdash; [Section title]</div>
       <a href="unit6.html#ch1" class="dd-ch"><span class="n">01</span>&ensp;[Chapter title]</a>
       <a href="unit6.html#ch2" class="dd-ch"><span class="n">02</span>&ensp;[Chapter title]</a>
@@ -79,64 +78,98 @@
 
 <main id="main">
 
-  <!-- Hero -->
   <section id="hero">
     <div class="hero-content">
-      <div class="hero-label">The Speaking Edge</div>
-      <h1>Speaking<br><em>Confidence.</em></h1>
-      <p class="hero-subtitle">The Speaking Confidence Programme</p>
-      <p class="hero-audience">[Programme strapline — replace with final copy describing who this is for and what they will achieve.]</p>
-      <a href="unit1.html" class="hero-cta">Begin Unit One &rarr;</a>
+      <div class="hero-label">Speaking Confidence Programme</div>
+      <h1>Welcome<br>back, <em id="firstName">there</em>.</h1>
+      <div class="progress-wrap">
+        <div class="progress-label-row">
+          <span class="progress-label-text">Your progress</span>
+          <span class="progress-fraction" id="progressText">0 of 6 complete</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+      </div>
+      <a href="unit1.html" class="hero-cta" id="continueBtn">Begin W.A.R.M.U.P. &rarr;</a>
     </div>
     <div id="hero-wave-wrap"></div>
   </section>
 
-  <!-- Overview -->
   <section class="welcome-section">
-    <h2 class="welcome-title">Welcome to the programme.</h2>
+    <h2 class="welcome-title">Your programme at a glance.</h2>
     <hr class="gold-rule">
-    <p>[Welcome copy — replace with final text. Introduce the course, set expectations, and orient the learner.]</p>
-    <p>[Second paragraph of welcome copy.]</p>
-
-    <h4>What this programme covers</h4>
-    <div class="unit-grid">
-      <a href="unit1.html" class="unit-card">
-        <div class="unit-card-num">Unit One</div>
-        <h3>[Unit One Title]</h3>
-        <p>[Brief description of what this unit covers — one or two sentences.]</p>
-      </a>
-      <a href="unit2.html" class="unit-card">
-        <div class="unit-card-num">Unit Two</div>
-        <h3>[Unit Two Title]</h3>
-        <p>[Brief description of what this unit covers — one or two sentences.]</p>
-      </a>
-      <a href="unit3.html" class="unit-card">
-        <div class="unit-card-num">Unit Three</div>
-        <h3>[Unit Three Title]</h3>
-        <p>[Brief description of what this unit covers — one or two sentences.]</p>
-      </a>
-      <a href="unit4.html" class="unit-card">
-        <div class="unit-card-num">Unit Four</div>
-        <h3>[Unit Four Title]</h3>
-        <p>[Brief description of what this unit covers — one or two sentences.]</p>
-      </a>
-      <a href="unit5.html" class="unit-card">
-        <div class="unit-card-num">Unit Five</div>
-        <h3>[Unit Five Title]</h3>
-        <p>[Brief description of what this unit covers — one or two sentences.]</p>
-      </a>
-      <a href="unit6.html" class="unit-card">
-        <div class="unit-card-num">Unit Six</div>
-        <h3>[Unit Six Title]</h3>
-        <p>[Brief description of what this unit covers — one or two sentences.]</p>
-      </a>
-    </div>
-
-    <p><strong>Start whenever you are ready —</strong><br>The Speaking Edge team</p>
+    <p>[Welcome copy — replace with final text.]</p>
+    <h4>The six units</h4>
+    <div class="unit-grid" id="unitGrid"></div>
   </section>
 
 </main>
 
 <script src="js/main.js"></script>
+<script>
+var _uid = null, _prog = null;
+
+tseInitCoursePage(null).then(function(r) {
+  if (!r) return;
+  document.body.style.visibility = 'visible';
+  tseShowCourseBanner(r.expiresAt);
+  _uid  = r.session.user.id;
+  _prog = r.progress;
+
+  document.getElementById('firstName').textContent = tseFirstName(r.profile && r.profile.full_name);
+
+  var completed = TSE_MODULES.filter(function(m) {
+    return r.progress[m.slug] && r.progress[m.slug].status === 'complete';
+  }).length;
+  document.getElementById('progressText').textContent = completed + ' of 6 complete';
+  document.getElementById('progressFill').style.width = Math.round((completed / 6) * 100) + '%';
+
+  var btn = document.getElementById('continueBtn');
+  if (btn) {
+    var next = TSE_MODULES.find(function(m) {
+      return !r.progress[m.slug] || r.progress[m.slug].status !== 'complete';
+    });
+    if (next) {
+      var inProg = r.progress[next.slug] && r.progress[next.slug].status === 'in_progress';
+      btn.textContent = (inProg ? 'Continue ' : 'Begin ') + next.acronym + ' →';
+      btn.href = next.page;
+    } else {
+      btn.textContent = 'All units complete ✓';
+      btn.style.background = '#27AE60';
+      btn.removeAttribute('href');
+    }
+  }
+
+  renderUnitCards(r.progress);
+  updateNavProgress(r.progress);
+}).catch(function(e) {
+  console.error('[TSE course]', e);
+  document.body.style.visibility = 'visible';
+});
+
+function renderUnitCards(progress) {
+  var grid = document.getElementById('unitGrid');
+  if (!grid) return;
+  var NUMS = ['One','Two','Three','Four','Five','Six'];
+  TSE_MODULES.forEach(function(m, i) {
+    var prog = progress[m.slug];
+    var statusClass, statusText;
+    if (prog && prog.status === 'complete')          { statusClass = 'complete';    statusText = 'Complete ✓'; }
+    else if (prog && prog.status === 'in_progress')  { statusClass = 'in-progress'; statusText = 'In progress'; }
+    else                                              { statusClass = 'not-started'; statusText = 'Not started'; }
+    var card = document.createElement('a');
+    card.href      = m.page;
+    card.className = 'unit-card';
+    card.innerHTML =
+      '<div class="unit-card-num">Unit ' + NUMS[i] + '</div>'
+      + '<div class="unit-card-acronym" style="color:' + m.color + '">' + m.acronym + '<sup style="font-size:0.42em;vertical-align:super">™</sup></div>'
+      + '<div class="unit-card-theme">' + m.theme + '</div>'
+      + '<h3>' + m.title + '</h3>'
+      + '<span class="unit-card-status ' + statusClass + '">' + statusText + '</span>';
+    grid.appendChild(card);
+  });
+}
+</script>
 </body>
 </html>

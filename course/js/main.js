@@ -1,3 +1,27 @@
+/* ── Module definitions (mirrors Supabase modules table) ── */
+var TSE_MODULES = [
+  { slug: '01-warmup',   number: 1, acronym: 'W.A.R.M.U.P.',          theme: 'Introduction', title: 'Comfortable with being uncomfortable',            color: '#C8392B', page: 'unit1.html' },
+  { slug: '02-scribe',   number: 2, acronym: 'S.C.R.I.B.E.',           theme: 'Story',        title: 'The art of storytelling',                         color: '#E8A020', page: 'unit2.html' },
+  { slug: '03-physcl',   number: 3, acronym: 'P.H.Y.S.C.L.',           theme: 'Body',         title: 'Connecting with the body as a communication tool', color: '#4A7A8A', page: 'unit3.html' },
+  { slug: '04-voices',   number: 4, acronym: 'V.O.I.C.E.S.',           theme: 'Voice',        title: 'Developing vocal delivery and control',            color: '#C8392B', page: 'unit4.html' },
+  { slug: '05-rainbows', number: 5, acronym: 'R.A.I.N.B.O.W.S.',       theme: 'Mind',         title: 'Managing fear and building a growth mindset',      color: '#E8A020', page: 'unit5.html' },
+  { slug: '06-impact',   number: 6, acronym: 'I.M.P.A.C.T. T.H.E.M.', theme: 'Delivery', title: 'Delivery mastery — integrating all skills',  color: '#27AE60', page: 'unit6.html' },
+];
+
+/* ── Update nav dropdown with progress colours ── */
+function updateNavProgress(progress) {
+  if (!progress) return;
+  var dropdown = document.querySelector('.chapters-dropdown');
+  if (!dropdown) return;
+  dropdown.querySelectorAll('.dd-part-label[data-slug]').forEach(function(el) {
+    var slug   = el.getAttribute('data-slug');
+    var status = progress[slug] && progress[slug].status;
+    el.classList.remove('nav-complete', 'nav-in-progress');
+    if (status === 'complete')    el.classList.add('nav-complete');
+    else if (status === 'in_progress') el.classList.add('nav-in-progress');
+  });
+}
+
 /* ── Header logo ── */
 var TSE_LOGO_SVG = [
   '<svg xmlns="http://www.w3.org/2000/svg" viewBox="36 58 424 186" aria-label="The Speaking Edge">',
