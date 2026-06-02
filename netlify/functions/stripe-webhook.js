@@ -5,10 +5,35 @@
      SUPABASE_URL            — your project URL
      SUPABASE_SERVICE_KEY    — service role key (not anon key)
      TSE_COURSE_ID           — UUID of the course row in Supabase
+     RESEND_API_KEY          — from Resend Dashboard → API Keys
    ═══════════════════════════════════════════════════════════════ */
 
 const stripe  = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const { createClient } = require('@supabase/supabase-js');
+const { Resend } = require('resend');
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+async function sendConfirmationEmail(toEmail) {
+  await resend.emails.send({
+    from: 'hello@speakingedgeglobal.com',
+    to: toEmail,
+    subject: 'Welcome to the Speaking Confidence Programme',
+    html: `
+      <div style="font-family: Georgia, serif; max-width: 560px; margin: 0 auto; color: #2c2c2c; line-height: 1.7;">
+        <p>Hi there,</p>
+        <p>Thank you so much for joining the <strong>Speaking Confidence Programme</strong> — I'm really glad you're here.</p>
+        <p>Your access is now active. Head over to your dashboard to get started whenever you're ready — there's no rush, and you can work through the material entirely at your own pace.</p>
+        <p>If you have any questions as you go, don't hesitate to reach out. I'm here to support you.</p>
+        <p>With warm wishes,<br>Maya</p>
+        <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 32px 0 16px;">
+        <p style="font-size: 13px; color: #888;">
+          Questions? You can always <a href="https://www.speakingedgeglobal.com/contact.html" style="color: #888;">get in touch here</a>.
+        </p>
+      </div>
+    `,
+  });
+}
 
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') {
@@ -79,6 +104,7 @@ exports.handler = async (event) => {
     }
 
     console.log(`Pending access recorded for ${customerEmail}`);
+    await sendConfirmationEmail(customerEmail);
     return { statusCode: 200, body: 'Pending access recorded' };
   }
 
@@ -102,5 +128,6 @@ exports.handler = async (event) => {
   }
 
   console.log(`Course access granted to user ${user.id} (${customerEmail})`);
+  await sendConfirmationEmail(customerEmail);
   return { statusCode: 200, body: 'Access granted' };
 };
