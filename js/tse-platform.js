@@ -208,6 +208,30 @@ function tseShowCourseBanner(expiresAt) {
   }, 6000);
 }
 
+// ── COURSE PAGE INIT (auth + profile + progress in one call) ─────────────────
+async function tseInitCoursePage(moduleSlug) {
+  const access = await tseRequireCourseAccess();
+  if (!access) return null;
+
+  const [profile, progress] = await Promise.all([
+    tseGetProfile(access.session.user.id),
+    tseGetProgress(access.session.user.id),
+  ]);
+
+  if (moduleSlug && progress[moduleSlug]?.status !== 'complete') {
+    db.from('progress').upsert({
+      user_id:   access.session.user.id,
+      course_id: TSE_CONFIG.courseId,
+      module_id: moduleSlug,
+      status:    'in_progress',
+    }, { onConflict: 'user_id,course_id,module_id' });
+    if (!progress[moduleSlug]) progress[moduleSlug] = {};
+    progress[moduleSlug].status = 'in_progress';
+  }
+
+  return { session: access.session, expiresAt: access.expiresAt, profile, progress };
+}
+
 async function tseSignOut() {
   await db.auth.signOut();
   window.location.href = '/index.html';
