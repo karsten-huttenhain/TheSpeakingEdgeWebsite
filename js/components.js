@@ -140,8 +140,8 @@ function updateNavAuth() {
     if (!data?.access_token) return;
     const link = document.getElementById('nav-auth-link');
     if (link) {
-      link.textContent = 'Dashboard';
-      link.href = '/dashboard.html';
+      link.textContent = 'My Course';
+      link.href = '/course/index.html';
     }
   } catch(e) {}
 }
