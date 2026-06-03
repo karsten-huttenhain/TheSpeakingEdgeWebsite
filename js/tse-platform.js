@@ -237,6 +237,19 @@ async function tseSignOut() {
   window.location.href = '/index.html';
 }
 
+function tseStartInactivityTimer() {
+  var TIMEOUT = 2 * 60 * 60 * 1000;
+  var timer;
+  function reset() {
+    clearTimeout(timer);
+    timer = setTimeout(tseSignOut, TIMEOUT);
+  }
+  ['click', 'keypress', 'mousemove', 'scroll', 'touchstart'].forEach(function(evt) {
+    document.addEventListener(evt, reset, { passive: true });
+  });
+  reset();
+}
+
 // ── PROGRESS ──────────────────────────────────────────────────────────────────
 async function tseGetProgress(userId) {
   const { data } = await db

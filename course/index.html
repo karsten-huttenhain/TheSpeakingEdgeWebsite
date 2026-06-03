@@ -74,6 +74,7 @@
       <a href="unit6.html#ch4" class="dd-ch"><span class="n">04</span>&ensp;[Chapter title]</a>
     </div>
   </nav>
+  <button class="btn-signout" onclick="tseSignOut()">Sign out</button>
 </header>
 
 <main id="main">
@@ -114,6 +115,7 @@ tseInitCoursePage(null).then(function(r) {
   if (!r) return;
   document.body.style.visibility = 'visible';
   tseShowCourseBanner(r.expiresAt);
+  tseStartInactivityTimer();
   _uid  = r.session.user.id;
   _prog = r.progress;
 

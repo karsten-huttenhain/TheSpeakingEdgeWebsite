@@ -84,6 +84,19 @@ body {
 }
 .btn-chapters[aria-expanded="true"] .caret { transform: rotate(180deg); }
 
+.btn-signout {
+  background: none; border: none;
+  color: rgba(255,255,255,0.5);
+  font-family: 'Source Sans Pro', Arial, sans-serif;
+  font-size: 0.82rem; font-weight: 600;
+  cursor: pointer;
+  padding: 0.5rem 0.75rem;
+  margin-left: 0.5rem;
+  transition: color 0.18s;
+  white-space: nowrap;
+}
+.btn-signout:hover { color: var(--white); }
+
 /* ── Chapters dropdown ── */
 .chapters-dropdown {
   position: absolute; top: calc(100% + 0.65rem); right: 0;

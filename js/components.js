@@ -78,6 +78,7 @@ const TSE_NAV = `
     <li><a href="about.html">About</a></li>
     <li><a href="contact.html">Contact</a></li>
     <li><a href="/login.html" id="nav-auth-link">Sign in</a></li>
+    <li><a href="#" id="nav-signout-link" style="display:none" onclick="tseNavSignOut();return false;">Sign out</a></li>
   </ul>
   <button class="nav-toggle" aria-label="Toggle menu">
     <span></span><span></span><span></span>
@@ -143,5 +144,12 @@ function updateNavAuth() {
       link.textContent = 'My Course';
       link.href = '/course/index.html';
     }
+    const signout = document.getElementById('nav-signout-link');
+    if (signout) signout.style.display = '';
   } catch(e) {}
+}
+
+function tseNavSignOut() {
+  localStorage.removeItem('sb-bkfkupyvwfbposjumcyq-auth-token');
+  window.location.href = '/index.html';
 }
