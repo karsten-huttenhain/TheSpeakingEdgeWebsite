@@ -11,7 +11,7 @@
   <style>body{visibility:hidden}</style>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../js/tse-platform.js"></script>
-  <script>tseRequireGuideAccess().then(function(r){if(r){document.body.style.visibility='visible';tseShowGuideBanner(r.expiresAt);tseStartInactivityTimer();}}).catch(function(e){console.error('[TSE guide]',e);document.body.style.visibility='visible';});</script>
+  <script>tseRequireGuideAccess().then(function(r){if(r){document.body.style.visibility='visible';tseStartInactivityTimer();}}).catch(function(e){console.error('[TSE guide]',e);document.body.style.visibility='visible';});</script>
 </head>
 <body>
 
@@ -74,6 +74,7 @@
       <p class="hero-subtitle">The introvert's guide to commanding the room</p>
       <p class="hero-audience">For introverted managers, technical leads, and quiet professionals who lead meetings, deliver presentations, and need to be heard.</p>
       <a href="part1.html" class="hero-cta">Start Reading &rarr;</a>
+      <button onclick="tseDownloadGuide()" class="hero-cta" style="margin-top:0.75rem;background:transparent;border:2px solid rgba(255,255,255,0.4);cursor:pointer;">Download PDF &darr;</button>
     </div>
     <div id="hero-wave-wrap"></div>
   </section>

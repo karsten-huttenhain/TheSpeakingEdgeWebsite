@@ -8,6 +8,7 @@ const TSE_CONFIG = {
   supabaseUrl:     'https://bkfkupyvwfbposjumcyq.supabase.co',
   supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJrZmt1cHl2d2ZicG9zanVtY3lxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1NTA0NzAsImV4cCI6MjA5MzEyNjQ3MH0.rrRaCKDgwzfvzVjs0W5NGB00WC78Q57XAf_bNGprDHE',
   courseId:        '7c4c6ad1-97a5-4bb1-a214-8a43387119bd',
+  guideId:         '9bbe3f5f-a1c9-4646-a63a-6f15b1edcf12',
 };
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -116,52 +117,45 @@ async function tseHasCourseAccess(userId) {
   return !!data;
 }
 
-// ── GUIDE ACCESS (14-day trial) ───────────────────────────────────────────────
+// ── GUIDE ACCESS (paid) ───────────────────────────────────────────────────────
 async function tseRequireGuideAccess() {
   const session = await tseRequireAuth();
   if (!session) return null;
 
   const { data } = await db
-    .from('guide_access')
+    .from('course_access')
     .select('expires_at')
     .eq('user_id', session.user.id)
+    .eq('course_id', TSE_CONFIG.guideId)
     .maybeSingle();
 
-  let expiresAt;
-
   if (!data) {
-    // First visit — start the 14-day trial
-    const expiry = new Date();
-    expiry.setDate(expiry.getDate() + 14);
-    expiresAt = expiry.toISOString();
-    await db.from('guide_access').insert({ user_id: session.user.id, expires_at: expiresAt });
-  } else {
-    expiresAt = data.expires_at;
-  }
-
-  if (new Date(expiresAt) < new Date()) {
-    window.location.href = '/index.html';
+    window.location.href = '/workbooks-and-courses.html';
     return null;
   }
 
-  return { session, expiresAt };
+  if (data.expires_at && new Date(data.expires_at) < new Date()) {
+    window.location.href = '/workbooks-and-courses.html';
+    return null;
+  }
+
+  return { session };
 }
 
-function tseShowGuideBanner(expiresAt) {
-  const msPerDay = 86400000;
-  const days = Math.ceil((new Date(expiresAt) - new Date()) / msPerDay);
-  const msg = days <= 1
-    ? 'Your free access expires today.'
-    : `Your free access expires in ${days} day${days === 1 ? '' : 's'}.`;
-  const banner = document.createElement('div');
-  banner.id = 'guide-access-banner';
-  banner.innerHTML = msg + ' <a href="/index.html" style="color:#fff;text-decoration:underline;">Learn more &rarr;</a>';
-  banner.style.cssText = 'background:#C8392B;color:#fff;text-align:center;padding:8px 16px;font-size:14px;position:fixed;top:64px;left:0;right:0;z-index:850;transition:opacity 0.6s ease;';
-  document.body.appendChild(banner);
-  setTimeout(function() {
-    banner.style.opacity = '0';
-    setTimeout(function() { banner.remove(); }, 650);
-  }, 6000);
+async function tseDownloadGuide() {
+  const { data: { session } } = await db.auth.getSession();
+  if (!session) return;
+  try {
+    const res = await fetch('/.netlify/functions/download-pdf', {
+      method: 'POST',
+      headers: { 'Authorization': 'Bearer ' + session.access_token }
+    });
+    if (!res.ok) { alert('Unable to generate download link — please try again.'); return; }
+    const { url } = await res.json();
+    window.open(url, '_blank');
+  } catch(e) {
+    alert('Unable to generate download link — please try again.');
+  }
 }
 
 // ── COURSE ACCESS (paid, 6-month) ─────────────────────────────────────────────
