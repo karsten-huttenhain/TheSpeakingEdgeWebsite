@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Free taster videos from W.A.R.M.U.P.™ — Module 01 of the Speaking Edge Framework. Comfortable with being uncomfortable.">
-<title>Free Taster — W.A.R.M.U.P.™ Module 01 — The Speaking Edge</title>
+<meta name="description" content="Free speaking resources from The Speaking Edge — tools, frameworks and insights to help you communicate with more confidence and impact.">
+<title>Free Resources — The Speaking Edge</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -12,7 +12,64 @@
 <link rel="stylesheet" href="css/tse.css">
 <style>
 
-/* ── PAGE HEADER OVERRIDES ── */
+/* ── GATE ── */
+#free-gate {
+  min-height: calc(100vh - 64px);
+  background: var(--midnight);
+  display: flex; align-items: center; justify-content: center;
+  padding: 80px 6%;
+  border-top: 3px solid var(--vermillion);
+}
+.gate-inner {
+  max-width: 560px; width: 100%; text-align: center;
+}
+.gate-inner h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 700; color: var(--white);
+  line-height: 1.15; margin: 0.75rem 0 1rem;
+}
+.gate-inner > p {
+  font-size: 1rem; color: rgba(255,255,255,0.6);
+  line-height: 1.7; margin-bottom: 2.5rem;
+}
+.gate-fields {
+  display: flex; flex-direction: column; gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+.gate-fields input {
+  width: 100%; padding: 14px 18px;
+  background: rgba(255,255,255,0.07);
+  border: 1.5px solid rgba(255,255,255,0.15);
+  border-radius: 6px; color: var(--white);
+  font-family: 'Source Sans 3', Arial, sans-serif;
+  font-size: 1rem; outline: none;
+  transition: border-color 0.2s;
+}
+.gate-fields input::placeholder { color: rgba(255,255,255,0.35); }
+.gate-fields input:focus { border-color: var(--gold); }
+.btn-gate-submit {
+  width: 100%; padding: 15px;
+  background: var(--vermillion); color: var(--white);
+  border: none; border-radius: 6px; cursor: pointer;
+  font-family: 'Source Sans 3', Arial, sans-serif;
+  font-size: 1rem; font-weight: 700; letter-spacing: 0.04em;
+  transition: background 0.2s, transform 0.15s;
+}
+.btn-gate-submit:hover:not(:disabled) { background: var(--vermillion-dark); transform: translateY(-1px); }
+.btn-gate-submit:disabled { opacity: 0.65; cursor: default; }
+.gate-note {
+  font-size: 0.82rem; color: rgba(255,255,255,0.38);
+  margin-top: 1.2rem; line-height: 1.5;
+}
+.gate-note a { color: rgba(255,255,255,0.6); text-decoration: underline; }
+.gate-note a:hover { color: var(--white); }
+.gate-error {
+  font-size: 0.88rem; color: #f08080;
+  margin: 0.5rem 0; text-align: center;
+}
+
+/* ── HUB HEADER ── */
 .page-header { background: var(--midnight); }
 .free-header-support {
   font-size: 0.85rem; color: rgba(255,255,255,0.38);
@@ -27,19 +84,20 @@
   border-top: 1px solid rgba(255,255,255,0.06);
 }
 .free-videos-inner { max-width: 1100px; margin: 0 auto; }
-
+.free-section-label {
+  font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.16em;
+  font-weight: 700; color: var(--gold); margin-bottom: 1.5rem;
+}
 .free-loading, .free-error {
   text-align: center; padding: 4rem 0;
   font-size: 1rem; font-style: italic;
   color: rgba(255,255,255,0.38);
 }
-
 .free-grid {
   display: none;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 2.5rem;
 }
-
 .free-video-item {
   background: rgba(255,255,255,0.04);
   border-top: 3px solid var(--gold);
@@ -54,38 +112,98 @@
 .free-video-info p {
   font-size: 0.87rem; line-height: 1.65; color: rgba(255,255,255,0.5); margin: 0;
 }
+.free-empty {
+  padding: 3rem; text-align: center;
+  color: rgba(255,255,255,0.35); font-style: italic;
+}
 
-/* ── TRANSITION NOTE ── */
-.free-transition {
+/* ── GO FURTHER CTA SECTION ── */
+.free-next-section {
   background: var(--cream);
-  padding: 60px 6%;
-  text-align: center;
-  border-top: 3px solid var(--ltsteel);
+  padding: 90px 6%;
+  border-top: 3px solid rgba(44,62,80,0.08);
 }
-.free-transition p {
-  font-size: 1rem; line-height: 1.75; color: var(--steel);
-  max-width: 580px; margin: 0 auto;
+.free-next-inner {
+  max-width: 960px; margin: 0 auto; text-align: center;
 }
-
-/* ── CTA TWO-BUTTON ── */
-.cta-actions {
-  display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap;
+.free-next-inner h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 700; color: var(--midnight);
+  line-height: 1.2; margin: 0.6rem 0 1rem;
 }
-.btn-cta-outline {
-  border: 2px solid rgba(255,255,255,0.5); color: var(--white);
-  padding: 15px 36px; border-radius: 4px;
-  font-size: 0.9rem; font-weight: 700; letter-spacing: 0.06em;
-  text-transform: uppercase; text-decoration: none;
-  transition: border-color 0.2s, background 0.2s;
+.free-next-inner > p {
+  font-size: 1rem; color: var(--steel);
+  max-width: 540px; margin: 0 auto 3rem;
+  line-height: 1.7;
+}
+.free-next-cards {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1.5rem; text-align: left;
+}
+.free-next-card {
+  background: var(--white); padding: 2.2rem 2rem;
+  border-top: 3px solid var(--gold);
+  box-shadow: 0 2px 16px rgba(44,62,80,0.07);
+}
+.free-next-card.course-card { border-top-color: var(--vermillion); }
+.free-next-card-label {
+  font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.14em;
+  font-weight: 700; color: var(--steel); margin-bottom: 0.4rem;
+}
+.free-next-card h3 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.25rem; font-weight: 700; color: var(--midnight);
+  margin-bottom: 0.4rem; line-height: 1.25;
+}
+.free-next-card-price {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.6rem; font-weight: 700;
+  color: var(--midnight); margin-bottom: 0.8rem;
+}
+.free-next-card p {
+  font-size: 0.9rem; color: var(--steel);
+  line-height: 1.65; margin-bottom: 1.5rem;
+}
+.btn-next-card {
   display: inline-block;
+  background: var(--midnight); color: var(--white);
+  padding: 12px 22px; border-radius: 4px;
+  font-size: 0.82rem; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; text-decoration: none;
+  transition: background 0.2s;
 }
-.btn-cta-outline:hover { border-color: var(--white); background: rgba(255,255,255,0.1); }
+.btn-next-card:hover { background: #1a252f; }
+.free-next-card.course-card .btn-next-card {
+  background: var(--vermillion);
+}
+.free-next-card.course-card .btn-next-card:hover { background: var(--vermillion-dark); }
+
+/* ── COMING SOON ── */
+.free-coming-section {
+  background: var(--midnight);
+  padding: 70px 6%;
+  text-align: center;
+}
+.free-coming-section h3 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.4rem; font-weight: 700; color: var(--white);
+  margin: 0.6rem 0 0.75rem;
+}
+.free-coming-section p {
+  font-size: 0.95rem; color: rgba(255,255,255,0.5);
+  max-width: 480px; margin: 0 auto;
+  line-height: 1.7;
+}
 
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
-  .free-videos-section { padding-left: 5%; padding-right: 5%; }
-  .free-transition { padding-left: 5%; padding-right: 5%; }
+  #free-gate { padding: 60px 5%; }
+  .free-videos-section { padding: 60px 5% 80px; }
+  .free-next-section { padding: 70px 5%; }
   .free-grid { grid-template-columns: 1fr; }
+  .free-next-cards { grid-template-columns: 1fr; }
+  .free-coming-section { padding: 60px 5%; }
 }
 
 </style>
@@ -94,92 +212,191 @@
 
 <div id="tse-nav"></div>
 
-<!-- PAGE HEADER -->
-<header class="page-header">
-  <div class="page-header-eyebrow">Free taster</div>
-  <h1>W.A.R.M.U.P.™ — Module 01</h1>
-  <p>Comfortable with being uncomfortable</p>
-  <p class="free-header-support">This is a selection of taster videos from Module 01 — not the full module.</p>
-</header>
+<!-- ══ GATE (shown until name + email submitted or logged in) ══ -->
+<section id="free-gate">
+  <div class="gate-inner">
+    <div class="section-label gold center">Free Resources</div>
+    <h1>Speaking tools and insights — yours free.</h1>
+    <p>Videos, frameworks and practical tools to help you communicate with more confidence. Enter your details for instant access — no password, no card.</p>
+    <form id="free-form" novalidate>
+      <div class="gate-fields">
+        <input type="text" id="free-name" name="name" placeholder="Your first name" required autocomplete="given-name">
+        <input type="email" id="free-email" name="email" placeholder="Your email address" required autocomplete="email">
+        <button type="submit" class="btn-gate-submit" id="gate-btn">Get free access &rarr;</button>
+      </div>
+      <p class="gate-error" id="gate-error" style="display:none"></p>
+      <p class="gate-note">Already a customer? <a href="/login.html">Sign in</a> for instant access.</p>
+    </form>
+  </div>
+</section>
 
-<!-- VIDEOS -->
-<section class="free-videos-section">
-  <div class="free-videos-inner">
-    <div class="free-loading" id="freeLoading">Loading videos&hellip;</div>
-    <div class="free-grid" id="freeGrid"></div>
-    <div class="free-error" id="freeError" style="display:none;">
-      No free videos are available right now — check back soon.
+<!-- ══ HUB (shown after access granted) ══ -->
+<div id="free-hub" style="display:none">
+
+  <header class="page-header">
+    <div class="page-header-eyebrow">Free Resources</div>
+    <h1>Your Speaking Resource Hub</h1>
+    <p>Tools, frameworks and insights to help you speak with more confidence and impact.</p>
+    <p class="free-header-support">More resources are added here over time — check back regularly.</p>
+  </header>
+
+  <!-- VIDEOS -->
+  <section class="free-videos-section">
+    <div class="free-videos-inner">
+      <div class="free-section-label">W.A.R.M.U.P.™ — Module 01 taster</div>
+      <div class="free-loading" id="freeLoading">Loading&hellip;</div>
+      <div class="free-grid" id="freeGrid"></div>
+      <div id="freeError" style="display:none">
+        <div class="free-empty">No videos available right now — check back soon.</div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- TRANSITION NOTE -->
-<div class="free-transition">
-  <p>The full W.A.R.M.U.P.™ module — and the five that follow — are available in the complete programme below.</p>
-</div>
+  <!-- GO FURTHER -->
+  <section class="free-next-section">
+    <div class="free-next-inner">
+      <div class="section-label center">Ready to go further?</div>
+      <div class="gold-divider center"></div>
+      <h2>Two ways to take it deeper.</h2>
+      <p>The free resources are a starting point. When you're ready to do the real work, here's what comes next.</p>
+      <div class="free-next-cards">
 
-<!-- CTA -->
-<section class="cta-section">
-  <h2>Make Speaking <em style="font-style:italic;color:rgba(255,255,255,0.9);">Your</em> Edge</h2>
-  <p>Two ways to access the complete six-module Speaking Confidence Programme.</p>
-  <div class="cta-actions">
-    <a href="https://payhip.com/b/FMNGA" target="_blank" rel="noopener" class="btn-cta-white">Enrol in the full course — £197</a>
-    <a href="https://buy.stripe.com/bJe8wRa420VSd9B4mM6wE00" target="_blank" rel="noopener" class="btn-cta-outline">Book a live place — £495</a>
-  </div>
-</section>
+        <div class="free-next-card reveal">
+          <div class="free-next-card-label">Written guide</div>
+          <h3>Quiet Influence</h3>
+          <div class="free-next-card-price">£47</div>
+          <p>The introvert's field guide to commanding rooms. 19 chapters, practical scripts, worksheets and a 30-day quiet leadership plan.</p>
+          <!-- Update href to Stripe guide payment link when live -->
+          <a href="/workbooks-and-courses.html#tse" class="btn-next-card">Get the guide &rarr;</a>
+        </div>
+
+        <div class="free-next-card course-card reveal">
+          <div class="free-next-card-label">Online course</div>
+          <h3>Speaking Confidence Programme</h3>
+          <div class="free-next-card-price">£197</div>
+          <p>The complete six-module programme — voice, body, story, mindset, delivery and integration. Self-paced with lifetime access.</p>
+          <a href="/workbooks-and-courses.html#tse" class="btn-next-card">Enrol now &rarr;</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- COMING SOON -->
+  <section class="free-coming-section">
+    <div class="section-label gold center">More coming soon</div>
+    <h3>This hub grows over time.</h3>
+    <p>More free resources — frameworks, tools and practical exercises — will be added here. You'll have access to everything as it's released.</p>
+  </section>
+
+  <!-- FOOTER CTA -->
+  <section class="cta-section">
+    <h2>Make Speaking <em style="font-style:italic;color:rgba(255,255,255,0.9);">Your</em> Edge</h2>
+    <p>Explore the full programme — three formats to suit how you learn.</p>
+    <a href="workbooks-and-courses.html" class="btn-cta-white">View pricing &amp; enrol</a>
+  </section>
+
+</div><!-- /#free-hub -->
 
 <div id="tse-footer"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/tse-platform.js"></script>
 <script src="js/components.js"></script>
 <script src="js/tse.js"></script>
 <script>
 (function () {
-  var loading = document.getElementById('freeLoading');
-  var grid    = document.getElementById('freeGrid');
-  var error   = document.getElementById('freeError');
+  var gate    = document.getElementById('free-gate');
+  var hub     = document.getElementById('free-hub');
+  var form    = document.getElementById('free-form');
+  var nameEl  = document.getElementById('free-name');
+  var emailEl = document.getElementById('free-email');
+  var btn     = document.getElementById('gate-btn');
+  var errEl   = document.getElementById('gate-error');
+  var videosLoaded = false;
 
-  fetch('/.netlify/functions/free-videos')
-    .then(function (res) {
-      if (!res.ok) throw new Error('HTTP ' + res.status);
-      return res.json();
-    })
-    .then(function (videos) {
-      loading.style.display = 'none';
-      if (!Array.isArray(videos) || videos.length === 0) {
-        error.style.display = 'block';
-        return;
-      }
-      videos.forEach(function (v) {
-        var card = document.createElement('div');
-        card.className = 'free-video-item';
+  function showHub() {
+    gate.style.display = 'none';
+    hub.style.display  = 'block';
+    if (!videosLoaded) { loadVideos(); videosLoaded = true; }
+  }
 
-        var info = document.createElement('div');
-        info.className = 'free-video-info';
-        var h3 = document.createElement('h3');
-        h3.textContent = v.title;
-        info.appendChild(h3);
+  function showError(msg) {
+    errEl.textContent = msg;
+    errEl.style.display = 'block';
+  }
 
-        var wrapper = document.createElement('div');
-        wrapper.className = 'video-wrapper';
-        var iframe = document.createElement('iframe');
-        iframe.src = v.embedUrl;
-        iframe.loading = 'lazy';
-        iframe.setAttribute('allow', 'accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;fullscreen;');
-        iframe.setAttribute('allowfullscreen', 'true');
-        wrapper.appendChild(iframe);
+  function hideError() { errEl.style.display = 'none'; }
 
-        card.appendChild(info);
-        card.appendChild(wrapper);
-        grid.appendChild(card);
+  // Check on load — logged-in customers and returning subscribers skip the gate
+  document.addEventListener('DOMContentLoaded', function () {
+    if (tseCheckFreeAccess()) showHub();
+  });
+
+  // Form submission
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    hideError();
+    var name  = nameEl.value.trim();
+    var email = emailEl.value.trim();
+    if (!name)  { showError('Please enter your first name.'); return; }
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showError('Please enter a valid email address.'); return;
+    }
+    btn.disabled    = true;
+    btn.textContent = 'Just a moment…';
+    tseSubmitFreeSubscriber(name, email)
+      .then(function () { showHub(); })
+      .catch(function () {
+        btn.disabled    = false;
+        btn.textContent = 'Get free access →';
+        showError('Something went wrong — please try again.');
       });
-      grid.style.display = 'grid';
+  });
 
-    })
-    .catch(function () {
-      loading.style.display = 'none';
-      error.style.display = 'block';
-    });
-})();
+  // Video loader (only runs when hub is shown)
+  function loadVideos() {
+    var loading = document.getElementById('freeLoading');
+    var grid    = document.getElementById('freeGrid');
+    var error   = document.getElementById('freeError');
+    fetch('/.netlify/functions/free-videos')
+      .then(function (res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.json();
+      })
+      .then(function (videos) {
+        loading.style.display = 'none';
+        if (!Array.isArray(videos) || videos.length === 0) {
+          error.style.display = 'block'; return;
+        }
+        videos.forEach(function (v) {
+          var card = document.createElement('div');
+          card.className = 'free-video-item';
+          var info = document.createElement('div');
+          info.className = 'free-video-info';
+          var h3 = document.createElement('h3');
+          h3.textContent = v.title;
+          info.appendChild(h3);
+          var wrapper = document.createElement('div');
+          wrapper.className = 'video-wrapper';
+          var iframe = document.createElement('iframe');
+          iframe.src = v.embedUrl;
+          iframe.loading = 'lazy';
+          iframe.setAttribute('allow', 'accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;fullscreen;');
+          iframe.setAttribute('allowfullscreen', 'true');
+          wrapper.appendChild(iframe);
+          card.appendChild(info);
+          card.appendChild(wrapper);
+          grid.appendChild(card);
+        });
+        grid.style.display = 'grid';
+      })
+      .catch(function () {
+        loading.style.display = 'none';
+        error.style.display = 'block';
+      });
+  }
+}());
 </script>
 </body>
 </html>

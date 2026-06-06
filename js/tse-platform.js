@@ -332,6 +332,25 @@ async function tseUploadSubmission(userId, moduleId, file, onProgress) {
   return data.path;
 }
 
+// ── FREE HUB ACCESS ───────────────────────────────────────────────────────────
+function tseCheckFreeAccess() {
+  if (localStorage.getItem('tse-free-access') === '1') return true;
+  try {
+    const raw = localStorage.getItem('sb-bkfkupyvwfbposjumcyq-auth-token');
+    if (raw && JSON.parse(raw)?.access_token) return true;
+  } catch(e) {}
+  return false;
+}
+
+async function tseSubmitFreeSubscriber(name, email) {
+  const { error } = await db.from('free_subscribers').upsert(
+    { name: name.trim(), email: email.trim().toLowerCase() },
+    { onConflict: 'email' }
+  );
+  if (error) throw error;
+  localStorage.setItem('tse-free-access', '1');
+}
+
 // ── DEBOUNCE ──────────────────────────────────────────────────────────────────
 function tseDebounce(fn, delay) {
   let timer;
