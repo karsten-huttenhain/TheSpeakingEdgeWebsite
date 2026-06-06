@@ -7,7 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400;1,700&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="../css/tse-reader.css">
+  <link rel="icon" type="image/gif" href="../images/favicon.gif">
   <style>body{visibility:hidden}</style>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../js/tse-platform.js"></script>
@@ -168,7 +169,7 @@
 
 </main>
 
-<script src="js/main.js"></script>
+<script src="../js/tse-reader.js"></script>
 <script>
 var MODULE_SLUG = '03-physcl';
 var _uid = null, _prog = null;
@@ -205,5 +206,7 @@ function markThisComplete() {
   });
 }
 </script>
+<script src="../js/tse-coach.js"></script>
+<script>tseInitCoach({ chapter: MODULE_SLUG });</script>
 </body>
 </html>

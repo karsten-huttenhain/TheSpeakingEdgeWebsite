@@ -8,6 +8,7 @@ const TSE_CONFIG = {
   supabaseUrl:     'https://bkfkupyvwfbposjumcyq.supabase.co',
   supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJrZmt1cHl2d2ZicG9zanVtY3lxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1NTA0NzAsImV4cCI6MjA5MzEyNjQ3MH0.rrRaCKDgwzfvzVjs0W5NGB00WC78Q57XAf_bNGprDHE',
   courseId:        '7c4c6ad1-97a5-4bb1-a214-8a43387119bd',
+  guideId:         '9bbe3f5f-a1c9-4646-a63a-6f15b1edcf12',
 };
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -116,52 +117,45 @@ async function tseHasCourseAccess(userId) {
   return !!data;
 }
 
-// ── GUIDE ACCESS (14-day trial) ───────────────────────────────────────────────
+// ── GUIDE ACCESS (paid) ───────────────────────────────────────────────────────
 async function tseRequireGuideAccess() {
   const session = await tseRequireAuth();
   if (!session) return null;
 
   const { data } = await db
-    .from('guide_access')
+    .from('course_access')
     .select('expires_at')
     .eq('user_id', session.user.id)
+    .eq('course_id', TSE_CONFIG.guideId)
     .maybeSingle();
 
-  let expiresAt;
-
   if (!data) {
-    // First visit — start the 14-day trial
-    const expiry = new Date();
-    expiry.setDate(expiry.getDate() + 14);
-    expiresAt = expiry.toISOString();
-    await db.from('guide_access').insert({ user_id: session.user.id, expires_at: expiresAt });
-  } else {
-    expiresAt = data.expires_at;
-  }
-
-  if (new Date(expiresAt) < new Date()) {
-    window.location.href = '/index.html';
+    window.location.href = '/workbooks-and-courses.html';
     return null;
   }
 
-  return { session, expiresAt };
+  if (data.expires_at && new Date(data.expires_at) < new Date()) {
+    window.location.href = '/workbooks-and-courses.html';
+    return null;
+  }
+
+  return { session };
 }
 
-function tseShowGuideBanner(expiresAt) {
-  const msPerDay = 86400000;
-  const days = Math.ceil((new Date(expiresAt) - new Date()) / msPerDay);
-  const msg = days <= 1
-    ? 'Your free access expires today.'
-    : `Your free access expires in ${days} day${days === 1 ? '' : 's'}.`;
-  const banner = document.createElement('div');
-  banner.id = 'guide-access-banner';
-  banner.innerHTML = msg + ' <a href="/index.html" style="color:#fff;text-decoration:underline;">Learn more &rarr;</a>';
-  banner.style.cssText = 'background:#C8392B;color:#fff;text-align:center;padding:8px 16px;font-size:14px;position:fixed;top:64px;left:0;right:0;z-index:850;transition:opacity 0.6s ease;';
-  document.body.appendChild(banner);
-  setTimeout(function() {
-    banner.style.opacity = '0';
-    setTimeout(function() { banner.remove(); }, 650);
-  }, 6000);
+async function tseDownloadGuide() {
+  const { data: { session } } = await db.auth.getSession();
+  if (!session) return;
+  try {
+    const res = await fetch('/.netlify/functions/download-pdf', {
+      method: 'POST',
+      headers: { 'Authorization': 'Bearer ' + session.access_token }
+    });
+    if (!res.ok) { alert('Unable to generate download link — please try again.'); return; }
+    const { url } = await res.json();
+    window.open(url, '_blank');
+  } catch(e) {
+    alert('Unable to generate download link — please try again.');
+  }
 }
 
 // ── COURSE ACCESS (paid, 6-month) ─────────────────────────────────────────────
@@ -337,6 +331,151 @@ async function tseUploadSubmission(userId, moduleId, file, onProgress) {
 
   return data.path;
 }
+
+// ── FREE HUB ACCESS ───────────────────────────────────────────────────────────
+function tseCheckFreeAccess() {
+  if (localStorage.getItem('tse-free-access') === '1') return true;
+  try {
+    const raw = localStorage.getItem('sb-bkfkupyvwfbposjumcyq-auth-token');
+    if (raw && JSON.parse(raw)?.access_token) return true;
+  } catch(e) {}
+  return false;
+}
+
+async function tseSubmitFreeSubscriber(name, email) {
+  const { error } = await db.from('free_subscribers').upsert(
+    { name: name.trim(), email: email.trim().toLowerCase() },
+    { onConflict: 'email' }
+  );
+  if (error) throw error;
+  localStorage.setItem('tse-free-access', '1');
+}
+
+// ── HUB NAV ───────────────────────────────────────────────────────────────────
+async function tseHasGuideAccess(userId) {
+  const { data } = await db
+    .from('course_access')
+    .select('id')
+    .eq('user_id', userId)
+    .eq('course_id', TSE_CONFIG.guideId)
+    .maybeSingle();
+  return !!data;
+}
+
+function tseInitHubNav(currentHub) {
+  if (document.getElementById('tse-hub-nav')) return;
+
+  if (!currentHub) {
+    var p = window.location.pathname;
+    currentHub = p.indexOf('/guide/') !== -1 ? 'guide'
+               : p.indexOf('/course/') !== -1 ? 'course'
+               : 'free';
+  }
+
+  // ── Inject styles
+  var style = document.createElement('style');
+  style.textContent = [
+    '#tse-hub-nav{position:fixed;left:0;right:0;z-index:850;background:#192433;border-bottom:1px solid rgba(255,255,255,0.07);height:44px;display:flex;align-items:stretch;}',
+    '.tse-hub-inner{display:flex;align-items:stretch;height:100%;padding:0 1.5rem;gap:0;}',
+    '.tse-hub-item{display:inline-flex;align-items:center;gap:0.35rem;padding:0 1.1rem;text-decoration:none;font-family:"Source Sans 3",Arial,sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;border-bottom:2px solid transparent;transition:color 0.15s,border-color 0.15s;box-sizing:border-box;}',
+    '.tse-hub-active{color:#FAF6F0;border-bottom-color:#E8A020;cursor:default;}',
+    '.tse-hub-unlocked{color:rgba(255,255,255,0.5);cursor:pointer;}',
+    '.tse-hub-unlocked:hover{color:#FAF6F0;border-bottom-color:rgba(232,160,32,0.35);}',
+    '.tse-hub-locked{color:rgba(255,255,255,0.22);cursor:pointer;}',
+    '.tse-hub-locked:hover{color:rgba(255,255,255,0.42);}',
+    '.tse-hub-badge{font-size:0.58rem;text-transform:none;font-weight:600;letter-spacing:0.02em;background:rgba(255,255,255,0.07);padding:1px 6px;border-radius:8px;margin-left:0.15rem;}',
+    '.tse-hub-lock{font-size:0.6rem;opacity:0.5;margin-left:0.1rem;}',
+    '.tse-hub-sep{width:1px;background:rgba(255,255,255,0.07);margin:10px 0;flex-shrink:0;}',
+    '@media(max-width:500px){.tse-hub-item{padding:0 0.65rem;font-size:0.67rem;}.tse-hub-badge,.tse-hub-lock{display:none;}}',
+  ].join('');
+  document.head.appendChild(style);
+
+  // ── Helpers
+  function sep() {
+    var d = document.createElement('div'); d.className = 'tse-hub-sep'; return d;
+  }
+
+  function makeItem(label, hub, defaultHref, price) {
+    var isActive = hub === currentHub;
+    var a = document.createElement('a');
+    a.className = 'tse-hub-item ' + (isActive ? 'tse-hub-active' : 'tse-hub-locked');
+    a.dataset.hub = hub;
+    var t = document.createElement('span'); t.textContent = label; a.appendChild(t);
+    if (!isActive && price) {
+      var b = document.createElement('span'); b.className = 'tse-hub-badge'; b.textContent = price; a.appendChild(b);
+      var l = document.createElement('span'); l.className = 'tse-hub-lock'; l.textContent = '🔒'; a.appendChild(l);
+    }
+    if (isActive) {
+      a.addEventListener('click', function(e) { e.preventDefault(); });
+    } else {
+      a.href = defaultHref;
+    }
+    return a;
+  }
+
+  var freeEl   = makeItem('Free Hub',        'free',   '/free',                           null);
+  var guideEl  = makeItem('Quiet Influence', 'guide',  '/workbooks-and-courses.html#tse', '£47');
+  var courseEl = makeItem('Course',          'course', '/workbooks-and-courses.html#tse', '£197');
+
+  var inner = document.createElement('div'); inner.className = 'tse-hub-inner';
+  [freeEl, sep(), guideEl, sep(), courseEl].forEach(function(n) { inner.appendChild(n); });
+
+  var nav = document.createElement('div');
+  nav.id = 'tse-hub-nav';
+  nav.setAttribute('role', 'navigation');
+  nav.setAttribute('aria-label', 'Content hub navigation');
+  nav.appendChild(inner);
+
+  // ── Position below whichever fixed header this page uses
+  var hasProgressBar = !!document.getElementById('progress-bar');
+  nav.style.top = (hasProgressBar ? 67 : 64) + 'px';
+  document.body.prepend(nav);
+
+  // ── Push content down so nothing hides behind the hub nav
+  var mainEl = document.getElementById('main');
+  if (mainEl) {
+    var cur = parseInt(window.getComputedStyle(mainEl).paddingTop, 10) || 0;
+    mainEl.style.paddingTop = (cur + 44) + 'px';
+  }
+  if (currentHub === 'free') {
+    var hubEl = document.getElementById('free-hub');
+    if (hubEl) hubEl.style.paddingTop = ((parseInt(hubEl.style.paddingTop, 10) || 0) + 44) + 'px';
+  }
+
+  // ── Free hub is always reachable from guide/course
+  if (currentHub !== 'free') {
+    freeEl.classList.remove('tse-hub-locked');
+    freeEl.classList.add('tse-hub-unlocked');
+  }
+
+  // ── Async: upgrade locked items to unlocked if user has paid access
+  tseGetSession().then(function(session) {
+    if (!session) return;
+    return Promise.all([tseHasGuideAccess(session.user.id), tseHasCourseAccess(session.user.id)])
+      .then(function(res) {
+        var hasGuide = res[0], hasCourse = res[1];
+
+        function unlock(el, href) {
+          el.className = 'tse-hub-item tse-hub-unlocked';
+          el.href = href;
+          ['tse-hub-badge', 'tse-hub-lock'].forEach(function(cls) {
+            var n = el.querySelector('.' + cls); if (n) n.remove();
+          });
+        }
+
+        if (hasGuide  && currentHub !== 'guide')  unlock(guideEl,  '/guide/index.html');
+        if (hasCourse && currentHub !== 'course') unlock(courseEl, '/course/index.html');
+      });
+  }).catch(function() {});
+}
+
+// Auto-initialise on guide and course pages (free.html calls tseInitHubNav directly from showHub)
+document.addEventListener('DOMContentLoaded', function() {
+  var p = window.location.pathname;
+  if (p.indexOf('/guide/') !== -1 || p.indexOf('/course/') !== -1) {
+    tseInitHubNav();
+  }
+});
 
 // ── DEBOUNCE ──────────────────────────────────────────────────────────────────
 function tseDebounce(fn, delay) {

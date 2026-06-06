@@ -4,8 +4,11 @@
      STRIPE_WEBHOOK_SECRET   — from Stripe Dashboard → Webhooks
      SUPABASE_URL            — your project URL
      SUPABASE_SERVICE_KEY    — service role key (not anon key)
-     TSE_COURSE_ID           — UUID of the course row in Supabase
+     TSE_COURSE_ID           — UUID of the Speaking Confidence Programme
+     GUIDE_COURSE_ID         — UUID of the Quiet Influence bundle
      RESEND_API_KEY          — from Resend Dashboard → API Keys
+   Product routing: add metadata {"course_id": "<uuid>"} to each
+   Stripe payment link. Falls back to TSE_COURSE_ID if absent.
    ═══════════════════════════════════════════════════════════════ */
 
 const stripe  = require('stripe')(process.env.STRIPE_SECRET_KEY);
@@ -14,7 +17,7 @@ const { Resend } = require('resend');
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-async function sendConfirmationEmail(toEmail) {
+async function sendCourseConfirmationEmail(toEmail) {
   await resend.emails.send({
     from: 'hello@speakingedgeglobal.com',
     to: toEmail,
@@ -29,6 +32,27 @@ async function sendConfirmationEmail(toEmail) {
         <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 32px 0 16px;">
         <p style="font-size: 13px; color: #888;">
           Questions? You can always <a href="https://www.speakingedgeglobal.com/contact.html" style="color: #888;">get in touch here</a>.
+        </p>
+      </div>
+    `,
+  });
+}
+
+async function sendGuideConfirmationEmail(toEmail) {
+  await resend.emails.send({
+    from: 'hello@speakingedgeglobal.com',
+    to: toEmail,
+    subject: 'Your Quiet Influence guide is ready',
+    html: `
+      <div style="font-family: Georgia, serif; max-width: 560px; margin: 0 auto; color: #2c2c2c; line-height: 1.7;">
+        <p>Hi there,</p>
+        <p>Thank you for getting <strong>Quiet Influence</strong> — I hope it gives you exactly what you need.</p>
+        <p>Your access is now active. You can read the guide online and download the PDF from your account at any time.</p>
+        <p>If you have any questions, don't hesitate to get in touch.</p>
+        <p>With warm wishes,<br>Maya</p>
+        <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 32px 0 16px;">
+        <p style="font-size: 13px; color: #888;">
+          Questions? <a href="https://www.speakingedgeglobal.com/contact.html" style="color: #888;">Get in touch here</a>.
         </p>
       </div>
     `,
@@ -61,6 +85,8 @@ exports.handler = async (event) => {
 
   const session = stripeEvent.data.object;
   const customerEmail = session.customer_details?.email;
+  const courseId = session.metadata?.course_id || process.env.TSE_COURSE_ID;
+  const isGuide = courseId === process.env.GUIDE_COURSE_ID;
 
   if (!customerEmail) {
     console.error('No customer email in session:', session.id);
@@ -92,7 +118,7 @@ exports.handler = async (event) => {
       .from('pending_access')
       .upsert({
         email:      customerEmail,
-        course_id:  process.env.TSE_COURSE_ID,
+        course_id:  courseId,
         stripe_session_id: session.id,
         expires_at: pendingExpiresAt.toISOString(),
         created_at: new Date().toISOString(),
@@ -104,11 +130,11 @@ exports.handler = async (event) => {
     }
 
     console.log(`Pending access recorded for ${customerEmail}`);
-    await sendConfirmationEmail(customerEmail);
+    isGuide ? await sendGuideConfirmationEmail(customerEmail) : await sendCourseConfirmationEmail(customerEmail);
     return { statusCode: 200, body: 'Pending access recorded' };
   }
 
-  // Grant course access — 6-month expiry
+  // Grant access — 6-month expiry
   const expiresAt = new Date();
   expiresAt.setMonth(expiresAt.getMonth() + 6);
 
@@ -116,7 +142,7 @@ exports.handler = async (event) => {
     .from('course_access')
     .upsert({
       user_id:    user.id,
-      course_id:  process.env.TSE_COURSE_ID,
+      course_id:  courseId,
       granted_at: new Date().toISOString(),
       expires_at: expiresAt.toISOString(),
       stripe_session_id: session.id,
@@ -127,7 +153,7 @@ exports.handler = async (event) => {
     return { statusCode: 500, body: 'Database error' };
   }
 
-  console.log(`Course access granted to user ${user.id} (${customerEmail})`);
-  await sendConfirmationEmail(customerEmail);
+  console.log(`Access granted to user ${user.id} (${customerEmail}) for course ${courseId}`);
+  isGuide ? await sendGuideConfirmationEmail(customerEmail) : await sendCourseConfirmationEmail(customerEmail);
   return { statusCode: 200, body: 'Access granted' };
 };
