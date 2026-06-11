@@ -352,6 +352,19 @@ async function tseSubmitFreeSubscriber(name, email) {
   localStorage.setItem('tse-free-access', '1');
 }
 
+// ── BUY BUTTON ────────────────────────────────────────────────────────────────
+async function tseHandleBuyClick(stripeUrl) {
+  const { data: { session } } = await db.auth.getSession();
+  if (!session) {
+    sessionStorage.setItem('tse-login-redirect', window.location.pathname);
+    window.location.href = '/login.html';
+    return;
+  }
+  window.location.href = stripeUrl +
+    '?client_reference_id=' + session.user.id +
+    '&prefilled_email='     + encodeURIComponent(session.user.email);
+}
+
 // ── HUB NAV ───────────────────────────────────────────────────────────────────
 async function tseHasGuideAccess(userId) {
   const { data } = await db

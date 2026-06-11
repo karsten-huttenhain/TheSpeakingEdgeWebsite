@@ -265,7 +265,15 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 
 const authClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-const _loginRedirect = new URLSearchParams(window.location.search).get('redirect') || '/course/index.html';
+function _resolveLoginRedirect() {
+  var stored = sessionStorage.getItem('tse-login-redirect');
+  var param  = new URLSearchParams(window.location.search).get('redirect');
+  var target = stored || param || '/dashboard.html';
+  if (!target.startsWith('/') || target.indexOf('://') !== -1) target = '/dashboard.html';
+  sessionStorage.removeItem('tse-login-redirect');
+  return target;
+}
+const _loginRedirect = _resolveLoginRedirect();
 
 // Redirect if already logged in
 authClient.auth.getSession().then(({ data: { session } }) => {

@@ -108,12 +108,12 @@
     </div>
 
     <div class="success-eyebrow">Payment confirmed</div>
-    <h1>You're in.<br><em>Let's get to work.</em></h1>
-    <p>Your place on the Speaking Confidence Programme is confirmed. All six modules are now unlocked and waiting for you.</p>
+    <h1 id="success-heading">You're in.<br><em>Let's get to work.</em></h1>
+    <p id="success-desc">Your place on the Speaking Confidence Programme is confirmed. All six modules are now unlocked and waiting for you.</p>
 
     <div class="success-divider"></div>
 
-    <div class="success-next-steps">
+    <div class="success-next-steps" id="success-steps">
       <h3>What happens next</h3>
       <div class="success-step">
         <div class="success-step-num">1</div>
@@ -129,11 +129,32 @@
       </div>
     </div>
 
-    <a href="/login.html?redirect=/course/index.html" class="btn-success">Go to my course →</a>
+    <a href="/login.html?redirect=/course/index.html" class="btn-success" id="success-cta">Go to my course →</a>
 
     <p class="success-support">Questions? <a href="mailto:speaking.edge.global@gmail.com">Get in touch</a></p>
   </div>
 </div>
 
+<script>
+(function () {
+  var product = new URLSearchParams(window.location.search).get('product');
+  var heading = document.getElementById('success-heading');
+  var desc    = document.getElementById('success-desc');
+  var cta     = document.getElementById('success-cta');
+  var steps   = document.getElementById('success-steps');
+
+  if (product === 'guide') {
+    if (heading) heading.innerHTML = 'Your guide<br><em>is ready.</em>';
+    if (desc)    desc.textContent  = 'Quiet Influence is now in your account. Sign in to read it online or download the PDF whenever you\'re ready.';
+    if (cta)     { cta.textContent = 'Access your guide →'; cta.href = '/login.html?redirect=/guide/'; }
+    if (steps)   steps.style.display = 'none';
+  } else if (product !== 'course') {
+    if (heading) heading.innerHTML = 'Purchase<br><em>confirmed.</em>';
+    if (desc)    desc.textContent  = 'Your access is now active. Sign in to get started.';
+    if (cta)     { cta.textContent = 'Go to dashboard →'; cta.href = '/login.html?redirect=/dashboard.html'; }
+    if (steps)   steps.style.display = 'none';
+  }
+})();
+</script>
 </body>
 </html>

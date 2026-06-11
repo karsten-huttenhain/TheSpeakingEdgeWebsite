@@ -414,53 +414,56 @@
 })();
 </script>
 <script>
-(async function () {
+(function () {
   // Replace these with live Stripe payment links when ready
   var GUIDE_STRIPE_URL  = '';  // TODO: add guide Stripe payment link
   var COURSE_STRIPE_URL = 'https://buy.stripe.com/test_6oUaEXdqn3cjgDbb436EU00';
 
-  var guideBtn  = document.getElementById('btn-guide');
-  var courseBtn = document.getElementById('btn-course');
+  db.auth.onAuthStateChange(async function (event, session) {
+    var guideBtn  = document.getElementById('btn-guide');
+    var courseBtn = document.getElementById('btn-course');
 
-  var sessionData = await db.auth.getSession();
-  var session = sessionData.data.session;
-
-  if (!session) {
-    // Not logged in — redirect to login, return to this page
-    var returnUrl = encodeURIComponent(window.location.pathname);
-    if (guideBtn)  guideBtn.href  = '/login.html?redirect=' + returnUrl;
-    if (courseBtn) courseBtn.href = '/login.html?redirect=' + returnUrl;
-    return;
-  }
-
-  var userId    = session.user.id;
-  var userEmail = encodeURIComponent(session.user.email);
-
-  var results = await Promise.all([
-    tseHasGuideAccess(userId),
-    tseHasCourseAccess(userId)
-  ]);
-  var hasGuide  = results[0];
-  var hasCourse = results[1];
-
-  if (guideBtn) {
-    if (hasGuide) {
-      guideBtn.href        = '/guide/';
-      guideBtn.textContent = 'Read the guide →';
-    } else if (GUIDE_STRIPE_URL) {
-      guideBtn.href = GUIDE_STRIPE_URL + '?client_reference_id=' + userId + '&prefilled_email=' + userEmail;
+    if (!session) {
+      if (guideBtn) {
+        guideBtn.href    = '/login.html';
+        guideBtn.onclick = function () { sessionStorage.setItem('tse-login-redirect', window.location.pathname); };
+      }
+      if (courseBtn) {
+        courseBtn.href    = '/login.html';
+        courseBtn.onclick = function () { sessionStorage.setItem('tse-login-redirect', window.location.pathname); };
+      }
+      return;
     }
-    // No Stripe link yet — button stays as login redirect until link is added
-  }
 
-  if (courseBtn) {
-    if (hasCourse) {
-      courseBtn.href        = '/course/index.html';
-      courseBtn.textContent = 'Go to my course →';
-    } else {
-      courseBtn.href = COURSE_STRIPE_URL + '?client_reference_id=' + userId + '&prefilled_email=' + userEmail;
+    var userId    = session.user.id;
+    var userEmail = encodeURIComponent(session.user.email);
+    var crid      = '?client_reference_id=' + userId + '&prefilled_email=' + userEmail;
+
+    var results = await Promise.all([
+      tseHasGuideAccess(userId),
+      tseHasCourseAccess(userId)
+    ]);
+
+    if (guideBtn) {
+      guideBtn.onclick = null;
+      if (results[0]) {
+        guideBtn.href        = '/guide/';
+        guideBtn.textContent = 'Read the guide →';
+      } else if (GUIDE_STRIPE_URL) {
+        guideBtn.href = GUIDE_STRIPE_URL + crid;
+      }
     }
-  }
+
+    if (courseBtn) {
+      courseBtn.onclick = null;
+      if (results[1]) {
+        courseBtn.href        = '/course/index.html';
+        courseBtn.textContent = 'Go to my course →';
+      } else {
+        courseBtn.href = COURSE_STRIPE_URL + crid;
+      }
+    }
+  });
 })();
 </script>
 </body>

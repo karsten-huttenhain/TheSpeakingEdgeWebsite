@@ -83,77 +83,91 @@ exports.handler = async (event) => {
     return { statusCode: 200, body: 'Ignored' };
   }
 
-  const session = stripeEvent.data.object;
+  const session       = stripeEvent.data.object;
+  const clientRefId   = session.client_reference_id;
   const customerEmail = session.customer_details?.email;
-  const courseId = session.metadata?.course_id || process.env.TSE_COURSE_ID;
-  const isGuide = courseId === process.env.GUIDE_COURSE_ID;
+  const courseId      = session.metadata?.course_id || process.env.TSE_COURSE_ID;
+  const isGuide       = courseId === process.env.GUIDE_COURSE_ID;
+  const sid           = session.id;
 
-  if (!customerEmail) {
-    console.error('No customer email in session:', session.id);
-    return { statusCode: 200, body: 'No email — skipped' };
+  const db = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY);
+
+  const expiresAt = new Date();
+  expiresAt.setMonth(expiresAt.getMonth() + 6);
+
+  // ── Fast path: client_reference_id is the Supabase user ID ──────────────────
+  if (clientRefId) {
+    console.log(`[webhook ${sid}] fast path — client_reference_id=${clientRefId} course=${courseId}`);
+
+    const { error: accessError } = await db.from('course_access').upsert({
+      user_id:           clientRefId,
+      course_id:         courseId,
+      granted_at:        new Date().toISOString(),
+      expires_at:        expiresAt.toISOString(),
+      stripe_session_id: sid,
+    }, { onConflict: 'user_id,course_id' });
+
+    if (accessError) {
+      console.error(`[webhook ${sid}] course_access error:`, accessError.message);
+      return { statusCode: 500, body: 'Database error' };
+    }
+
+    if (customerEmail) {
+      isGuide ? await sendGuideConfirmationEmail(customerEmail) : await sendCourseConfirmationEmail(customerEmail);
+    }
+    console.log(`[webhook ${sid}] access granted (fast path) to ${clientRefId}`);
+    return { statusCode: 200, body: 'Access granted (fast path)' };
   }
 
-  // Look up the Supabase user by email, then grant access
-  const db = createClient(
-    process.env.SUPABASE_URL,
-    process.env.SUPABASE_SERVICE_KEY
-  );
+  // ── Fallback: look up by email ───────────────────────────────────────────────
+  if (!customerEmail) {
+    console.error(`[webhook ${sid}] no client_reference_id and no customer email — skipped`);
+    return { statusCode: 200, body: 'No identifiers — skipped' };
+  }
 
-  // Find auth user by email
+  console.log(`[webhook ${sid}] fallback path — looking up by email ${customerEmail}`);
+
   const { data: usersData, error: lookupError } = await db.auth.admin.listUsers();
   if (lookupError) {
-    console.error('Error listing users:', lookupError.message);
+    console.error(`[webhook ${sid}] listUsers error:`, lookupError.message);
     return { statusCode: 500, body: 'Database error' };
   }
 
   const user = usersData?.users?.find(u => u.email === customerEmail);
 
   if (!user) {
-    // User hasn't created an account yet — store a pending grant keyed by email.
-    // When they sign up, the login flow should check this table.
-    const pendingExpiresAt = new Date();
-    pendingExpiresAt.setMonth(pendingExpiresAt.getMonth() + 6);
-
-    const { error: pendingError } = await db
-      .from('pending_access')
-      .upsert({
-        email:      customerEmail,
-        course_id:  courseId,
-        stripe_session_id: session.id,
-        expires_at: pendingExpiresAt.toISOString(),
-        created_at: new Date().toISOString(),
-      }, { onConflict: 'email,course_id' });
+    const { error: pendingError } = await db.from('pending_access').upsert({
+      email:             customerEmail,
+      course_id:         courseId,
+      stripe_session_id: sid,
+      expires_at:        expiresAt.toISOString(),
+      created_at:        new Date().toISOString(),
+    }, { onConflict: 'email,course_id' });
 
     if (pendingError) {
-      console.error('Error writing pending_access:', pendingError.message);
+      console.error(`[webhook ${sid}] pending_access error:`, pendingError.message);
       return { statusCode: 500, body: 'Database error' };
     }
 
-    console.log(`Pending access recorded for ${customerEmail}`);
+    console.log(`[webhook ${sid}] pending access recorded for ${customerEmail}`);
     isGuide ? await sendGuideConfirmationEmail(customerEmail) : await sendCourseConfirmationEmail(customerEmail);
     return { statusCode: 200, body: 'Pending access recorded' };
   }
 
-  // Grant access — 6-month expiry
-  const expiresAt = new Date();
-  expiresAt.setMonth(expiresAt.getMonth() + 6);
-
-  const { error: accessError } = await db
-    .from('course_access')
-    .upsert({
-      user_id:    user.id,
-      course_id:  courseId,
-      granted_at: new Date().toISOString(),
-      expires_at: expiresAt.toISOString(),
-      stripe_session_id: session.id,
-    }, { onConflict: 'user_id,course_id' });
+  const { error: accessError } = await db.from('course_access').upsert({
+    user_id:           user.id,
+    course_id:         courseId,
+    granted_at:        new Date().toISOString(),
+    expires_at:        expiresAt.toISOString(),
+    stripe_session_id: sid,
+  }, { onConflict: 'user_id,course_id' });
 
   if (accessError) {
-    console.error('Error granting course_access:', accessError.message);
+    console.error(`[webhook ${sid}] course_access error:`, accessError.message);
     return { statusCode: 500, body: 'Database error' };
   }
 
-  console.log(`Access granted to user ${user.id} (${customerEmail}) for course ${courseId}`);
+  console.log(`[webhook ${sid}] access granted (fallback) to ${user.id} (${customerEmail})`);
   isGuide ? await sendGuideConfirmationEmail(customerEmail) : await sendCourseConfirmationEmail(customerEmail);
-  return { statusCode: 200, body: 'Access granted' };
+  return { statusCode: 200, body: 'Access granted (fallback)' };
 };

@@ -324,38 +324,48 @@
     if (!guideBtn && !courseBtn) return;
 
     var sessionData = await db.auth.getSession();
-    var session = sessionData.data.session;
+    var session   = sessionData.data.session;
     var userId    = session && session.user.id;
     var userEmail = session && encodeURIComponent(session.user.email);
 
     if (userId) {
+      var crid    = '?client_reference_id=' + userId + '&prefilled_email=' + userEmail;
       var results = await Promise.all([
         tseHasGuideAccess(userId),
         tseHasCourseAccess(userId)
       ]);
-      var hasGuide  = results[0];
-      var hasCourse = results[1];
 
       if (guideBtn) {
-        if (hasGuide) {
+        if (results[0]) {
           guideBtn.href        = '/guide/';
           guideBtn.textContent = 'Read the guide →';
         } else if (GUIDE_STRIPE_URL) {
-          guideBtn.href = GUIDE_STRIPE_URL + '?client_reference_id=' + userId + '&prefilled_email=' + userEmail;
+          guideBtn.href = GUIDE_STRIPE_URL + crid;
         }
       }
       if (courseBtn) {
-        if (hasCourse) {
+        if (results[1]) {
           courseBtn.href        = '/course/index.html';
           courseBtn.textContent = 'Go to my course →';
         } else {
-          courseBtn.href = COURSE_STRIPE_URL + '?client_reference_id=' + userId + '&prefilled_email=' + userEmail;
+          courseBtn.href = COURSE_STRIPE_URL + crid;
         }
       }
     } else {
-      // Free email subscriber (no account) — point to Stripe directly when links exist
-      if (guideBtn && GUIDE_STRIPE_URL)  guideBtn.href  = GUIDE_STRIPE_URL;
-      if (courseBtn && COURSE_STRIPE_URL) courseBtn.href = COURSE_STRIPE_URL;
+      // Free email subscriber (no account) — use tseHandleBuyClick on click
+      if (guideBtn) {
+        guideBtn.onclick = function (e) {
+          e.preventDefault();
+          if (GUIDE_STRIPE_URL) tseHandleBuyClick(GUIDE_STRIPE_URL);
+          else { sessionStorage.setItem('tse-login-redirect', '/workbooks-and-courses.html'); window.location.href = '/login.html'; }
+        };
+      }
+      if (courseBtn) {
+        courseBtn.onclick = function (e) {
+          e.preventDefault();
+          tseHandleBuyClick(COURSE_STRIPE_URL);
+        };
+      }
     }
   }
 
