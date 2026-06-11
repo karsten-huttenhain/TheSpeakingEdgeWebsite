@@ -266,8 +266,7 @@
           <h3>Quiet Influence</h3>
           <div class="free-next-card-price">£47</div>
           <p>The introvert's field guide to commanding rooms. 19 chapters, practical scripts, worksheets and a 30-day quiet leadership plan.</p>
-          <!-- Update href to Stripe guide payment link when live -->
-          <a href="/workbooks-and-courses.html#tse" class="btn-next-card">Get the guide &rarr;</a>
+          <a href="/workbooks-and-courses.html" class="btn-next-card" id="btn-guide-hub">Get the guide &rarr;</a>
         </div>
 
         <div class="free-next-card course-card reveal">
@@ -275,7 +274,7 @@
           <h3>Speaking Confidence Programme</h3>
           <div class="free-next-card-price">£197</div>
           <p>The complete six-module programme — voice, body, story, mindset, delivery and integration. Self-paced with lifetime access.</p>
-          <a href="/workbooks-and-courses.html#tse" class="btn-next-card">Enrol now &rarr;</a>
+          <a href="/workbooks-and-courses.html" class="btn-next-card" id="btn-course-hub">Enrol now &rarr;</a>
         </div>
 
       </div>
@@ -315,11 +314,57 @@
   var errEl   = document.getElementById('gate-error');
   var videosLoaded = false;
 
+  // Replace with live Stripe payment links when ready
+  var GUIDE_STRIPE_URL  = '';  // TODO: add guide Stripe payment link
+  var COURSE_STRIPE_URL = 'https://buy.stripe.com/test_6oUaEXdqn3cjgDbb436EU00';
+
+  async function updateHubButtons() {
+    var guideBtn  = document.getElementById('btn-guide-hub');
+    var courseBtn = document.getElementById('btn-course-hub');
+    if (!guideBtn && !courseBtn) return;
+
+    var sessionData = await db.auth.getSession();
+    var session = sessionData.data.session;
+    var userId    = session && session.user.id;
+    var userEmail = session && encodeURIComponent(session.user.email);
+
+    if (userId) {
+      var results = await Promise.all([
+        tseHasGuideAccess(userId),
+        tseHasCourseAccess(userId)
+      ]);
+      var hasGuide  = results[0];
+      var hasCourse = results[1];
+
+      if (guideBtn) {
+        if (hasGuide) {
+          guideBtn.href        = '/guide/';
+          guideBtn.textContent = 'Read the guide →';
+        } else if (GUIDE_STRIPE_URL) {
+          guideBtn.href = GUIDE_STRIPE_URL + '?client_reference_id=' + userId + '&prefilled_email=' + userEmail;
+        }
+      }
+      if (courseBtn) {
+        if (hasCourse) {
+          courseBtn.href        = '/course/index.html';
+          courseBtn.textContent = 'Go to my course →';
+        } else {
+          courseBtn.href = COURSE_STRIPE_URL + '?client_reference_id=' + userId + '&prefilled_email=' + userEmail;
+        }
+      }
+    } else {
+      // Free email subscriber (no account) — point to Stripe directly when links exist
+      if (guideBtn && GUIDE_STRIPE_URL)  guideBtn.href  = GUIDE_STRIPE_URL;
+      if (courseBtn && COURSE_STRIPE_URL) courseBtn.href = COURSE_STRIPE_URL;
+    }
+  }
+
   function showHub() {
     gate.style.display = 'none';
     hub.style.display  = 'block';
     tseInitHubNav('free');
     if (!videosLoaded) { loadVideos(); videosLoaded = true; }
+    updateHubButtons();
   }
 
   function showError(msg) {
