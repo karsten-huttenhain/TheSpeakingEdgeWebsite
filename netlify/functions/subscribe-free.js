@@ -26,10 +26,15 @@ exports.handler = async (event) => {
     return { statusCode: 400, body: 'name and email are required' };
   }
 
-  const db = createClient(
-    process.env.SUPABASE_URL,
-    process.env.SUPABASE_SERVICE_KEY
-  );
+  const supabaseUrl = process.env.SUPABASE_URL;
+  const supabaseKey = process.env.SUPABASE_SERVICE_KEY;
+
+  if (!supabaseUrl || !supabaseKey) {
+    console.error('subscribe-free: missing SUPABASE_URL or SUPABASE_SERVICE_KEY');
+    return { statusCode: 500, body: 'Server misconfiguration: missing env vars' };
+  }
+
+  const db = createClient(supabaseUrl, supabaseKey);
 
   const { error } = await db.from('free_subscribers').upsert(
     { name: name.trim(), email: email.trim().toLowerCase() },
@@ -37,8 +42,8 @@ exports.handler = async (event) => {
   );
 
   if (error) {
-    console.error('subscribe-free: upsert error:', error.message);
-    return { statusCode: 500, body: 'Database error' };
+    console.error('subscribe-free: upsert error:', error.message, error.code, error.details);
+    return { statusCode: 500, body: `Database error: ${error.message} (code: ${error.code})` };
   }
 
   return {
