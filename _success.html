@@ -147,11 +147,16 @@
     if (heading) heading.innerHTML = 'Your guide<br><em>is ready.</em>';
     if (desc)    desc.textContent  = 'Quiet Influence is now in your account. Sign in to read it online or download the PDF whenever you\'re ready.';
     if (cta)     { cta.textContent = 'Access your guide →'; cta.href = '/login.html?redirect=/guide/'; }
-    if (steps)   steps.style.display = 'none';
+    if (steps) {
+      var stepPs = steps.querySelectorAll('.success-step p');
+      if (stepPs[0]) stepPs[0].textContent = 'Check your inbox — a receipt and confirmation have been sent to your email address.';
+      if (stepPs[1]) stepPs[1].textContent = 'Sign in to your account to read the guide online at any time.';
+      if (stepPs[2]) stepPs[2].textContent = 'Download the PDF from your account to keep a copy offline.';
+    }
   } else if (product !== 'course') {
     if (heading) heading.innerHTML = 'Purchase<br><em>confirmed.</em>';
     if (desc)    desc.textContent  = 'Your access is now active. Sign in to get started.';
-    if (cta)     { cta.textContent = 'Go to dashboard →'; cta.href = '/login.html?redirect=/dashboard.html'; }
+    if (cta)     { cta.textContent = 'Go to my account →'; cta.href = '/login.html?redirect=/workbooks-and-courses.html'; }
     if (steps)   steps.style.display = 'none';
   }
 })();
