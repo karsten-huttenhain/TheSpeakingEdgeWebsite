@@ -343,11 +343,12 @@ function tseCheckFreeAccess() {
 }
 
 async function tseSubmitFreeSubscriber(name, email) {
-  const { error } = await db.from('free_subscribers').upsert(
-    { name: name.trim(), email: email.trim().toLowerCase() },
-    { onConflict: 'email' }
-  );
-  if (error) throw error;
+  const res = await fetch('/.netlify/functions/subscribe-free', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name: name.trim(), email: email.trim().toLowerCase() }),
+  });
+  if (!res.ok) throw new Error('subscribe-free returned ' + res.status);
   localStorage.setItem('tse-free-access', '1');
 }
 
