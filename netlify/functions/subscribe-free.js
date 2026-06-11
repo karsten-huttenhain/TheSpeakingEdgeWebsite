@@ -42,8 +42,8 @@ exports.handler = async (event) => {
   );
 
   if (error) {
-    console.error('subscribe-free: upsert error:', error.message, error.code, error.details);
-    return { statusCode: 500, body: `Database error: ${error.message} (code: ${error.code})` };
+    console.error('subscribe-free: upsert error:', error.message, error.code);
+    return { statusCode: 500, body: 'Database error' };
   }
 
   return {
