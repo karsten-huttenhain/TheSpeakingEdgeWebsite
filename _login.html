@@ -268,8 +268,8 @@ const authClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 function _resolveLoginRedirect() {
   var stored = sessionStorage.getItem('tse-login-redirect');
   var param  = new URLSearchParams(window.location.search).get('redirect');
-  var target = stored || param || '/dashboard.html';
-  if (!target.startsWith('/') || target.indexOf('://') !== -1) target = '/dashboard.html';
+  var target = stored || param || '/workbooks-and-courses.html';
+  if (!target.startsWith('/') || target.indexOf('://') !== -1) target = '/workbooks-and-courses.html';
   sessionStorage.removeItem('tse-login-redirect');
   return target;
 }
