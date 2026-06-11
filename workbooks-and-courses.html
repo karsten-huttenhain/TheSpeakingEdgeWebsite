@@ -233,8 +233,7 @@
         <li>12 scripts for difficult moments</li>
         <li>30-day quiet leadership plan</li>
       </ul>
-      <!-- Update href to Stripe guide payment link when live -->
-      <a href="/login.html?redirect=/guide/index.html" class="btn-price">Get the guide &rarr;</a>
+      <a href="/login.html?redirect=/workbooks-and-courses.html" class="btn-price" id="btn-guide">Get the guide &rarr;</a>
     </div>
 
     <!-- Online self-paced — featured -->
@@ -253,7 +252,7 @@
         <li>Practice video submission per module</li>
         <li>Lifetime access</li>
       </ul>
-      <a href="https://buy.stripe.com/test_6oUaEXdqn3cjgDbb436EU00" class="btn-price">Enrol now — £197</a>
+      <a href="/login.html?redirect=/workbooks-and-courses.html" class="btn-price" id="btn-course">Enrol now — £197</a>
     </div>
 
     <!-- Live 6-week programme -->
@@ -380,6 +379,8 @@
 
 
 <div id="tse-footer"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/tse-platform.js"></script>
 <script src="js/components.js"></script>
 <script src="js/tse.js"></script>
 <script>
@@ -410,6 +411,56 @@
       success.style.display = 'block';
     });
   });
+})();
+</script>
+<script>
+(async function () {
+  // Replace these with live Stripe payment links when ready
+  var GUIDE_STRIPE_URL  = '';  // TODO: add guide Stripe payment link
+  var COURSE_STRIPE_URL = 'https://buy.stripe.com/test_6oUaEXdqn3cjgDbb436EU00';
+
+  var guideBtn  = document.getElementById('btn-guide');
+  var courseBtn = document.getElementById('btn-course');
+
+  var sessionData = await db.auth.getSession();
+  var session = sessionData.data.session;
+
+  if (!session) {
+    // Not logged in — redirect to login, return to this page
+    var returnUrl = encodeURIComponent(window.location.pathname);
+    if (guideBtn)  guideBtn.href  = '/login.html?redirect=' + returnUrl;
+    if (courseBtn) courseBtn.href = '/login.html?redirect=' + returnUrl;
+    return;
+  }
+
+  var userId    = session.user.id;
+  var userEmail = encodeURIComponent(session.user.email);
+
+  var results = await Promise.all([
+    tseHasGuideAccess(userId),
+    tseHasCourseAccess(userId)
+  ]);
+  var hasGuide  = results[0];
+  var hasCourse = results[1];
+
+  if (guideBtn) {
+    if (hasGuide) {
+      guideBtn.href        = '/guide/';
+      guideBtn.textContent = 'Read the guide →';
+    } else if (GUIDE_STRIPE_URL) {
+      guideBtn.href = GUIDE_STRIPE_URL + '?client_reference_id=' + userId + '&prefilled_email=' + userEmail;
+    }
+    // No Stripe link yet — button stays as login redirect until link is added
+  }
+
+  if (courseBtn) {
+    if (hasCourse) {
+      courseBtn.href        = '/course/index.html';
+      courseBtn.textContent = 'Go to my course →';
+    } else {
+      courseBtn.href = COURSE_STRIPE_URL + '?client_reference_id=' + userId + '&prefilled_email=' + userEmail;
+    }
+  }
 })();
 </script>
 </body>
