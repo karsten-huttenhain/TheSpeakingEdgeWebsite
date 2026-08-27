@@ -342,11 +342,15 @@ function tseCheckFreeAccess() {
   return false;
 }
 
-async function tseSubmitFreeSubscriber(name, email) {
+async function tseSubmitFreeSubscriber(name, email, company) {
   const res = await fetch('/.netlify/functions/subscribe-free', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name: name.trim(), email: email.trim().toLowerCase() }),
+    body: JSON.stringify({
+      name: name.trim(),
+      email: email.trim().toLowerCase(),
+      company: company || '',   // honeypot — empty for real users
+    }),
   });
   if (!res.ok) throw new Error('subscribe-free returned ' + res.status);
   localStorage.setItem('tse-free-access', '1');

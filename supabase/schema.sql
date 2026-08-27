@@ -289,3 +289,75 @@ values
   ('7c4c6ad1-97a5-4bb1-a214-8a43387119bd', '06-impact',   6, 'I.M.P.A.C.T. T.H.E.M.',
    'Delivery', 'Delivery mastery — integrating all skills', '#27AE60', false,
    '"The goal is not perfection. The goal is presence, clarity, and connection."', 60);
+
+
+-- ════════════════════════════════════════════════════════════════
+-- RATE LIMITS
+-- Durable, IP-keyed rate limiting for Netlify Functions
+-- (ai-coach.js, subscribe-free.js — via netlify/functions/_rate-limit.js).
+-- Service-role only. See migrations/20260827_rate_limits.sql for details.
+-- ════════════════════════════════════════════════════════════════
+
+create table public.rate_limits (
+  bucket       text        not null,
+  identifier   text        not null,
+  count        integer     not null default 0,
+  window_start timestamptz not null default now(),
+  updated_at   timestamptz not null default now(),
+  primary key (bucket, identifier)
+);
+
+alter table public.rate_limits enable row level security;
+-- No policies: service-role only, like pending_access.
+
+create or replace function public.rate_limit_hit(
+  p_bucket         text,
+  p_identifier     text,
+  p_limit          integer,
+  p_window_seconds integer
+)
+returns table (allowed boolean, remaining integer, retry_after_seconds integer)
+language plpgsql
+security definer set search_path = public
+as $$
+declare
+  v_now    timestamptz := now();
+  v_window interval    := make_interval(secs => p_window_seconds);
+  v_row    public.rate_limits%rowtype;
+begin
+  select * into v_row
+    from public.rate_limits
+   where bucket = p_bucket and identifier = p_identifier
+   for update;
+
+  if not found then
+    insert into public.rate_limits (bucket, identifier, count, window_start, updated_at)
+    values (p_bucket, p_identifier, 1, v_now, v_now)
+    on conflict (bucket, identifier) do update
+      set count = public.rate_limits.count + 1, updated_at = v_now;
+    return query select true, greatest(p_limit - 1, 0), 0;
+    return;
+  end if;
+
+  if v_now - v_row.window_start >= v_window then
+    update public.rate_limits
+       set count = 1, window_start = v_now, updated_at = v_now
+     where bucket = p_bucket and identifier = p_identifier;
+    return query select true, greatest(p_limit - 1, 0), 0;
+    return;
+  end if;
+
+  if v_row.count >= p_limit then
+    return query select
+      false,
+      0,
+      greatest(ceil(extract(epoch from (v_row.window_start + v_window - v_now)))::integer, 1);
+    return;
+  end if;
+
+  update public.rate_limits
+     set count = v_row.count + 1, updated_at = v_now
+   where bucket = p_bucket and identifier = p_identifier;
+  return query select true, greatest(p_limit - v_row.count - 1, 0), 0;
+end;
+$$;

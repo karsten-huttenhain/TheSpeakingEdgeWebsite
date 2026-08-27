@@ -4,26 +4,17 @@
    ai-coach — proxies chat messages to Anthropic with rate limiting
    Environment variables required:
      ANTHROPIC_API_KEY — server-side only, never sent to browser
-   Rate limit: 30 exchanges per sessionId per 24-hour window
-   (in-memory — resets on cold start; upgrade to KV store if needed)
+     SUPABASE_URL, SUPABASE_SERVICE_KEY — for the durable rate limiter
+   Rate limit: 30 exchanges per caller IP per 24-hour window, backed by
+   the Supabase `rate_limits` table (survives cold starts; the client
+   can't reset it by rotating sessionId). Callers who bring their own
+   Anthropic key are exempt, as before.
    ═══════════════════════════════════════════════════════════════ */
 
-const rateLimitStore = new Map();
+const { checkRateLimit, getClientIp } = require('./_rate-limit');
 
-function checkRateLimit(sessionId) {
-  const LIMIT  = 30;
-  const WINDOW = 24 * 60 * 60 * 1000;
-  const now    = Date.now();
-  const entry  = rateLimitStore.get(sessionId);
-
-  if (!entry || now > entry.resetAt) {
-    rateLimitStore.set(sessionId, { count: 1, resetAt: now + WINDOW });
-    return true;
-  }
-  if (entry.count >= LIMIT) return false;
-  entry.count++;
-  return true;
-}
+const RATE_LIMIT   = 30;
+const RATE_WINDOW_S = 24 * 60 * 60;
 
 function buildSystemPrompt(chapterContext) {
   return `You are a warm, experienced speaking and communication coach for The Speaking Edge — a platform that helps professionals develop speaking confidence and authentic presence.
@@ -64,10 +55,27 @@ exports.handler = async (event) => {
   }
 
   if (!apiKey) {
-    if (!checkRateLimit(sessionId)) {
+    // Key on the caller's real IP so a scripted client can't reset the
+    // counter by generating a fresh sessionId per request. Fall back to
+    // the sessionId only when the IP is somehow unavailable, so a
+    // legitimate browser is never hard-blocked.
+    const ip = getClientIp(event);
+    const identifier = ip || `session:${sessionId}`;
+
+    const { allowed, retryAfterSeconds } = await checkRateLimit({
+      bucket: 'ai-coach',
+      identifier,
+      limit: RATE_LIMIT,
+      windowSeconds: RATE_WINDOW_S,
+    });
+
+    if (!allowed) {
       return {
         statusCode: 429,
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Retry-After': String(retryAfterSeconds || RATE_WINDOW_S),
+        },
         body: JSON.stringify({
           error: 'daily_limit_reached',
           message: "You've used your 30 daily coaching exchanges. Come back tomorrow, or add your own Anthropic API key below for unlimited access.",
