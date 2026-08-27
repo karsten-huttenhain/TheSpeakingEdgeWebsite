@@ -1,14 +1,29 @@
 /* ═══════════════════════════════════════════════════════════════
    Stripe webhook — provisions course_access after payment
    Environment variables required (set in Netlify dashboard):
+     STRIPE_SECRET_KEY       — live secret key
      STRIPE_WEBHOOK_SECRET   — from Stripe Dashboard → Webhooks
      SUPABASE_URL            — your project URL
      SUPABASE_SERVICE_KEY    — service role key (not anon key)
      TSE_COURSE_ID           — UUID of the Speaking Confidence Programme
-     GUIDE_COURSE_ID         — UUID of the Quiet Influence bundle
+     GUIDE_COURSE_ID         — UUID of the Quiet Influence guide
      RESEND_API_KEY          — from Resend Dashboard → API Keys
-   Product routing: add metadata {"course_id": "<uuid>"} to each
-   Stripe payment link. Falls back to TSE_COURSE_ID if absent.
+   Optional (override the baked-in fallbacks below):
+     GUIDE_PRICE_ID          — Stripe Price ID for the guide
+     COURSE_PRICE_ID         — Stripe Price ID for the programme
+
+   Product routing (fail CLOSED):
+     1. Expand the session's line items and map the Stripe Price ID
+        to a course_id (GUIDE_PRICE_ID / COURSE_PRICE_ID).
+     2. session.metadata.course_id overrides (1) if it is present AND
+        equals a known course_id.
+     3. If neither resolves a known product → grant NOTHING, log the
+        event loudly, return 200. We never fall back to "the course".
+
+   Expiry: set explicitly once the product is known —
+     guide  → permanent (PERMANENT_EXPIRY sentinel)
+     course → now + 6 months
+   Never NULL, never computed before the product is resolved.
    ═══════════════════════════════════════════════════════════════ */
 
 const stripe  = require('stripe')(process.env.STRIPE_SECRET_KEY);
@@ -16,6 +31,65 @@ const { createClient } = require('@supabase/supabase-js');
 const { Resend } = require('resend');
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+
+// Guide access does not expire. Stored as an explicit far-future
+// timestamp so `expires_at` is never NULL and every read path
+// (tse-platform.js, download-pdf.js) can treat it uniformly.
+const PERMANENT_EXPIRY = '2099-01-01T00:00:00.000Z';
+
+// Course IDs (env-driven, with the known live UUIDs as fallback).
+const GUIDE_COURSE_ID = process.env.GUIDE_COURSE_ID || '9bbe3f5f-a1c9-4646-a63a-6f15b1edcf12';
+const TSE_COURSE_ID   = process.env.TSE_COURSE_ID   || '7c4c6ad1-97a5-4bb1-a214-8a43387119bd';
+
+// Live Stripe Price IDs → course_id.
+const GUIDE_PRICE_ID  = process.env.GUIDE_PRICE_ID  || 'price_1Th9kTGkgQARp0TaK3wj7RDS';
+const COURSE_PRICE_ID = process.env.COURSE_PRICE_ID || 'price_1Th9kWGkgQARp0TaMjVfyFhU';
+
+const PRICE_TO_COURSE = {
+  [GUIDE_PRICE_ID]:  GUIDE_COURSE_ID,
+  [COURSE_PRICE_ID]: TSE_COURSE_ID,
+};
+const KNOWN_COURSE_IDS = new Set([GUIDE_COURSE_ID, TSE_COURSE_ID]);
+
+function sixMonthsFromNow() {
+  const d = new Date();
+  d.setMonth(d.getMonth() + 6);
+  return d.toISOString();
+}
+
+// Resolve which product this checkout was for. Returns a known
+// course_id, or null if it cannot be determined with confidence.
+async function resolveCourseId(session, sid) {
+  // ── Primary: Stripe Price ID from the session line items ──────────
+  let priceIds = [];
+  try {
+    const lineItems = await stripe.checkout.sessions.listLineItems(sid, { limit: 20 });
+    priceIds = (lineItems.data || []).map(li => li.price && li.price.id).filter(Boolean);
+  } catch (err) {
+    console.error(`[webhook ${sid}] could not list line items: ${err.message}`);
+  }
+
+  let resolved = null;
+  for (const pid of priceIds) {
+    if (PRICE_TO_COURSE[pid]) { resolved = PRICE_TO_COURSE[pid]; break; }
+  }
+
+  // ── Override: metadata.course_id, only if it names a known product ─
+  const metaCourseId = session.metadata && session.metadata.course_id;
+  if (metaCourseId && KNOWN_COURSE_IDS.has(metaCourseId)) {
+    if (resolved && resolved !== metaCourseId) {
+      console.warn(`[webhook ${sid}] metadata course_id=${metaCourseId} overrides price-derived course_id=${resolved} (prices=${priceIds.join(',') || 'none'})`);
+    }
+    resolved = metaCourseId;
+  } else if (metaCourseId && !KNOWN_COURSE_IDS.has(metaCourseId)) {
+    console.warn(`[webhook ${sid}] metadata course_id=${metaCourseId} is not a known product — ignored`);
+  }
+
+  if (!resolved) {
+    console.error(`[webhook ${sid}] UNRESOLVED PRODUCT — line item prices=${priceIds.join(',') || 'none'}, metadata.course_id=${metaCourseId || 'none'}`);
+  }
+  return resolved;
+}
 
 async function sendCourseConfirmationEmail(toEmail) {
   await resend.emails.send({
@@ -86,24 +160,36 @@ exports.handler = async (event) => {
   const session       = stripeEvent.data.object;
   const clientRefId   = session.client_reference_id;
   const customerEmail = session.customer_details?.email;
-  const courseId      = session.metadata?.course_id || process.env.TSE_COURSE_ID;
-  const isGuide       = courseId === process.env.GUIDE_COURSE_ID;
   const sid           = session.id;
+  const eid           = stripeEvent.id;
+
+  // ── Resolve the product — fail CLOSED if we cannot ──────────────────────────
+  const courseId = await resolveCourseId(session, sid);
+  if (!courseId) {
+    console.error(
+      `[webhook ${sid}] NO ACCESS GRANTED — unresolved product. ` +
+      `event=${eid} session=${sid} payment_link=${session.payment_link || 'none'} ` +
+      `amount_total=${session.amount_total} currency=${session.currency} ` +
+      `email=${customerEmail || 'none'} client_reference_id=${clientRefId || 'none'}`
+    );
+    // 200 so Stripe does not retry indefinitely; the log line above is the alert.
+    return { statusCode: 200, body: 'Unresolved product — no access granted' };
+  }
+
+  const isGuide   = courseId === GUIDE_COURSE_ID;
+  const expiresAt = isGuide ? PERMANENT_EXPIRY : sixMonthsFromNow();
 
   const db = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY);
 
-  const expiresAt = new Date();
-  expiresAt.setMonth(expiresAt.getMonth() + 6);
-
   // ── Fast path: client_reference_id is the Supabase user ID ──────────────────
   if (clientRefId) {
-    console.log(`[webhook ${sid}] fast path — client_reference_id=${clientRefId} course=${courseId}`);
+    console.log(`[webhook ${sid}] fast path — client_reference_id=${clientRefId} course=${courseId} expires_at=${expiresAt}`);
 
     const { error: accessError } = await db.from('course_access').upsert({
       user_id:           clientRefId,
       course_id:         courseId,
       granted_at:        new Date().toISOString(),
-      expires_at:        expiresAt.toISOString(),
+      expires_at:        expiresAt,
       stripe_session_id: sid,
     }, { onConflict: 'user_id,course_id' });
 
@@ -125,7 +211,7 @@ exports.handler = async (event) => {
     return { statusCode: 200, body: 'No identifiers — skipped' };
   }
 
-  console.log(`[webhook ${sid}] fallback path — looking up by email ${customerEmail}`);
+  console.log(`[webhook ${sid}] fallback path — looking up by email ${customerEmail} course=${courseId} expires_at=${expiresAt}`);
 
   const { data: usersData, error: lookupError } = await db.auth.admin.listUsers();
   if (lookupError) {
@@ -140,7 +226,7 @@ exports.handler = async (event) => {
       email:             customerEmail,
       course_id:         courseId,
       stripe_session_id: sid,
-      expires_at:        expiresAt.toISOString(),
+      expires_at:        expiresAt,
       created_at:        new Date().toISOString(),
     }, { onConflict: 'email,course_id' });
 
@@ -158,7 +244,7 @@ exports.handler = async (event) => {
     user_id:           user.id,
     course_id:         courseId,
     granted_at:        new Date().toISOString(),
-    expires_at:        expiresAt.toISOString(),
+    expires_at:        expiresAt,
     stripe_session_id: sid,
   }, { onConflict: 'user_id,course_id' });
 

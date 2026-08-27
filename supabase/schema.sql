@@ -37,12 +37,17 @@ values (
 
 -- ── 3. COURSE ACCESS ─────────────────────────────────────────────
 -- Granted by the Stripe webhook after payment.
+-- expires_at is ALWAYS set by the webhook: `now() + 6 months` for the
+-- programme, or the far-future sentinel 2099-01-01 for the (permanent)
+-- guide. It is never NULL — read paths treat "expired" as
+-- `expires_at < now()`, so a NULL would silently mean "never expires".
 
 create table public.course_access (
   id                uuid primary key default gen_random_uuid(),
   user_id           uuid not null references public.profiles on delete cascade,
   course_id         uuid not null references public.courses  on delete cascade,
   granted_at        timestamptz default now(),
+  expires_at        timestamptz not null,
   stripe_session_id text,
   unique (user_id, course_id)
 );
@@ -57,6 +62,7 @@ create table public.pending_access (
   email             text not null,
   course_id         uuid not null references public.courses on delete cascade,
   stripe_session_id text,
+  expires_at        timestamptz not null,
   created_at        timestamptz default now(),
   unique (email, course_id)
 );
@@ -173,9 +179,11 @@ begin
     'student'
   );
 
-  -- Redeem any course access purchased before sign-up
-  insert into public.course_access (user_id, course_id, granted_at, stripe_session_id)
-  select new.id, pa.course_id, now(), pa.stripe_session_id
+  -- Redeem any course access purchased before sign-up.
+  -- Carry expires_at through from pending_access — do NOT drop it here,
+  -- or redeemed grants land with a NULL expiry (= "never expires").
+  insert into public.course_access (user_id, course_id, granted_at, expires_at, stripe_session_id)
+  select new.id, pa.course_id, now(), pa.expires_at, pa.stripe_session_id
   from   public.pending_access pa
   where  lower(pa.email) = lower(new.email)
   on conflict (user_id, course_id) do nothing;
