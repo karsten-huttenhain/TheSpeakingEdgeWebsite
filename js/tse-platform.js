@@ -428,7 +428,7 @@ function tseInitHubNav(currentHub) {
   }
 
   var freeEl   = makeItem('Free Hub',        'free',   '/free',                           null);
-  var guideEl  = makeItem('Quiet Influence', 'guide',  '/workbooks-and-courses.html#tse', '£47');
+  var guideEl  = makeItem('Quiet Influence', 'guide',  '/workbooks-and-courses.html#tse', '£27');
   var courseEl = makeItem('Course',          'course', '/workbooks-and-courses.html#tse', '£197');
 
   var inner = document.createElement('div'); inner.className = 'tse-hub-inner';
