@@ -224,6 +224,10 @@
         <input type="email" id="free-email" name="email" placeholder="Your email address" required autocomplete="email">
         <button type="submit" class="btn-gate-submit" id="gate-btn">Get free access &rarr;</button>
       </div>
+      <!-- Honeypot: hidden from real users; bots that fill it are silently dropped -->
+      <input type="text" id="free-company" name="company" tabindex="-1" autocomplete="off" aria-hidden="true"
+             style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;">
+
       <p class="gate-error" id="gate-error" style="display:none"></p>
       <p class="gate-note">Already a customer? <a href="/login.html">Sign in</a> for instant access.</p>
     </form>
@@ -310,6 +314,7 @@
   var form    = document.getElementById('free-form');
   var nameEl  = document.getElementById('free-name');
   var emailEl = document.getElementById('free-email');
+  var hpEl    = document.getElementById('free-company');
   var btn     = document.getElementById('gate-btn');
   var errEl   = document.getElementById('gate-error');
   var videosLoaded = false;
@@ -400,7 +405,7 @@
     }
     btn.disabled    = true;
     btn.textContent = 'Just a moment…';
-    tseSubmitFreeSubscriber(name, email)
+    tseSubmitFreeSubscriber(name, email, hpEl ? hpEl.value : '')
       .then(function () { showHub(); })
       .catch(function () {
         btn.disabled    = false;

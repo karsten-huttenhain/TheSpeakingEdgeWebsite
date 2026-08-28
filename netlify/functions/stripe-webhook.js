@@ -9,8 +9,10 @@
      GUIDE_COURSE_ID         — UUID of the Quiet Influence guide
      RESEND_API_KEY          — from Resend Dashboard → API Keys
    Optional (override the baked-in fallbacks below):
-     GUIDE_PRICE_ID          — Stripe Price ID for the guide
-     COURSE_PRICE_ID         — Stripe Price ID for the programme
+     GUIDE_PRICE_ID           — Stripe Price ID for the guide
+     COURSE_PRICE_ID          — Stripe Price ID for the programme
+     ADMIN_NOTIFICATION_EMAIL — where "unresolved product" alerts are sent
+                                (default speaking.edge.global@gmail.com)
 
    Product routing (fail CLOSED):
      1. Expand the session's line items and map the Stripe Price ID
@@ -45,6 +47,9 @@ const TSE_COURSE_ID   = process.env.TSE_COURSE_ID   || '7c4c6ad1-97a5-4bb1-a214-
 const GUIDE_PRICE_ID  = process.env.GUIDE_PRICE_ID  || 'price_1Th9kTGkgQARp0TaK3wj7RDS';
 const COURSE_PRICE_ID = process.env.COURSE_PRICE_ID || 'price_1Th9kWGkgQARp0TaMjVfyFhU';
 
+// Where "unresolved product" alerts go. Env-overridable for easy change later.
+const ADMIN_NOTIFICATION_EMAIL = process.env.ADMIN_NOTIFICATION_EMAIL || 'speaking.edge.global@gmail.com';
+
 const PRICE_TO_COURSE = {
   [GUIDE_PRICE_ID]:  GUIDE_COURSE_ID,
   [COURSE_PRICE_ID]: TSE_COURSE_ID,
@@ -57,18 +62,22 @@ function sixMonthsFromNow() {
   return d.toISOString();
 }
 
-// Resolve which product this checkout was for. Returns a known
-// course_id, or null if it cannot be determined with confidence.
-async function resolveCourseId(session, sid) {
-  // ── Primary: Stripe Price ID from the session line items ──────────
-  let priceIds = [];
+// The Stripe Price IDs on the session's line items. Returns [] on any error
+// (the caller then fails closed). Split out so the unresolved-product alert
+// can report the price(s) without a second Stripe call.
+async function getSessionPriceIds(sid) {
   try {
     const lineItems = await stripe.checkout.sessions.listLineItems(sid, { limit: 20 });
-    priceIds = (lineItems.data || []).map(li => li.price && li.price.id).filter(Boolean);
+    return (lineItems.data || []).map(li => li.price && li.price.id).filter(Boolean);
   } catch (err) {
     console.error(`[webhook ${sid}] could not list line items: ${err.message}`);
+    return [];
   }
+}
 
+// Resolve which product this checkout was for. Returns a known
+// course_id, or null if it cannot be determined with confidence.
+function resolveCourseId(session, sid, priceIds) {
   let resolved = null;
   for (const pid of priceIds) {
     if (PRICE_TO_COURSE[pid]) { resolved = PRICE_TO_COURSE[pid]; break; }
@@ -133,6 +142,81 @@ async function sendGuideConfirmationEmail(toEmail) {
   });
 }
 
+// Notify the admin that a completed checkout could not be matched to a
+// product (fail-closed branch). Caller wraps this in try/catch; a broken
+// notification must never turn into a Stripe webhook retry.
+async function sendUnresolvedProductAlert(d) {
+  const priceLine = d.priceIds && d.priceIds.length
+    ? d.priceIds.join(', ')
+    : 'none on session line items';
+  const amountLine = (typeof d.amountTotal === 'number')
+    ? `${d.amountTotal} minor units = ${(d.amountTotal / 100).toFixed(2)} ${(d.currency || '').toUpperCase()}`
+    : 'unknown';
+
+  const rows = [
+    ['Event ID',            d.eid],
+    ['Session ID',          d.sid],
+    ['Payment Link ID',     d.paymentLink || 'none'],
+    ['Price ID(s)',         priceLine],
+    ['Amount',              amountLine],
+    ['Customer email',      d.customerEmail || 'none'],
+    ['client_reference_id', d.clientRefId || 'none'],
+    ['Event time (UTC)',    d.eventTime],
+  ];
+
+  const text = [
+    'A completed Stripe checkout could not be matched to a product, so NO access was granted.',
+    '',
+    rows.map(([k, v]) => `${(k + ':').padEnd(21)} ${v}`).join('\n'),
+    '',
+    'If this was a real purchase that should have granted access, add the row manually:',
+    '  course_id options:',
+    '    7c4c6ad1-97a5-4bb1-a214-8a43387119bd  = Speaking Confidence Programme (course)',
+    '    9bbe3f5f-a1c9-4646-a63a-6f15b1edcf12  = Quiet Influence (guide)',
+    '  In course_access, upsert { user_id, course_id, granted_at, expires_at, stripe_session_id }:',
+    '    - user_id: the Supabase auth user for the customer email above',
+    '    - expires_at: course -> now + 6 months; guide -> 2099-01-01 (permanent sentinel)',
+    '    - check no row already exists for that user_id + course_id first',
+    '',
+    'If this was the £495 Live Programme cohort link, no action needed — it is intentionally unmapped.',
+  ].join('\n');
+
+  const htmlRows = rows.map(([k, v]) =>
+    `<tr><td style="padding:3px 14px 3px 0;color:#888;white-space:nowrap;vertical-align:top;">${k}</td>` +
+    `<td style="padding:3px 0;font-family:ui-monospace,Menlo,monospace;">${v}</td></tr>`
+  ).join('');
+
+  const html = `
+    <div style="font-family:-apple-system,Arial,sans-serif;max-width:640px;margin:0 auto;color:#2c2c2c;line-height:1.6;">
+      <p>A completed Stripe checkout <strong>could not be matched to a product</strong>, so <strong>no access was granted</strong>.</p>
+      <table style="border-collapse:collapse;font-size:13px;margin:16px 0;">${htmlRows}</table>
+      <p style="font-size:13px;">If this was a real purchase that should have granted access, add the row manually:</p>
+      <ul style="font-size:13px;">
+        <li><code>course_id</code> options:
+          <ul>
+            <li><code>7c4c6ad1-97a5-4bb1-a214-8a43387119bd</code> = Speaking Confidence Programme (course)</li>
+            <li><code>9bbe3f5f-a1c9-4646-a63a-6f15b1edcf12</code> = Quiet Influence (guide)</li>
+          </ul>
+        </li>
+        <li>In <code>course_access</code>, upsert
+          <code>{ user_id, course_id, granted_at, expires_at, stripe_session_id }</code> —
+          <code>user_id</code> = the Supabase auth user for the customer email above;
+          <code>expires_at</code> = course → now + 6 months, guide → <code>2099-01-01</code> (permanent sentinel);
+          check no row already exists for that <code>user_id</code> + <code>course_id</code> first.</li>
+      </ul>
+      <p style="font-size:12px;color:#888;">If this was the £495 Live Programme cohort link, no action needed — it is intentionally unmapped.</p>
+    </div>
+  `;
+
+  await resend.emails.send({
+    from: 'hello@speakingedgeglobal.com',
+    to: ADMIN_NOTIFICATION_EMAIL,
+    subject: 'TSE — unresolved Stripe purchase (needs review)',
+    html,
+    text,
+  });
+}
+
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method Not Allowed' };
@@ -164,15 +248,37 @@ exports.handler = async (event) => {
   const eid           = stripeEvent.id;
 
   // ── Resolve the product — fail CLOSED if we cannot ──────────────────────────
-  const courseId = await resolveCourseId(session, sid);
+  const priceIds = await getSessionPriceIds(sid);
+  const courseId = resolveCourseId(session, sid, priceIds);
   if (!courseId) {
     console.error(
       `[webhook ${sid}] NO ACCESS GRANTED — unresolved product. ` +
       `event=${eid} session=${sid} payment_link=${session.payment_link || 'none'} ` +
+      `prices=${priceIds.join(',') || 'none'} ` +
       `amount_total=${session.amount_total} currency=${session.currency} ` +
       `email=${customerEmail || 'none'} client_reference_id=${clientRefId || 'none'}`
     );
-    // 200 so Stripe does not retry indefinitely; the log line above is the alert.
+
+    // Notify the admin. Own try/catch: a failed email must NOT become a
+    // Stripe retry — we still return 200 below regardless.
+    try {
+      await sendUnresolvedProductAlert({
+        eid,
+        sid,
+        paymentLink:   session.payment_link,
+        priceIds,
+        amountTotal:   session.amount_total,
+        currency:      session.currency,
+        customerEmail,
+        clientRefId,
+        eventTime:     new Date((stripeEvent.created || Math.floor(Date.now() / 1000)) * 1000).toISOString(),
+      });
+      console.log(`[webhook ${sid}] unresolved-product alert emailed to ${ADMIN_NOTIFICATION_EMAIL}`);
+    } catch (mailErr) {
+      console.error(`[webhook ${sid}] FAILED to send unresolved-product alert email: ${mailErr.message}`);
+    }
+
+    // 200 so Stripe does not retry indefinitely; the log + email are the alert.
     return { statusCode: 200, body: 'Unresolved product — no access granted' };
   }
 

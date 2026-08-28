@@ -17,6 +17,30 @@ Guide pages use the same pattern but load `../js/tse-platform.js` (one level up)
 - `develop` — all active work goes here
 - `main` — production; merge from develop when ready to deploy
 
+### Intentional live/test divergence — do NOT "fix" it
+`main` and `develop` permanently differ in exactly two files, and only on the
+Stripe payment-link constants:
+
+| Constant | `main` (live) | `develop` (test) |
+| --- | --- | --- |
+| `GUIDE_STRIPE_URL`  | `buy.stripe.com/7sY14ngCz6ov2Mlfkj6EU02` (£27)  | `buy.stripe.com/test_4gM9ATgCzaEL5Yx7RR6EU01` |
+| `COURSE_STRIPE_URL` | `buy.stripe.com/fZuaEX1HF14b72Bdcb6EU03` (£197) | `buy.stripe.com/test_6oUaEXdqn3cjgDbb436EU00` |
+
+These live in `free.html` and `workbooks-and-courses.html` (inline `<script>`,
+around line 315 / 417). `git diff main develop` should show *only* these lines.
+
+- Never blanket-merge `develop → main` without checking this — a normal merge
+  keeps `main`'s live URLs (develop hasn't touched those lines since they
+  diverged), but verify with `git diff main develop` after merging.
+- Never blanket-merge `main → develop` — it would drop the test links.
+- When changing webhook / schema / page logic, commit on `develop`, then
+  `git merge --no-ff develop` into `main` and re-check the diff.
+- Price/label text (e.g. "£27") must be changed on BOTH branches — it is not
+  part of the intended divergence.
+- The Stripe webhook (`netlify/functions/stripe-webhook.js`) resolves the
+  product by **Stripe Price ID** (`price_1Th9kT…` = guide, `price_1Th9kW…` =
+  course), not by link URL, so the test/live URL split does not affect routing.
+
 ---
 
 ## Roadmap
